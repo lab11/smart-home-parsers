@@ -1,0 +1,69 @@
+
+<html>
+    <head>
+        <title>
+            You Autocomplete Me
+        </title>
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+    </head>
+    <body>
+        <div id="header">
+            You Autocomplete Me
+        </div>
+    </div>
+
+
+
+<script>
+    var antlr4 = require('antlr4/index');
+ </script>
+
+<script src="lib/HelloLexer.js"></script>
+<script src="lib/HelloParser.js"></script>
+<script src="lib/HelloListener.js"></script>
+
+<script type="text/javascript">
+//var HelloLexer =require('lib/HelloLexer'); 
+//var HelloParser =require('lib/HelloParser'); 
+//var HelloListener=require('lib/HelloListener');
+
+    KeyPrinter = function() {
+             HelloListener.call(this); // inherit default listener
+             return this;
+        };
+
+    // inherit default listener
+    KeyPrinter.prototype = Object.create(HelloListener.prototype);
+    KeyPrinter.prototype.constructor = KeyPrinter;
+
+    // override default listener behavior
+           KeyPrinter.prototype.exitKey = function(ctx) {      
+           console.log("Oh, a key!");
+       }; 
+
+//    function set_echo(frm)
+//    {
+        var input = "your text to parse here"
+   var chars = new antlr4.InputStream(input);
+   var lexer = new HelloLexer.HelloLexer(chars);
+   var tokens  = new antlr4.CommonTokenStream(lexer);
+   var parser = new HelloParser.HelloParser(tokens);
+   parser.buildParseTrees = true;
+   var tree = parser.r()
+   var printer = new KeyPrinter();
+ antlr4.tree.ParseTreeWalker.DEFAULT.walk(printer, tree);
+//    }
+</script>
+
+<img id="image" name="echo_img" src="" style="display:none;"/>
+
+<div align="center">
+<form name="echo_form" action="" method="get" >
+    <input type="text" name="inputbox" value="">
+    <input type="submit" name="button" class="button_example" value="Submit" onclick="return set_echo(this.form)">
+</form>
+</div>
+</div>
+
+</body>
+</html>
