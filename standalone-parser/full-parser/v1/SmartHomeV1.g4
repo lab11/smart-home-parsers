@@ -6,6 +6,11 @@ fragment FLOAT:      ('-'|'+')?(('0'..'9')*'.'('0'..'9')+) ;
 NUMBER:     INTEGER | FLOAT ;
 CLOCK_TIME:       ('0'..'2')?('0'..'9')(':'('0'..'5')('0'..'9'))?('a.m.'|'p.m.'|'am'|'pm')? ; //24 hour clock, covers some invalid times too
 STRING:   (~[\r\n])+ ; 
+LOGICAL_OP:	'and'
+	| 'or'
+	| 'not'
+	| 'but not'
+	;
 
 
 // Orig below
@@ -20,8 +25,8 @@ action_sentence: action
     ;
 action: command 
     | command_with_conditions 
-    | command unless
-	| command_with_conditions unless
+    | command UNLESS
+	| command_with_conditions UNLESS
     ;
 question_sentence: question_phrase
 	| question_phrase 'and' question_sentence
@@ -53,41 +58,41 @@ direct_action: 'check and see' knowable_things
 	| 'let me know' knowable_things
 	| 'tell me' knowable_things
 	| 'keep track of' knowable_things
-	| 'remind me to' entity_EVENT_CONJUGATION_1
+	| 'remind me to' entity_event_conjugation_1
 	| 'verify that' statements
 	| 'make sure that' statements
-	| 'keep' identifier objectS object_state
-	| 'keep' entity entity_STATE
-	| 'monitor' identifier objectS
+	| 'keep' determiner objects object_state
+	| 'keep' entity entity_state
+	| 'monitor' determiner objects
 	| 'monitor' knowable_things
 	| 'notify me' condition
 	| simple_actions
-	| 'check' ONLINE_SERVICE
-	| 'check' identifier ONLINE_SERVICE
-	| 'check' identifier DATA_SOURCES
-	| 'check' identifier PLURAL_UPDATES
+	| 'check' online_service
+	| 'check' determiner online_service
+	| 'check' determiner data_sources
+	| 'check' determiner plural_updates
 	| 'check on' entity
-	| 'check on' identifier objectS
-	| 'check' identifier objectS
-	| 'keep track of when' EVENTS
-	| 'keep track of when' factS
+	| 'check on' determiner objects
+	| 'check' determiner objects
+	| 'keep track of when' events_
+	| 'keep track of when' facts
 //	| 'tell' entity 'that' <textbox('custom message')>
 //	| 'inform' entity 'that' <textbox('custom message')>
 	| 'ensure that' statements
-	| 'give me' DATA_SOURCES
-	| 'have' identifier noun simple_actions
-	| 'have' identifier noun state_phrase
+	| 'give me' data_sources
+	| 'have' determiner noun simple_actions
+	| 'have' determiner noun state_phrase
 	| 'help me' simple_actions
-	| 'inform me of' identifier PLURAL_UPDATES
-	| 'inform me of' identifier DATA_SOURCES
+	| 'inform me of' determiner plural_updates
+	| 'inform me of' determiner data_sources
 	| 'offer to' simple_actions
 	| 'wake' entity 'up'
-	| 'cut back on' DATA_SOURCES 'by' NUMBER UNITS
+	| 'cut back on' data_sources 'by' NUMBER units_
 	| 'greet' entity
 	| 'decide whether to' simple_actions
     ;
-simple_action: verb identifier noun
-	| verb identifier noun state_phrase
+simple_action: verb determiner noun
+	| verb determiner noun state_phrase
     ;
 simple_actions: simple_action
 	| simple_action 'and' simple_action
@@ -98,8 +103,8 @@ knowable_things: knowable_thing
 	| knowable_thing 'and' additional_knowable_thing
 	| knowable_thing 'or' additional_knowable_thing 
     ;
-knowable_thing: identifier DATA_SOURCES
-	| INDIRECT_REFERENCES
+knowable_thing: determiner data_sources
+	| indirect_references
 	| condition
     ;
 additional_knowable_thing: knowable_things ;
@@ -249,7 +254,7 @@ verb: 'turn'
 	| 'crank up'
 	| 'crank down'
     ;
-identifier: 'the'
+determiner: 'the'
 	| 'some'
 	| 'the current'
 	| 'my current'
@@ -281,27 +286,27 @@ nouns: noun
 	| noun 'or' additional_noun
     ;
 additional_noun: nouns ;
-noun: objectS
-	| objectS DESCRIPTION
+noun: objects
+	| objects DESCRIPTION
     ;
-MUSIC: 'music'
+music_: 'music'
 //	| 'music by' <textbox('artist')>
 //	| <textbox('genre')> 'music'
 	| 'background music'
     ;
-SONG: 'song'
+song_: 'song'
 //	| 'song by' <textbox('artist')>
 //	| 'song' <textbox('song title')>
 //	| 'song' <textbox('song title')> 'by' <textbox('artist')>
     ;
-ALBUM: 'album' ; //<textbox('album')>
+album_: 'album' ; //<textbox('album')>
 //	| 'album' <textbox('album')> 'by' <textbox('artist')>
 //	| 'album by' <textbox('artist')>
 //    ;
-PLAYLIST: 'playlist' ; //<textbox('playlist name')>
+playlist_: 'playlist' ; //<textbox('playlist name')>
 //	| <textbox('description or name')> 'playlist'
 //    ;
-TELEVISION: 'television'
+television_: 'television'
 	| 'movie'
 	| 'movies'
 	| 'video'
@@ -314,13 +319,13 @@ TELEVISION: 'television'
 //	| <textbox('TV show')>
 //	| <textbox('movie title')>
     ;
-location: identifier SPACE
+location: determiner space_
 	| 'inside'
 	| 'outside'
 	| 'school'
 	| 'work'
     ;
-SPACE: 'room'
+space_: 'room'
 	| 'house'
 	| 'living room'
 	| 'bathroom'
@@ -363,7 +368,7 @@ SPACE: 'room'
 	| 'household'
     ;
 activity: 'cooking'
-	| 'cooking' MEAL
+	| 'cooking' meal_
 	| 'sleeping'
 	| 'showering'
 	| 'exercising'
@@ -376,14 +381,14 @@ activity: 'cooking'
 	| 'getting ready'
 	| 'reading'
 	| 'doing homework'
-	| 'preparing' MEAL
-	| identifier 'morning routine'
+	| 'preparing' meal_
+	| determiner 'morning routine'
     ;
 entity: 'I'
 	| 'people'
 	| 'they'
-	| identifier 'kids'
-	| identifier 'children'
+	| determiner 'kids'
+	| determiner 'children'
 	| 'we'
 	| 'my pets'
 	| 'my pet'
@@ -402,11 +407,11 @@ entity: 'I'
 	| 'someone else'
 	| 'no one'
 	| 'nobody'
-	| identifier 'stranger'
+	| determiner 'stranger'
 	| 'an unidentified person'
 	| 'anyone'
-	| identifier 'dog'
-	| identifier 'cat'
+	| determiner 'dog'
+	| determiner 'cat'
 	| 'them'
 	| 'he'
 	| 'she'
@@ -414,52 +419,52 @@ entity: 'I'
 	| 'her'
 	| 'us'
 	| 'me'
-	| identifier 'friends'
-	| identifier 'fish'
+	| determiner 'friends'
+	| determiner 'fish'
 	| 'my family'
 //	| <textbox('custom name')>
 	| 'my parents'
 	| 'my in-laws'
 	| 'everyone'
     ;
-UTILITY: 'energy'
+utility_: 'energy'
 	| 'electricity'
 	| 'power'
 	| 'water'
 	| 'gas'
 	| 'utility'
     ;
-MEAL: 'breakfast'
+meal_: 'breakfast'
 	| 'lunch'
 	| 'dinner'
     ;
 
 // ATTRIBUTES
-STATES: state_phrase
-	| state_phrase 'and' ADDITIONAL_STATE
+states_: state_phrase
+	| state_phrase 'and' additional_state
     ;
-ADDITIONAL_STATE: STATES ;
+additional_state: states_ ;
 state_phrase: 'to' object_state
 	| 'at' object_state
-	| 'of' DATA_SOURCES
+	| 'of' data_sources
 //	| 'that says' <textbox('custom message')>
 //	| 'to' entity 'that says' <textbox('custom message')>
 //	| 'to say' <textbox('custom message')>
 	| object_state
 	| 'to' entity
-	| 'to my' PERSONAL_ORGANIZERS
+	| 'to my' personal_organizers
     ;
-COLOR: BASE_COLOR
-	| 'warm' BASE_COLOR
-	| 'cool' BASE_COLOR
-	| 'bright' BASE_COLOR
-	| 'light' BASE_COLOR
-	| 'hot' BASE_COLOR
-	| 'dark' BASE_COLOR
-	| 'cold' BASE_COLOR
+color_: base_color
+	| 'warm' base_color
+	| 'cool' base_color
+	| 'bright' base_color
+	| 'light' base_color
+	| 'hot' base_color
+	| 'dark' base_color
+	| 'cold' base_color
 //	| <textbox('custom color')>
     ;
-BASE_COLOR: 'red'
+base_color: 'red'
 	| 'pink'
 	| 'salmon'
 	| 'orange'
@@ -473,35 +478,35 @@ BASE_COLOR: 'red'
 	| 'white'
 	| 'gold'
     ;
-POWER: STEP 'power'
-	| STEP 'brightness'
-	| PERCENT 'power'
-	| PERCENT 'brightness'
+power_: step_ 'power'
+	| step_ 'brightness'
+	| percent_ 'power'
+	| percent_ 'brightness'
 	| 'dim'
 	| 'bright'
     ;
-STEP: 'low'
+step_: 'low'
 	| 'mid'
 	| 'high'
 	| 'full'
 	| 'half'
 	| 'medium'
     ;
-PERCENT: NUMBER '%' ;
-VOLUME: STEP 'volume'
-	| PERCENT 'volume'
+percent_: NUMBER '%' ;
+volume_: step_ 'volume'
+	| percent_ 'volume'
     ;
-TEMPERATURE: 'warm'
+temperature_: 'warm'
 	| 'cool'
 	| 'hot'
 	| 'cold'
-	| DEGREES_F 'degrees Fahrenheit'
-	| DEGREES_C 'degrees Celsius'
+	| degrees_f 'degrees Fahrenheit'
+	| degrees_c 'degrees Celsius'
 	| 'optimal temperatures'
     ;
-DEGREES_F: NUMBER ;
-DEGREES_C: NUMBER ;
-UNITS: 'dollars'
+degrees_f: NUMBER ;
+degrees_c: NUMBER ;
+units_: 'dollars'
 	| 'watts'
 	| 'gallons'
 	| 'steps'
@@ -516,7 +521,7 @@ UNITS: 'dollars'
 	| 'levels'
     ;
 
-// conditionS
+// conditions
  command_with_conditions:  command condition
 	| condition  command
 	| 
@@ -525,7 +530,7 @@ condition: 'if' statements
 	| 'when' statements
 	| dependent_clauses
     ;
-dependent_clause: WHILE
+dependent_clause: while_
 	| TIME_DEPENDENCY
 	| location_dependency
 	| BEFORE
@@ -545,76 +550,76 @@ statements: statement
     ;
 additional_statement: statements ;
 statement: fact
-	| EVENT
+	| event_
 	| fact dependent_clauses
-	| EVENT dependent_clauses	
+	| event_ dependent_clauses	
     ;
-factS: fact
-	| fact 'and' ADDITIONAL_fact
-	| fact 'or' ADDITIONAL_fact
+facts: fact
+	| fact 'and' additional_fact
+	| fact 'or' additional_fact
     ;
-ADDITIONAL_fact: factS ;
-EVENTS: EVENT
-	| EVENT 'and' ADDITIONAL_EVENT
+additional_fact: facts ;
+events_: event_
+	| event_ 'and' additional_event
     ;
-ADDITIONAL_EVENT: EVENTS ;
+additional_event: events_ ;
 
-// factS 
+// facts 
 // Make sure that, check to see if, tell me if, let me know if, if, when...// see “that the” phrases on SBAR list - when, if, whenever
 fact: entity_fact
-	| ENVIRONMENT_fact
+	| environment_fact
 	| update_fact
 	| object_fact
-	| DATA_fact
+	| data_fact
     ;
-entity_fact: 'I am' entity_STATE
-	| 'we are' entity_STATE
-	| 'you are' entity_STATE
-	| 'someone is' entity_STATE
-	| 'someone else is' entity_STATE
-	| 'no one is' entity_STATE
-	| 'nobody is' entity_STATE
-	| 'they are' entity_STATE
-	| identifier 'pets are' entity_STATE
-	| 'a stranger is' entity_STATE
-	| 'an unidentified person is' entity_STATE
-	| 'anyone is' entity_STATE
-	| 'the dog is' entity_STATE
-	| 'the cat is' entity_STATE
-	| 'she is' entity_STATE
-	| 'he is' entity_STATE
-	| 'everyone is' entity_STATE
-	| entity_CONJUGATION_1 'need to' entity_EVENT_CONJUGATION_1
-	| entity_CONJUGATION_2 'needs to' entity_EVENT_CONJUGATION_1
-	| entity_CONJUGATION_1 'want to' entity_EVENT_CONJUGATION_1
-	| entity_CONJUGATION_2 'wants to' entity_EVENT_CONJUGATION_1
-	| entity 'should' entity_EVENT_CONJUGATION_1
-	| 'I am not' entity_STATE
-	| 'we are not' entity_STATE
-	| 'you are not' entity_STATE
-	| 'someone is not' entity_STATE
-	| 'someone else is not' entity_STATE
-	| 'they are not' entity_STATE
-	| identifier 'pets are not' entity_STATE
-	| 'a stranger is not' entity_STATE
-	| 'an unidentified person is not' entity_STATE
-	| 'anyone is not' entity_STATE
-	| 'the dog is not' entity_STATE
-	| 'the cat is not' entity_STATE
-	| 'she is not' entity_STATE
-	| 'he is not' entity_STATE
-	| 'everyone is not' entity_STATE
-	| entity_CONJUGATION_1 'do not need to' entity_EVENT_CONJUGATION_1
-	| entity_CONJUGATION_2 'does not need to' entity_EVENT_CONJUGATION_1
-	| entity_CONJUGATION_1 'do not want to' entity_EVENT_CONJUGATION_1
-	| entity_CONJUGATION_2 'does not want to' entity_EVENT_CONJUGATION_1
-	| entity 'should not' entity_EVENT_CONJUGATION_1
+entity_fact: 'I am' entity_state
+	| 'we are' entity_state
+	| 'you are' entity_state
+	| 'someone is' entity_state
+	| 'someone else is' entity_state
+	| 'no one is' entity_state
+	| 'nobody is' entity_state
+	| 'they are' entity_state
+	| determiner 'pets are' entity_state
+	| 'a stranger is' entity_state
+	| 'an unidentified person is' entity_state
+	| 'anyone is' entity_state
+	| 'the dog is' entity_state
+	| 'the cat is' entity_state
+	| 'she is' entity_state
+	| 'he is' entity_state
+	| 'everyone is' entity_state
+	| entity_conjugation_1 'need to' entity_event_conjugation_1
+	| entity_conjugation_2 'needs to' entity_event_conjugation_1
+	| entity_conjugation_1 'want to' entity_event_conjugation_1
+	| entity_conjugation_2 'wants to' entity_event_conjugation_1
+	| entity 'should' entity_event_conjugation_1
+	| 'I am not' entity_state
+	| 'we are not' entity_state
+	| 'you are not' entity_state
+	| 'someone is not' entity_state
+	| 'someone else is not' entity_state
+	| 'they are not' entity_state
+	| determiner 'pets are not' entity_state
+	| 'a stranger is not' entity_state
+	| 'an unidentified person is not' entity_state
+	| 'anyone is not' entity_state
+	| 'the dog is not' entity_state
+	| 'the cat is not' entity_state
+	| 'she is not' entity_state
+	| 'he is not' entity_state
+	| 'everyone is not' entity_state
+	| entity_conjugation_1 'do not need to' entity_event_conjugation_1
+	| entity_conjugation_2 'does not need to' entity_event_conjugation_1
+	| entity_conjugation_1 'do not want to' entity_event_conjugation_1
+	| entity_conjugation_2 'does not want to' entity_event_conjugation_1
+	| entity 'should not' entity_event_conjugation_1
     ;
-entity_STATE: 'home'
-	| 'in' identifier location
+entity_state: 'home'
+	| 'in' determiner location
 	| 'at the door'
 	| 'present'
-	| 'anywhere in' identifier location
+	| 'anywhere in' determiner location
 	| 'not home'
 	| 'not at home'
 	| 'away from home'
@@ -626,11 +631,11 @@ entity_STATE: 'home'
 	| 'coming home from work'
 	| 'coming home'
 	| 'about to enter'
-	| 'entering' identifier location
+	| 'entering' determiner location
 	| 'nearby'
 	| 'leaving'
-	| 'leaving' identifier location
-	| 'approaching' identifier location
+	| 'leaving' determiner location
+	| 'approaching' determiner location
 	| 'leaving for work'
 	| 'ready to go to work'
 	| 'ready to leave'
@@ -665,10 +670,10 @@ entity_STATE: 'home'
 	| 'looking for it'
 	| 'not'
 	| 'done'
-	| 'done with' MEAL
+	| 'done with' meal_
 	| 'finished' activity
 	| 'available'
-	| 'beginning to overuse' UTILITY
+	| 'beginning to overuse' utility_
 	| 'late for work'
 	| 'in need of a cab'
 	| 'due'
@@ -682,14 +687,14 @@ entity_STATE: 'home'
 	| 'having company over'
     ;
 
-ENVIRONMENT_fact: 'it is' ENVIRONMENT_STATE
-	| 'it is not' ENVIRONMENT_STATE
+environment_fact: 'it is' environment_state
+	| 'it is not' environment_state
     ;
-ENVIRONMENT_STATE: CLOCK_TIME
+environment_state: CLOCK_TIME
 	| 'after' CLOCK_TIME
 	| 'before' CLOCK_TIME
-	| 'below' DEGREES_F 'degrees Fahrenheit'
-	| 'below' DEGREES_C 'degrees Celsius'
+	| 'below' degrees_f 'degrees Fahrenheit'
+	| 'below' degrees_c 'degrees Celsius'
 	| 'cool enough'
 	| 'warm enough'
 	| 'too warm'
@@ -719,32 +724,32 @@ ENVIRONMENT_STATE: CLOCK_TIME
 	| 'breakfast'
     ;
 
-update_fact: 'there are' identifier PLURAL_UPDATES
-	| 'there are' identifier PLURAL_UPDATES 'from' entity
-	| 'there are' identifier PLURAL_UPDATES 'from' ONLINE_SERVICE
-	| 'there are' identifier PLURAL_UPDATES 'from work'
-	| 'there is' identifier SINGULAR_UPDATE
+update_fact: 'there are' determiner plural_updates
+	| 'there are' determiner plural_updates 'from' entity
+	| 'there are' determiner plural_updates 'from' online_service
+	| 'there are' determiner plural_updates 'from work'
+	| 'there is' determiner singular_update
 	| 'there is anything'
-	| 'there is' identifier SINGULAR_UPDATE 'from' entity
+	| 'there is' determiner singular_update 'from' entity
 	| 'there is anything from' entity
-	| 'there is' identifier SINGULAR_UPDATE 'from' ONLINE_SERVICE
-	| 'there is anything from' ONLINE_SERVICE
-	| 'there is' identifier SINGULAR_UPDATE 'from work'
+	| 'there is' determiner singular_update 'from' online_service
+	| 'there is anything from' online_service
+	| 'there is' determiner singular_update 'from work'
 	| 'there is anything from work'
-	| 'there are no' PLURAL_UPDATES
-	| 'there are no' PLURAL_UPDATES 'from' entity
-	| 'there are no' PLURAL_UPDATES 'from' ONLINE_SERVICE
-	| 'there are no' PLURAL_UPDATES 'from work'
-	| 'there is no' SINGULAR_UPDATE
+	| 'there are no' plural_updates
+	| 'there are no' plural_updates 'from' entity
+	| 'there are no' plural_updates 'from' online_service
+	| 'there are no' plural_updates 'from work'
+	| 'there is no' singular_update
 	| 'there is nothing'
-	| 'there is no' SINGULAR_UPDATE 'from' entity
+	| 'there is no' singular_update 'from' entity
 	| 'there is nothing from' entity
-	| 'there is no' SINGULAR_UPDATE 'from' ONLINE_SERVICE
-	| 'there is nothing from' ONLINE_SERVICE
-	| 'there is no' SINGULAR_UPDATE 'from work'
+	| 'there is no' singular_update 'from' online_service
+	| 'there is nothing from' online_service
+	| 'there is no' singular_update 'from work'
 	| 'there is nothing from work'
     ;
-PLURAL_UPDATES: 'transportation alerts'
+plural_updates: 'transportation alerts'
 	| 'updates on the forecast'
 	| 'weather alerts'
 	| 'emails'
@@ -759,10 +764,10 @@ PLURAL_UPDATES: 'transportation alerts'
 	| 'alerts'
 	| 'notifications'
 	| 'updates'
-	| ONLINE_SERVICE 'messages'
-	| 'new' ONLINE_SERVICE 'messages'
-	| ONLINE_SERVICE 'alerts'
-	| ONLINE_SERVICE 'updates'
+	| online_service 'messages'
+	| 'new' online_service 'messages'
+	| online_service 'alerts'
+	| online_service 'updates'
 	| 'social media alerts'
 	| 'social media updates'
 	| 'news alerts'
@@ -774,7 +779,7 @@ PLURAL_UPDATES: 'transportation alerts'
 	| 'suggestions'
 	| 'things'
     ;
-SINGULAR_UPDATE: 'message'
+singular_update: 'message'
 	| 'new message'
 	| 'text message'
 	| 'new text message'
@@ -789,7 +794,7 @@ SINGULAR_UPDATE: 'message'
 	| 'voicemail'
 	| 'physical mail'
     ;
-ONLINE_SERVICE: 'Facebook'
+online_service: 'Facebook'
 	| 'Twitter'
 	| 'YouTube'
 	| 'Reddit'
@@ -814,12 +819,12 @@ ONLINE_SERVICE: 'Facebook'
 	| 'my email'
     ;
 
-object_fact: identifier objectS RELATION object_state ;
-objectS: object
-	| object 'and' ADDITIONAL_object
-	| object 'or' ADDITIONAL_object
+object_fact: determiner objects relation_ object_state ;
+objects: object
+	| object 'and' additional_object
+	| object 'or' additional_object
     ;
-ADDITIONAL_object: objectS ;
+additional_object: objects ;
 object: 'appliance'
 	| 'appliances'
 	| 'plumbing'
@@ -854,7 +859,7 @@ object: 'appliance'
 	| 'objects'
 	| location
 	| 'motion sensors'
-	| PLAYLIST
+	| playlist_
 	| 'TV'
 	| 'game'
 	| 'blinds'
@@ -918,12 +923,12 @@ object: 'appliance'
 	| 'EEG headset'
 	| 'blood pressure monitor'
 	| 'heart rate monitor'
-	| MUSIC
-	| SONG
-	| ALBUM
+	| music_
+	| song_
+	| album_
 	| 'lock'
 	| 'locks'
-	| TELEVISION
+	| television_
 	| 'temperature'
 	| 'temperatures'
 	| 'recipe'
@@ -932,7 +937,7 @@ object: 'appliance'
 	| 'news'
 	| 'local news'
 	| 'world news'
-	| ONLINE_SERVICE
+	| online_service
 	| 'results'
 	| 'command'
 	| 'appointment'
@@ -958,7 +963,7 @@ object: 'appliance'
 	| 'video library'
 	| 'media library'
     ;
-RELATION: 'is'
+relation_: 'is'
 	| 'is not'
 	| 'are'
 	| 'are not'
@@ -1020,10 +1025,10 @@ object_state: 'in use'
 	| 'running low'
 	| 'too high'
 	| 'too low'
-	| 'below' DEGREES_C 'degrees Celsius'
-	| 'below' DEGREES_F 'degrees Fahrenheit'
-	| 'above' DEGREES_C 'degrees Celsius'
-	| 'above' DEGREES_F 'degrees Fahrenheit'
+	| 'below' degrees_c 'degrees Celsius'
+	| 'below' degrees_f 'degrees Fahrenheit'
+	| 'above' degrees_c 'degrees Celsius'
+	| 'above' degrees_f 'degrees Fahrenheit'
 	| 'nice'
 	| 'good'
 	| 'bad'
@@ -1041,7 +1046,7 @@ object_state: 'in use'
 	| 'ringing'
 	| 'bright'
 	| 'dim'
-	| COLOR
+	| color_
 	| 'enabled'
 	| 'disabled'
 	| 'tailored to my needs'
@@ -1071,10 +1076,10 @@ object_state: 'in use'
 	| 'dirty'
 	| 'updated'
 	| 'scheduled'
-	| COLOR
-	| POWER
-	| VOLUME
-	| TEMPERATURE
+	| color_
+	| power_
+	| volume_
+	| temperature_
 	| 'my preferred settings'
 	| 'a predefined setting'
 	| 'secure'
@@ -1084,12 +1089,12 @@ object_state: 'in use'
 	| NUMBER
     ;
 
-DATA_fact: identifier DATA_SOURCES RELATION DATA_STATE ;
-DATA_SOURCES: DATA
-	| DATA 'and' ADDITIONAL_DATA
+data_fact: determiner data_sources relation_ data_state ;
+data_sources: data_
+	| data_ 'and' additional_data
     ;
-ADDITIONAL_DATA: DATA_SOURCES ;
-DATA: 'energy consumption'
+additional_data: data_sources ;
+data_: 'energy consumption'
 	| 'electricity usage'
 	| 'water usage'
 	| 'gas usage'
@@ -1116,12 +1121,12 @@ DATA: 'energy consumption'
 	| 'weather'
 	| 'traffic conditions'
 	| 'road conditions'
-	| UTILITY 'bill'
+	| utility_ 'bill'
 	| 'costs'
 	| 'currently available ingredients'
 	| 'mood'
-	| 'top news on' ONLINE_SERVICE
-	| 'trending content on' ONLINE_SERVICE
+	| 'top news on' online_service
+	| 'trending content on' online_service
 	| 'preferences'
 	| 'schedule'
 	| 'to-do list'
@@ -1139,7 +1144,7 @@ DATA: 'energy consumption'
 	| 'things'
 	| 'anything'
     ;
-DATA_STATE: 'unusually high'
+data_state: 'unusually high'
 	| 'high'
 	| 'low'
 	| 'good'
@@ -1166,7 +1171,7 @@ DATA_STATE: 'unusually high'
 	| 'free'
 	| 'at its limit'
     ;
-PERSONAL_ORGANIZERS: 'calendar'
+personal_organizers: 'calendar'
 	| 'Google Calendar'
 	| 'schedule'
 	| 'to-do list'
@@ -1176,32 +1181,32 @@ PERSONAL_ORGANIZERS: 'calendar'
 	| 'preferences'
     ;
 
-// EVENTS - when, if, whenever, as, as soon as, --- must be followed by location - a room, the garage, the yard, the kitchen, the house the home, my home, for school, for work, school, work, at school, at work, at the door, the door, in, out, away, from outside, etc -- also time -- today, in the winter, at night
+// events_ - when, if, whenever, as, as soon as, --- must be followed by location - a room, the garage, the yard, the kitchen, the house the home, my home, for school, for work, school, work, at school, at work, at the door, the door, in, out, away, from outside, etc -- also time -- today, in the winter, at night
 
-EVENT: entity_EVENT
-	| ENVIRONMENT_EVENT
-	| UPDATE_EVENT
-	| object_EVENT
-	| DATA_EVENT
+event_: entity_event
+	| environment_event
+	| update_event
+	| object_event
+	| data_event
     ;
-entity_EVENT: entity_CONJUGATION_1 entity_EVENT_CONJUGATION_1
-	| entity_CONJUGATION_2 entity_EVENT_CONJUGATION_2
+entity_event: entity_conjugation_1 entity_event_conjugation_1
+	| entity_conjugation_2 entity_event_conjugation_2
     ;
-entity_CONJUGATION_1: 'I'
+entity_conjugation_1: 'I'
 	| 'people'
 	| 'they'
-	| identifier 'kids'
-	| identifier 'children'
+	| determiner 'kids'
+	| determiner 'children'
 	| 'we'
 	| 'my pets'
 	| 'my sisters'
 	| 'my brothers'
 	| 'you'
-	| identifier 'friends'
+	| determiner 'friends'
 	| 'my parents'
 	| 'my in-laws'
     ;
-entity_EVENT_CONJUGATION_1: 'approach'
+entity_event_conjugation_1: 'approach'
 	| 'enter'
 	| 'leave'
 	| 'return'
@@ -1242,27 +1247,27 @@ entity_EVENT_CONJUGATION_1: 'approach'
 	| 'tell you to'
 //	| 'send' entity 'a message saying that' <textbox('custom')>
 //	| 'say' <textbox('custom')>
-	| 'consume' identifier objectS
+	| 'consume' determiner objects
 	| 'eat'
-	| 'eat' MEAL
+	| 'eat' meal_
 	| 'eat' NUMBER 'calories'
 	| 'exercise'
 	| 'forget'
-	| 'get' identifier SINGULAR_UPDATE
-	| 'get' identifier PLURAL_UPDATES
-	| 'receive' identifier PLURAL_UPDATES
-	| 'receive'  identifier SINGULAR_UPDATE
-	| 'lose' identifier nouns
-	| 'lost' identifier nouns
-	| 'accidentally leave' identifier objectS object_state
+	| 'get' determiner singular_update
+	| 'get' determiner plural_updates
+	| 'receive' determiner plural_updates
+	| 'receive'  determiner singular_update
+	| 'lose' determiner nouns
+	| 'lost' determiner nouns
+	| 'accidentally leave' determiner objects object_state
 	| 'finish' activity
 	| 'start' activity
-	| 'finish' MEAL
-	| 'start' MEAL
+	| 'finish' meal_
+	| 'start' meal_
 	| 'access the Internet'
 	| 'put' entity 'out in the yard'
-	| 'cut back on' DATA_SOURCES 'by' NUMBER UNITS
-	| 'cut back on' activity 'by' NUMBER UNITS
+	| 'cut back on' data_sources 'by' NUMBER units_
+	| 'cut back on' activity 'by' NUMBER units_
 	| 'gain more than' NUMBER 'pounds of fat'
 	| 'walk' NUMBER 'steps'
 	| simple_actions
@@ -1274,16 +1279,16 @@ entity_EVENT_CONJUGATION_1: 'approach'
 	| 'do something else'
 	| 'go grocery shopping'
 	| 'go to the store'
-	| 'pick up food for' MEAL
+	| 'pick up food for' meal_
 	| 'maintain my current weight'
-	| 'listen to' identifier MUSIC
-	| 'watch' identifier TELEVISION
-	| 'have' identifier objectS
+	| 'listen to' determiner music_
+	| 'watch' determiner television_
+	| 'have' determiner objects
 	| 'get gas'
 	| 'do something healthy'
     ;
 
-entity_CONJUGATION_2: 'my husband'
+entity_conjugation_2: 'my husband'
 	| 'my wife'
 	| 'my boyfriend'
 	| 'my girlfriend'
@@ -1295,11 +1300,11 @@ entity_CONJUGATION_2: 'my husband'
 	| 'someone else'
 	| 'no one'
 	| 'nobody'
-	| identifier 'stranger'
+	| determiner 'stranger'
 	| 'an unidentified person'
 	| 'anyone'
-	| identifier 'dog'
-	| identifier 'cat'
+	| determiner 'dog'
+	| determiner 'cat'
 	| 'he'
 	| 'she'
 	| 'my pet'
@@ -1308,7 +1313,7 @@ entity_CONJUGATION_2: 'my husband'
 	| 'everyone'
 //	| <textbox('custom name')>
     ;
-entity_EVENT_CONJUGATION_2: 'approaches'
+entity_event_conjugation_2: 'approaches'
 	| 'enters'
 	| 'leaves'
 	| 'returns'
@@ -1348,34 +1353,34 @@ entity_EVENT_CONJUGATION_2: 'approaches'
 	| 'tells you to'
 //	| 'sends you a message saying that' <textbox('custom')>
 //	| 'says' <textbox('custom')>
-	| 'consumes' identifier objectS
+	| 'consumes' determiner objects
 	| 'eats'
-	| 'eats' MEAL
+	| 'eats' meal_
 	| 'eats' NUMBER 'calories'
 	| 'exercises'
 	| 'forgets'
-	| 'gets' identifier SINGULAR_UPDATE
-	| 'gets' identifier PLURAL_UPDATES
-	| 'receives' identifier PLURAL_UPDATES
-	| 'receives' identifier SINGULAR_UPDATE
-	| 'loses' identifier nouns
-	| 'lost' identifier nouns
-	| 'accidentally leaves' identifier objectS object_state
+	| 'gets' determiner singular_update
+	| 'gets' determiner plural_updates
+	| 'receives' determiner plural_updates
+	| 'receives' determiner singular_update
+	| 'loses' determiner nouns
+	| 'lost' determiner nouns
+	| 'accidentally leaves' determiner objects object_state
 	| 'finishes' activity
 	| 'starts' activity
-	| 'finishes' MEAL
-	| 'starts' MEAL
+	| 'finishes' meal_
+	| 'starts' meal_
 	| 'accesses the Internet'
 	| 'puts' entity 'out in the yard'
-	| 'cuts back on' DATA_SOURCES 'by' NUMBER UNITS
-	| 'cuts back on' activity 'by' NUMBER UNITS
+	| 'cuts back on' data_sources 'by' NUMBER units_
+	| 'cuts back on' activity 'by' NUMBER units_
 	| 'gains more than' NUMBER 'pounds of fat'
 	| 'walks' NUMBER 'steps'
-	| 'locks' identifier nouns
-	| 'opens' identifier nouns
-	| 'closes' identifier nouns
-	| 'turns on' identifier nouns
-	| 'turns off' identifier nouns
+	| 'locks' determiner nouns
+	| 'opens' determiner nouns
+	| 'closes' determiner nouns
+	| 'turns on' determiner nouns
+	| 'turns off' determiner nouns
 	| 'knocks'
 	| 'wanders off'
 	| 'does not respond'
@@ -1385,48 +1390,48 @@ entity_EVENT_CONJUGATION_2: 'approaches'
 	| 'does something else'
 	| 'goes grocery shopping'
 	| 'goes to the store'
-	| 'picks up food for' MEAL
+	| 'picks up food for' meal_
 	| 'maintains their current weight'
-	| 'listens to' identifier MUSIC
-	| 'watches' identifier TELEVISION
-	| 'has' identifier objectS
+	| 'listens to' determiner music_
+	| 'watches' determiner television_
+	| 'has' determiner objects
 	| 'gets gas'
 	| 'does something healthy'
     ;
 
-ENVIRONMENT_EVENT: 'it' ENVIRONMENT_CHANGE ;
-ENVIRONMENT_CHANGE: 'gets dark'
+environment_event: 'it' environment_change ;
+environment_change: 'gets dark'
 	| 'starts to get dark'
 	| 'reaches that temperature'
 	| 'is happening'
-	| 'gets below' DEGREES_C 'degrees Celsius'
-	| 'gets below' DEGREES_F 'degrees Fahrenheit'
-	| 'drops below' DEGREES_C 'degrees Celsius'
-	| 'drops below' DEGREES_F 'degrees Fahrenheit'
-	| 'falls below' DEGREES_F 'degrees Fahrenheit'
-	| 'falls below' DEGREES_C 'degrees Celsius'
-	| 'goes above' DEGREES_F 'degrees Fahrenheit'
-	| 'goes above' DEGREES_C 'degrees Celsius'
+	| 'gets below' degrees_c 'degrees Celsius'
+	| 'gets below' degrees_f 'degrees Fahrenheit'
+	| 'drops below' degrees_c 'degrees Celsius'
+	| 'drops below' degrees_f 'degrees Fahrenheit'
+	| 'falls below' degrees_f 'degrees Fahrenheit'
+	| 'falls below' degrees_c 'degrees Celsius'
+	| 'goes above' degrees_f 'degrees Fahrenheit'
+	| 'goes above' degrees_c 'degrees Celsius'
 	| 'gets too cold'
 	| 'gets too hot'
     ;
 
-UPDATE_EVENT: 'I have' UPDATES
+update_event: 'I have' UPDATES
 	| 'they have' UPDATES
-	| identifier 'kids have' UPDATES
+	| determiner 'kids have' UPDATES
 	| 'we have' UPDATES
 	| 'my boyfriend has' UPDATES
 	| 'my husband has' UPDATES
 	| 'my sister has' UPDATES
 	| 'somebody has' UPDATES
     ;
-UPDATES: SINGULAR_UPDATE
-	| PLURAL_UPDATES
+UPDATES: singular_update
+	| plural_updates
 	| NUMBER 'minutes until the bus arrives'
     ;
 
-object_EVENT: identifier objectS object_BEHAVIOR
-	| identifier SINGULAR_UPDATE object_BEHAVIOR 
+object_event: determiner objects object_BEHAVIOR
+	| determiner singular_update object_BEHAVIOR 
     ;
 object_BEHAVIOR: 'goes off'
 	| 'go off'
@@ -1448,7 +1453,7 @@ object_BEHAVIOR: 'goes off'
 	| 'starts'
 	| 'ring'
 	| 'rings'
-	| ENVIRONMENT_EVENT
+	| environment_event
 	| 'turn on'
 	| 'turn off'
 	| 'turns on'
@@ -1466,9 +1471,9 @@ object_BEHAVIOR: 'goes off'
 	| 'stays' object_state
     ;
 
-DATA_EVENT: identifier DATA_SOURCES DATA_BEHAVIOR ;
-DATA_BEHAVIOR: 'rises above' PERCENT
-	| 'goes over' NUMBER UNITS
+data_event: determiner data_sources data_behavior ;
+data_behavior: 'rises above' percent_
+	| 'goes over' NUMBER units_
 	| 'gets high'
 	| 'gets low'
 	| 'gets unusually high'
@@ -1484,8 +1489,8 @@ DATA_BEHAVIOR: 'rises above' PERCENT
 	| 'gets worse'
 	| 'varies an unusual amount'
 	| 'reaches its limit'
-	| 'rise above' PERCENT
-	| 'go over' NUMBER UNITS
+	| 'rise above' percent_
+	| 'go over' NUMBER units_
 	| 'get high'
 	| 'get low'
 	| 'get unusually high'
@@ -1508,68 +1513,68 @@ DATA_BEHAVIOR: 'rises above' PERCENT
 question_phrase: QUESTION
 	| QUESTION dependent_clauses
     ;
-QUESTION: QUESTION_ABOUT_entity
-	| QUESTION_ABOUT_object
-	| QUESTION_ABOUT_UPDATE
-	| QUESTION_ABOUT_ENVIRONMENT
-	| QUESTION_ABOUT_DATA
-	| HOW_QUESTION
-	| WHAT_QUESTION
-	| WHEN_QUESTION
-	| WHERE_QUESTION
-	| WHO_QUESTION
+QUESTION: question_about_entity
+	| question_about_object
+	| question_about_update
+	| question_about_environment
+	| question_about_data
+	| how_question
+	| what_question
+	| when_question
+	| where_question
+	| who_question
     ;
-QUESTION_ABOUT_entity: 'are' entity entity_STATE
-	| 'is' entity entity_STATE
-	| 'am I' entity_STATE
+question_about_entity: 'are' entity entity_state
+	| 'is' entity entity_state
+	| 'am I' entity_state
     ;
-QUESTION_ABOUT_ENVIRONMENT: 'is it' ENVIRONMENT_STATE ;
-QUESTION_ABOUT_UPDATE: 'are there' identifier PLURAL_UPDATES
-	| 'are there' identifier PLURAL_UPDATES 'from' entity
-	| 'are there' identifier PLURAL_UPDATES 'from work'
-	| 'are there' identifier PLURAL_UPDATES 'from' ONLINE_SERVICE
-	| 'is there' identifier SINGULAR_UPDATE
-	| 'is there' identifier SINGULAR_UPDATE 'from' entity
-	| 'is there' identifier SINGULAR_UPDATE 'from work'
-	| 'is there' identifier SINGULAR_UPDATE 'from' ONLINE_SERVICE
+question_about_environment: 'is it' environment_state ;
+question_about_update: 'are there' determiner plural_updates
+	| 'are there' determiner plural_updates 'from' entity
+	| 'are there' determiner plural_updates 'from work'
+	| 'are there' determiner plural_updates 'from' online_service
+	| 'is there' determiner singular_update
+	| 'is there' determiner singular_update 'from' entity
+	| 'is there' determiner singular_update 'from work'
+	| 'is there' determiner singular_update 'from' online_service
     ;
-QUESTION_ABOUT_object: 'are' identifier objectS object_state
-	| 'is' identifier objectS object_state
-	| 'have' identifier objectS 'been' object_state
-	| 'has' identifier objectS 'been' object_state
-	| 'was' identifier objectS object_state
-	| 'were' identifier objectS object_state
-	| 'are' identifier objectS 'forecast to be' object_state
-	| 'is' identifier objectS 'forecast to be' object_state
+question_about_object: 'are' determiner objects object_state
+	| 'is' determiner objects object_state
+	| 'have' determiner objects 'been' object_state
+	| 'has' determiner objects 'been' object_state
+	| 'was' determiner objects object_state
+	| 'were' determiner objects object_state
+	| 'are' determiner objects 'forecast to be' object_state
+	| 'is' determiner objects 'forecast to be' object_state
     ;
-QUESTION_ABOUT_DATA: 'is' identifier DATA_SOURCES DATA_STATE
-	| 'are' identifier DATA_SOURCES DATA_STATE 
+question_about_data: 'is' determiner data_sources data_state
+	| 'are' determiner data_sources data_state 
     ;
-HOW_QUESTION: 'how anxious am I'
+how_question: 'how anxious am I'
 	| 'how dirty is the house'
 	| 'how hot is it'
-	| 'how am' HOW_AM
-	| 'how high' HOW_HIGH
-	| 'how is' HOW_IS
-	| 'how did' HOW_DID
-	| 'how well' HOW_WELL
-	| 'how are' HOW_ARE
-	| 'how can' entity HOW_CAN_entity
-	| 'how long' HOW_LONG
-	| 'how many' HOW_MANY
-	| 'how much' HOW_MUCH
-	| 'how far' HOW_FAR
-	| 'how fast' HOW_FAST
+	| 'how am' how_am
+	| 'how high' how_high
+	| 'how is' how_is
+	| 'how did' how_did
+	| 'how well' how_well
+	| 'how are' how_are
+	| 'how can' entity how_can_entity
+	| 'how long' how_long
+	| 'how many' how_many
+	| 'how much' how_much
+	| 'how far' how_far
+	| 'how fast' how_fast
     ;
-HOW_AM: entity 'feeling'
+how_am: entity 'feeling'
 	| entity 'doing'
 	| entity
     ;
-HOW_HIGH: 'is' identifier 'blood sugar'
-	| 'is' identifier 'blood pressure'
-	| 'is' identifier 'heart rate'
+how_high: 'is' determiner 'blood sugar'
+	| 'is' determiner 'blood pressure'
+	| 'is' determiner 'heart rate'
     ;
-HOW_IS: 'the traffic'
+how_is: 'the traffic'
 	| 'the weather'
 	| 'my blood sugar'
 	| 'my exercise program going'
@@ -1579,40 +1584,40 @@ HOW_IS: 'the traffic'
 	| 'the stock market'
 	| entity
     ;
-HOW_DID: 'I sleep last night' ;
-HOW_WELL: 'have I been working out'
+how_did: 'I sleep last night' ;
+how_well: 'have I been working out'
 	| 'have I been sleeping'
 	| 'did I sleep last night'
     ;
-HOW_ARE: 'my vitals'
+how_are: 'my vitals'
 	| 'you'
 	| entity
     ;
-HOW_CAN_entity: 'reduce' identifier 'utility bills'
+how_can_entity: 'reduce' determiner 'utility bills'
 	| 'conserve energy'
 	| 'conserve water'
 	| 'conserve gas'
 	| 'conserve electricity'
 	| 'conserve resources'
-	| 'reduce' identifier 'utility usage'
+	| 'reduce' determiner 'utility usage'
 	| 'be healthier'
 	| 'cook a particular meal'
-	| 'improve' identifier 'sleeping habits'
-	| 'reduce' identifier 'costs'
+	| 'improve' determiner 'sleeping habits'
+	| 'reduce' determiner 'costs'
 	| 'save money on utilities'
     ;
-HOW_LONG: 'have my washer and dryer been running'
+how_long: 'have my washer and dryer been running'
 	| 'long will the commute be'
     ;
-HOW_MANY: 'calories have I burned'
+how_many: 'calories have I burned'
 	| 'calories do I need to eat' //<today> <after my exercise routine>
 	| 'minutes do I need to exercise' GOAL_DEPENDENCY//<on my elliptical> <in order to eat three pieces of pepp pizza>
 	| 'steps have I taken'
 	| 'steps do I need to take' GOAL_DEPENDENCY //<if I eat 1500 calories> <and want to maintain my current weight>
     ;
-HOW_MUCH: 'do I weigh'
+how_much: 'do I weigh'
 	| 'am I exercising right now'
-	| 'energy' RELATION identifier objectS 'consuming'
+	| 'energy' relation_ determiner objects 'consuming'
 	| 'exercise did' entity 'do'
 	| 'exercise have I done'
 	| 'exercise has' entity 'done'
@@ -1625,15 +1630,14 @@ HOW_MUCH: 'do I weigh'
 	| 'does gas cost'
 	| 'does water cost'
 	| 'money can I save if I' direct_action
-	| 'money would I save if I' EVENT
+	| 'money would I save if I' event_
 	| 'money is in my bank account'
-	| 'will my bills be' TIME
-	| 'am I using of each utility'
+	| 'will my bills be' TIME	| 'am I using of each utility'
 	| 'will my electricity cost' TIME
 	| 'does each utility cost'
-	| 'energy do' identifier objectS 'consume'
-	| 'energy does' identifier objectS 'consume'
-	| 'electricity' RELATION identifier objectS 'consuming'
+	| 'energy do' determiner objects 'consume'
+	| 'energy does' determiner objects 'consume'
+	| 'electricity' relation_ determiner objects 'consuming'
 	| 'electricity have appliances used'
 	| 'electricity am I using'
 	| 'electricity do' entity 'consume'
@@ -1650,78 +1654,78 @@ HOW_MUCH: 'do I weigh'
 	| 'am I paying for gas'
 	| 'am I paying for utilities'
     ;
-HOW_FAR: 'did' entity 'travel' ;
-HOW_FAST: 'is' identifier 'heart beating'
-	| 'is' identifier 'car going'
+how_far: 'did' entity 'travel' ;
+how_fast: 'is' determiner 'heart beating'
+	| 'is' determiner 'car going'
     ;
-WHAT_QUESTION: 'what' objectS RELATION object_state
-	| 'what is' identifier DATA_SOURCES
-	| 'what are' identifier DATA_SOURCES
+what_question: 'what' objects relation_ object_state
+	| 'what is' determiner data_sources
+	| 'what are' determiner data_sources
 	| 'what color are the lights'
 	| 'what color is the light'
-	| 'what is new on' ONLINE_SERVICE
+	| 'what is new on' online_service
 	| 'what is new on TV'
     ;
-WHEN_QUESTION: 'when do' entity 'need to' entity_EVENT
-	| 'when does' entity 'need to' entity_EVENT
-	| 'when is' entity entity_STATE
-	| 'when are' entity entity_STATE
-	| 'when will' entity entity_EVENT
-	| 'when will' entity 'be' entity_STATE
-	| 'when did' entity EVENT
+when_question: 'when do' entity 'need to' entity_event
+	| 'when does' entity 'need to' entity_event
+	| 'when is' entity entity_state
+	| 'when are' entity entity_state
+	| 'when will' entity entity_event
+	| 'when will' entity 'be' entity_state
+	| 'when did' entity event_
 	| 'when was' entity entity_fact
 	| 'when were' entity entity_fact
-	| 'when do' identifier objectS 'need to' object_EVENT
-	| 'when does' identifier objectS 'need to' object_EVENT
-	| 'when is' identifier objectS object_state
-	| 'when are' identifier objectS object_state
-	| 'when will' identifier objectS object_EVENT
-	| 'when will' identifier objectS 'be' object_state
-	| 'when did' identifier objectS object_EVENT
-	| 'when was' identifier objectS object_fact
-	| 'when were' identifier objectS object_fact
+	| 'when do' determiner objects 'need to' object_event
+	| 'when does' determiner objects 'need to' object_event
+	| 'when is' determiner objects object_state
+	| 'when are' determiner objects object_state
+	| 'when will' determiner objects object_event
+	| 'when will' determiner objects 'be' object_state
+	| 'when did' determiner objects object_event
+	| 'when was' determiner objects object_fact
+	| 'when were' determiner objects object_fact
     ;
-WHERE_QUESTION: 'where are' entity
+where_question: 'where are' entity
 	| 'where is' entity
 	| 'where was' entity
 	| 'where were' entity
-	| 'where is' identifier objectS
+	| 'where is' determiner objects
     ;
-WHO_QUESTION: 'who is' entity_STATE
+who_question: 'who is' entity_state
 	| 'who are my new messages from'
 	| 'who has a birthday'
     ;
 
 
 // INDIRECT QUESTIONS
-INDIRECT_REFERENCES: INDIRECT_REFERENCE_PHRASE
-	| INDIRECT_REFERENCE_PHRASE 'and' ADDITIONAL_INDIRECT_QUESTION
+indirect_references: indirect_reference_phrase
+	| indirect_reference_phrase 'and' additional_indirect_question
     ;
-ADDITIONAL_INDIRECT_QUESTION: INDIRECT_REFERENCES ;
-INDIRECT_REFERENCE_PHRASE: INDIRECT_REFERENCE
-	| INDIRECT_REFERENCE dependent_clauses
+additional_indirect_question: indirect_references ;
+indirect_reference_phrase: indirect_reference
+	| indirect_reference dependent_clauses
     ;
-INDIRECT_REFERENCE: 'what' OPTIONS_FOR_WHAT
-	| 'what' identifier OPTIONS_FOR_WHAT_identifier
-	| 'what the' OPTIONS_FOR_WHAT_THE
-	| 'what I' OPTIONS_FOR_WHAT_I
-	| 'what is' OPTIONS_FOR_WHAT_IS
-	| 'how' OPTIONS_FOR_HOW
+indirect_reference: 'what' options_for_what
+	| 'what' determiner options_for_what_determiner
+	| 'what the' options_for_what_the
+	| 'what I' options_for_what_I
+	| 'what is' options_for_what_is
+	| 'how' options_for_how
 	| 'how I'
-	| 'how long' OPTIONS_FOR_HOW_LONG
-	| 'how many' OPTIONS_FOR_HOW_MANY
-	| 'how much' OPTIONS_FOR_HOW_MUCH
-	| 'how much electricity' OPTIONS_FOR_HOW_MUCH_ELECTRICITY 
-	| 'how much I' OPTIONS_FOR_HOW_MUCH_I
-	| 'how to' OPTIONS_FOR_HOW_TO 
-	| 'when' WHEN_REFERENCE
-	| 'where' WHERE_REFERENCE
-	| 'who' WHO_REFERENCE
-	| 'whether' WHETHER_REFERENCE
+	| 'how long' options_for_how_long
+	| 'how many' OPTIONS_FOR_how_many
+	| 'how much' options_for_how_much
+	| 'how much electricity' options_for_how_much_electricity 
+	| 'how much I' options_for_how_much_I
+	| 'how to' options_for_how_to 
+	| 'when' when_reference
+	| 'where' where_reference
+	| 'who' who_reference
+	| 'whether' whether_reference
     ;
-OPTIONS_FOR_WHAT: object RELATION object_state ;
-OPTIONS_FOR_WHAT_identifier: DATA_SOURCES 'is'
-	| DATA_SOURCES 'is for' entity
+options_for_what: object relation_ object_state ;
+options_for_what_determiner: data_sources 'is'
+	| data_sources 'is for' entity
 	| 'exercise program is'
 	| 'mood is'
 	| entity 'does during the day'
@@ -1729,7 +1733,7 @@ OPTIONS_FOR_WHAT_identifier: DATA_SOURCES 'is'
 	| entity 'is doing'
 	| entity 'are doing'
     ;
-OPTIONS_FOR_WHAT_THE: 'forecast is'
+options_for_what_the: 'forecast is'
 	| 'humidity is'
 	| 'perfect temperature is for my body temperature'
 	| 'temperature is'
@@ -1737,7 +1741,7 @@ OPTIONS_FOR_WHAT_THE: 'forecast is'
 	| 'weather is going to be like'
 	| 'weather will be like'
     ;
-OPTIONS_FOR_WHAT_I: 'weigh'
+options_for_what_I: 'weigh'
 	| 'am doing'
 	| 'can cook'
 	| 'eat'
@@ -1749,13 +1753,13 @@ OPTIONS_FOR_WHAT_I: 'weigh'
 	| 'want'
 	| 'watch on TV'
     ;
-OPTIONS_FOR_WHAT_IS: 'causing illness'
+options_for_what_is: 'causing illness'
 	| 'in my refrigerator for me to eat'
 	| 'in the refrigerator'
-	| 'new on' ONLINE_SERVICE
+	| 'new on' online_service
 	| 'out of stock'
     ;
-OPTIONS_FOR_HOW: 'anxious I am feeling right now'
+options_for_how: 'anxious I am feeling right now'
 	| 'cold and hot it is'
 	| 'dirty the house is'
 	| 'fast it is going'
@@ -1768,14 +1772,14 @@ OPTIONS_FOR_HOW: 'anxious I am feeling right now'
 	| 'well I have been working out the last week'
 	| 'well I sleep'
     ;
-OPTIONS_FOR_HOW_I: 'am feeling'
+options_for_how_I: 'am feeling'
 	| 'can reduce my utility bills'
 	| 'feel'
 	| 'slept last night'
 	| 'long I have left on my washer and dryer'
     ;
-OPTIONS_FOR_HOW_LONG: 'the commute will be' ;
-OPTIONS_FOR_HOW_MANY: 'calories I\'ve burned'
+options_for_how_long: 'the commute will be' ;
+OPTIONS_FOR_how_many: 'calories I\'ve burned'
 	| 'calories I need to eat today after my exercise routine'
 	| 'minutes I need to exercise on my elliptical to eat three pieces of pepperoni pizza'
 	| 'steps I\'ve taken'
@@ -1783,7 +1787,7 @@ OPTIONS_FOR_HOW_MANY: 'calories I\'ve burned'
 	| 'steps I\'ve taken through my day'
 	| 'steps I must take today if I eat 1500 calories and want to maintain my current weight'
     ;
-OPTIONS_FOR_HOW_MUCH: 'am I exercising right now'
+options_for_how_much: 'am I exercising right now'
 	| 'are they currently consuming'
 	| 'energy'
 	| 'exercise I did this week'
@@ -1798,7 +1802,7 @@ OPTIONS_FOR_HOW_MUCH: 'am I exercising right now'
 	| 'water and electricity I am using'
 	| 'water and gas that I am using'
     ;
-OPTIONS_FOR_HOW_MUCH_ELECTRICITY: 'gas and water is being consumed currently/is currently in use'
+options_for_how_much_electricity: 'gas and water is being consumed currently/is currently in use'
 	| 'water and gas cost'
 	| 'all the appliances consume'
 	| 'they are currently using'
@@ -1810,7 +1814,7 @@ OPTIONS_FOR_HOW_MUCH_ELECTRICITY: 'gas and water is being consumed currently/is 
 	| 'I used'
 	| 'is being used'
     ;
-OPTIONS_FOR_HOW_MUCH_I: 'weigh'
+options_for_how_much_I: 'weigh'
 	| 'am spending every month'
 	| 'could save at slightly reduced levels'
 	| 'currently weigh'
@@ -1819,43 +1823,43 @@ OPTIONS_FOR_HOW_MUCH_I: 'weigh'
 	| 'slept'
 	| 'will be spending at current levels of electricity/heating/etc'
     ;
-OPTIONS_FOR_HOW_TO: 'be healthier'
+options_for_how_to: 'be healthier'
 	| 'clean'
 	| 'cook a certain recipe'
 	| 'improve my sleeping habits'
 	| 'make a particular meal'
 	| 'reduce cost'
-	| 'save money on UTILITY usage in my home'
+	| 'save money on utility_ usage in my home'
     ;
-WHEN_REFERENCE: statements ;
-WHERE_REFERENCE: entity_CONJUGATION_2 'is'
+when_reference: statements ;
+where_reference: entity_conjugation_2 'is'
 	| 'I am'
-	| entity_CONJUGATION_1 'are' 
+	| entity_conjugation_1 'are' 
 	| 'it is'
-	| identifier objectS 'are'
-	| identifier objectS 'is'
+	| determiner objects 'are'
+	| determiner objects 'is'
     ;
-WHO_REFERENCE: 'is' entity_STATE
-	| 'was' entity_STATE
+who_reference: 'is' entity_state
+	| 'was' entity_state
     ;
-WHETHER_REFERENCE: statements ;
+whether_reference: statements ;
 
 //// DEPENDENCY CLAUSES
 
-// WHILE - facts
-WHILE: 'while' factS ;
+// while_ - facts
+while_: 'while' facts ;
 
 // BEFORE if I am not home before dark
-BEFORE: 'before' EVENTS
+BEFORE: 'before' events_
 	| 'before' TIME
-	| NUMBER TIME_UNIT 'before' EVENTS
+	| NUMBER TIME_UNIT 'before' events_
 	| NUMBER TIME_UNIT 'before' TIME
     ;
 
 // AFTER
-AFTER: 'after' EVENTS
+AFTER: 'after' events_
 	| 'after' TIME
-	| NUMBER TIME_UNIT 'after' EVENTS
+	| NUMBER TIME_UNIT 'after' events_
 	| NUMBER TIME_UNIT 'after' TIME
     ;
 
@@ -1865,7 +1869,7 @@ UNTIL: 'until' statements
     ;
 
 // UNLESS - applies to action sets?
-unless: 'unless' statements ;
+UNLESS: 'unless' statements ;
 
 // GOAL DEPENDENCY
 GOAL_DEPENDENCY: 'in order to lose weight'
@@ -1877,11 +1881,11 @@ GOAL_DEPENDENCY: 'in order to lose weight'
     ;
 
 // DESCRIPTION DEPENDENCY (for nouns only)
-DESCRIPTION: 'that' RELATION object_state
+DESCRIPTION: 'that' relation_ object_state
 	| 'that I am in'
-	| 'that' entity entity_CRITERIA
+	| 'that' entity ENTITY_CRITERIA
     ;
-entity_CRITERIA: 'have left' object_state
+ENTITY_CRITERIA: 'have left' object_state
 	| 'has left' object_state
 	| 'like'
 	| 'likes'
@@ -1902,15 +1906,14 @@ entity_CRITERIA: 'have left' object_state
     ;
 
 // location DEPENDENCY
-location_dependency: location_PHRASE
-	| location_PHRASE 'or' ADDITIONAL_location
-	| location_PHRASE 'and' ADDITIONAL_location
+location_dependency: LOCATION_PHRASE
+	| LOCATION_PHRASE LOGICAL_OP location_dependency
     ;
-location_PHRASE: 'in' location
+LOCATION_PHRASE: 'in' location
 	| 'in' location 'that' entity 'in'
-	| 'in' location 'that is' location_ATTRIBUTE
-	| 'in' location 'that are' location_ATTRIBUTE
-	| 'in' identifier location_ATTRIBUTE SPACE
+	| 'in' location 'that is' LOCATION_ATTRIBUTE
+	| 'in' location 'that are' LOCATION_ATTRIBUTE
+	| 'in' determiner LOCATION_ATTRIBUTE space_
 	| 'to'
 	| 'for'
 	| 'in'
@@ -1919,7 +1922,7 @@ location_PHRASE: 'in' location
 	| 'from' location
 	| 'for' location
     ;
-location_ATTRIBUTE: 'occupied'
+LOCATION_ATTRIBUTE: 'occupied'
 	| 'unoccupied'
 	| 'hot'
 	| 'cold'
@@ -1930,7 +1933,6 @@ location_ATTRIBUTE: 'occupied'
 	| 'loud'
 	| 'nearby'
     ;
-ADDITIONAL_location: location_dependency ;
 
 // TIME DEPENDENCY
 TIME_DEPENDENCY: TIME
@@ -1952,7 +1954,7 @@ TIME: 'tonight'
 	| 'yearly'
 	| 'for today'
 	| 'for tomorrow'
-	| 'for' identifier TIME_UNIT
+	| 'for' determiner TIME_UNIT
 	| 'for' CLOCK_TIME
 	| 'right now'
 	| 'every' TIME_UNIT
@@ -1996,15 +1998,11 @@ SEASON: 'winter'
 	| 'fall'
     ;
 
-// SOURCE DEPENDENCY
-BASED_ON: 'based on' SOURCE ;
-SOURCE: INDIRECT_REFERENCE
-	| identifier DATA_SOURCES
-	| identifier DATA_SOURCES 'and' ADDITIONAL_SOURCE
-	| INDIRECT_REFERENCE 'and' ADDITIONAL_SOURCE
-	| INDIRECT_REFERENCE 'or' ADDITIONAL_SOURCE
-	| INDIRECT_REFERENCE 'but not' ADDITIONAL_SOURCE
-	| identifier DATA_SOURCES 'or' ADDITIONAL_SOURCE
-	| identifier DATA_SOURCES 'but not' ADDITIONAL_SOURCE 
+// source_ DEPENDENCY
+BASED_ON: 'based on' source_ ;
+source_: indirect_reference
+	| determiner data_sources
+	| determiner data_sources LOGICAL_OP additional_source
+	| indirect_reference LOGICAL_OP additional_source
     ;
-ADDITIONAL_SOURCE: SOURCE ;
+additional_source: source_ ;
