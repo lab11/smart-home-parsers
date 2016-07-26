@@ -1,7 +1,5 @@
 grammar Home;
 
-//options { tokenVocab=HomeLexer; }
-
 application: sentence ;
 sentence: action_sentence (PERIOD)? ;
    // | question_sentence QUESTION_MARK
@@ -18,17 +16,41 @@ action: command
     //| question_phrase 'and' question_sentence
     //;
 
-command: COMMAND_PLEASANTRIES direct_action_set
+
+// DIRECT ACTIONS
+command: command_pleasantries direct_action_set
     | direct_action_set
     | DO_NOT direct_action_set
+    //| COMMAND_QUERY_PLEASANTRIES knowable_things
+    | command_query_pleasantries knowable_things
     ;
+
 direct_action_set: direct_action
     | direct_action BOOLEAN_OPERATOR direct_action_set
     ;
 direct_action: simple_action ;
-simple_action: VERB DETERMINER NOUN ;
+simple_action: verb determiner object (states)? ;
 
+states: state_phrase
+    | state_phrase BOOLEAN_OPERATOR states
+    ;
+state_phrase: PREPOSITION OBJECT_STATE
+//  | 'of' data_sources
+//  | 'that says' STRING
+//  | 'to' entity 'that says' STRING
+//  | 'to say' STRING
+    | OBJECT_STATE
+    | PREPOSITION ENTITY
+    | PREPOSITION DETERMINER PERSONAL_ORGANIZERS
+    ;
 
+knowable_things: knowable_thing
+    | knowable_thing BOOLEAN_OPERATOR knowable_things
+    ;
+knowable_thing: DETERMINER DATA
+//    | indirect_references
+//    | condition
+    ;
 
 
 
@@ -42,18 +64,20 @@ fragment INTEGER:    ('-'|'+')?('0'..'9')+ ;
 fragment FLOAT:      ('-'|'+')?(('0'..'9')*'.'('0'..'9')+) ;
 
 //punctuation
-QUESTION_MARK: '?' ;
-PERIOD: '.' ;
+QUESTION_MARK: '?' -> skip;
+PERIOD: '.' -> skip ;
 
 //white space
 WS  : [ \t\r\n]+ -> skip ;
 
-
+number: NUMBER | WS ;
 NUMBER:             INTEGER | FLOAT ;
 //24 hour clock, covers some invalid times too
+clock_time: CLOCK_TIME | WS ;
 CLOCK_TIME:       ('0'..'2')?('0'..'9')(':'('0'..'5')('0'..'9'))?('a.m.'|'p.m.'|'am'|'pm')? ; 
 
-STRING: 'a';//  (~[\r\n])+ ; 
+string: STRING | WS ;
+STRING: 'why';//  (~[\r\n])+ ; 
 
 
 //logic!
@@ -68,7 +92,7 @@ BOOLEAN_OPERATOR: AND
     | 'but not'
     | 'but do not'
     ;
-
+command_pleasantries: COMMAND_PLEASANTRIES | WS ;
 COMMAND_PLEASANTRIES: 'I would like for you to'
     | 'I would like you to'
     | 'I would like to'
@@ -79,7 +103,9 @@ COMMAND_PLEASANTRIES: 'I would like for you to'
     | 'I need you to'
     | 'I want you to'
     | 'I would like for you to'
-    | 'I want to know'
+    ;
+command_query_pleasantries: COMMAND_QUERY_PLEASANTRIES | WS ;
+COMMAND_QUERY_PLEASANTRIES: 'I want to know'
     | 'I would like to know'
     ;
 DIRECT_ACTION_VERBS: 'check and see'
@@ -110,6 +136,7 @@ DIRECT_ACTION_VERBS: 'check and see'
     | 'greet'
     | 'decide whether to'
     ;
+verb: VERB | WS ;
 VERB: 'turn'
     | 'turn on'
     | 'turn off'
@@ -256,6 +283,7 @@ VERB: 'turn'
     | 'crank up'
     | 'crank down'
     ;
+determiner: DETERMINER | WS ;
 DETERMINER: 'the'
     | 'some'
     | 'the current'
@@ -283,10 +311,6 @@ DETERMINER: 'the'
     | 'this'
     | 'that'
     ;
-NOUNS: NOUN
-    | NOUN BOOLEAN_OPERATOR NOUNS
-    ;
-NOUN: OBJECT ;
 MUSIC: 'music'
     | 'music by' ARTIST
     |  GENRE 'music'
@@ -747,9 +771,10 @@ ONLINE_SERVICE: 'Facebook'
     | 'my email'
     ;
 
-OBJECTS: OBJECT 
-    | OBJECT BOOLEAN_OPERATOR OBJECTS
-    ;
+//OBJECTS: OBJECT 
+//    | OBJECT BOOLEAN_OPERATOR OBJECT
+//    ;
+object: OBJECT | WS ;
 OBJECT: 'appliance'
     | 'appliances'
     | 'plumbing'
@@ -781,7 +806,7 @@ OBJECT: 'appliance'
     | 'air conditioning'
     | 'air conditioner'
     | 'car'
-    | 'OBJECTS'
+    | 'OBJECT'
     | LOCATION
     | 'motion sensors'
     | PLAYLIST
@@ -1142,7 +1167,7 @@ ENTITY_EVENT: 'approach'
     | 'tell you to'
 //  | 'send' ENTITY 'a message saying that' <textbox('custom')>
 //  | 'say' <textbox('custom')>
-    | 'consume' DETERMINER OBJECTS
+    | 'consume' DETERMINER OBJECT
     | 'eat'
     | 'eat' MEAL
     | 'eat' NUMBER 'calories'
@@ -1152,9 +1177,9 @@ ENTITY_EVENT: 'approach'
     | 'get' DETERMINER PLURAL_UPDATES
     | 'receive' DETERMINER PLURAL_UPDATES
     | 'receive'  DETERMINER SINGULAR_UPDATE
-    | 'lose' DETERMINER NOUNS
-    | 'lost' DETERMINER NOUNS
-    | 'accidentally leave' DETERMINER OBJECTS OBJECT_STATE
+    | 'lose' DETERMINER OBJECT
+    | 'lost' DETERMINER OBJECT
+    | 'accidentally leave' DETERMINER OBJECT OBJECT_STATE
     | 'finish' ACTIVITY
     | 'start' ACTIVITY
     | 'finish' MEAL
@@ -1178,7 +1203,7 @@ ENTITY_EVENT: 'approach'
     | 'maintain my current weight'
     | 'listen to' DETERMINER MUSIC
     | 'watch' DETERMINER TELEVISION
-    | 'have' DETERMINER OBJECTS
+    | 'have' DETERMINER OBJECT
     | 'get gas'
     | 'do something healthy'
     // CONJUGATION 2 below!!
@@ -1222,7 +1247,7 @@ ENTITY_EVENT: 'approach'
     | 'tells you to'
 //  | 'sends you a message saying that' <textbox('custom')>
 //  | 'says' <textbox('custom')>
-    | 'consumes' DETERMINER OBJECTS
+    | 'consumes' DETERMINER OBJECT
     | 'eats'
     | 'eats' MEAL
     | 'eats' NUMBER 'calories'
@@ -1232,9 +1257,9 @@ ENTITY_EVENT: 'approach'
     | 'gets' DETERMINER PLURAL_UPDATES
     | 'receives' DETERMINER PLURAL_UPDATES
     | 'receives' DETERMINER SINGULAR_UPDATE
-    | 'loses' DETERMINER NOUNS
-    | 'lost' DETERMINER NOUNS
-    | 'accidentally leaves' DETERMINER OBJECTS OBJECT_STATE
+    | 'loses' DETERMINER OBJECT
+    | 'lost' DETERMINER OBJECT
+    | 'accidentally leaves' DETERMINER OBJECT OBJECT_STATE
     | 'finishes' ACTIVITY
     | 'starts' ACTIVITY
     | 'finishes' MEAL
@@ -1245,11 +1270,11 @@ ENTITY_EVENT: 'approach'
     | 'cuts back on' ACTIVITY 'by' NUMBER UNITS
     | 'gains more than' NUMBER 'pounds of fat'
     | 'walks' NUMBER 'steps'
-    | 'locks' DETERMINER NOUNS
-    | 'opens' DETERMINER NOUNS
-    | 'closes' DETERMINER NOUNS
-    | 'turns on' DETERMINER NOUNS
-    | 'turns off' DETERMINER NOUNS
+    | 'locks' DETERMINER OBJECT
+    | 'opens' DETERMINER OBJECT
+    | 'closes' DETERMINER OBJECT
+    | 'turns on' DETERMINER OBJECT
+    | 'turns off' DETERMINER OBJECT
     | 'knocks'
     | 'wanders off'
     | 'does not respond'
@@ -1263,7 +1288,7 @@ ENTITY_EVENT: 'approach'
     | 'maintains their current weight'
     | 'listens to' DETERMINER MUSIC
     | 'watches' DETERMINER TELEVISION
-    | 'has' DETERMINER OBJECTS
+    | 'has' DETERMINER OBJECT
     | 'gets gas'
     | 'does something healthy'
     ;
@@ -1362,14 +1387,14 @@ DATA_BEHAVIOR: 'rises above' PERCENT
 /* UNFINISHED MODIFICATIONS BELOW
 //////////////////////////////////
 
-question_about_OBJECT: 'are' DETERMINER OBJECTS OBJECT_STATE
-    | 'is' DETERMINER OBJECTS OBJECT_STATE
-    | 'have' DETERMINER OBJECTS 'been' OBJECT_STATE
-    | 'has' DETERMINER OBJECTS 'been' OBJECT_STATE
-    | 'was' DETERMINER OBJECTS OBJECT_STATE
-    | 'were' DETERMINER OBJECTS OBJECT_STATE
-    | 'are' DETERMINER OBJECTS 'forecast to be' OBJECT_STATE
-    | 'is' DETERMINER OBJECTS 'forecast to be' OBJECT_STATE
+question_about_OBJECT: 'are' DETERMINER OBJECT OBJECT_STATE
+    | 'is' DETERMINER OBJECT OBJECT_STATE
+    | 'have' DETERMINER OBJECT 'been' OBJECT_STATE
+    | 'has' DETERMINER OBJECT 'been' OBJECT_STATE
+    | 'was' DETERMINER OBJECT OBJECT_STATE
+    | 'were' DETERMINER OBJECT OBJECT_STATE
+    | 'are' DETERMINER OBJECT 'forecast to be' OBJECT_STATE
+    | 'is' DETERMINER OBJECT 'forecast to be' OBJECT_STATE
     ;
 
 how_question: 'how anxious am I'
@@ -1437,7 +1462,7 @@ how_many: 'calories have I burned'
     ;
 how_much: 'do I weigh'
     | 'am I exercising right now'
-    | 'energy' RELATION DETERMINER OBJECTS 'consuming'
+    | 'energy' RELATION DETERMINER OBJECT 'consuming'
     | 'exercise did' ENTITY 'do'
     | 'exercise have I done'
     | 'exercise has' ENTITY 'done'
@@ -1455,9 +1480,9 @@ how_much: 'do I weigh'
     | 'will my bills be' TIME   | 'am I using of each utility'
     | 'will my electricity cost' TIME
     | 'does each utility cost'
-    | 'energy do' DETERMINER OBJECTS 'consume'
-    | 'energy does' DETERMINER OBJECTS 'consume'
-    | 'electricity' RELATION DETERMINER OBJECTS 'consuming'
+    | 'energy do' DETERMINER OBJECT 'consume'
+    | 'energy does' DETERMINER OBJECT 'consume'
+    | 'electricity' RELATION DETERMINER OBJECT 'consuming'
     | 'electricity have appliances used'
     | 'electricity am I using'
     | 'electricity do' ENTITY 'consume'
@@ -1478,7 +1503,7 @@ how_far: 'did' ENTITY 'travel' ;
 how_fast: 'is' DETERMINER 'heart beating'
     | 'is' DETERMINER 'car going'
     ;
-what_question: 'what' OBJECTS RELATION OBJECT_STATE
+what_question: 'what' OBJECT RELATION OBJECT_STATE
     | 'what is' DETERMINER DATA
     | 'what are' DETERMINER DATA
     | 'what color are the lights'
@@ -1495,21 +1520,21 @@ when_question: 'when do' ENTITY 'need to' ENTITY_event
     | 'when did' ENTITY event_
     | 'when was' ENTITY ENTITY_FACT
     | 'when were' ENTITY ENTITY_FACT
-    | 'when do' DETERMINER OBJECTS 'need to' OBJECT_event
-    | 'when does' DETERMINER OBJECTS 'need to' OBJECT_event
-    | 'when is' DETERMINER OBJECTS OBJECT_STATE
-    | 'when are' DETERMINER OBJECTS OBJECT_STATE
-    | 'when will' DETERMINER OBJECTS OBJECT_event
-    | 'when will' DETERMINER OBJECTS 'be' OBJECT_STATE
-    | 'when did' DETERMINER OBJECTS OBJECT_event
-    | 'when was' DETERMINER OBJECTS OBJECT_fact
-    | 'when were' DETERMINER OBJECTS OBJECT_fact
+    | 'when do' DETERMINER OBJECT 'need to' OBJECT_event
+    | 'when does' DETERMINER OBJECT 'need to' OBJECT_event
+    | 'when is' DETERMINER OBJECT OBJECT_STATE
+    | 'when are' DETERMINER OBJECT OBJECT_STATE
+    | 'when will' DETERMINER OBJECT OBJECT_event
+    | 'when will' DETERMINER OBJECT 'be' OBJECT_STATE
+    | 'when did' DETERMINER OBJECT OBJECT_event
+    | 'when was' DETERMINER OBJECT OBJECT_fact
+    | 'when were' DETERMINER OBJECT OBJECT_fact
     ;
 where_question: 'where are' ENTITY
     | 'where is' ENTITY
     | 'where was' ENTITY
     | 'where were' ENTITY
-    | 'where is' DETERMINER OBJECTS
+    | 'where is' DETERMINER OBJECT
     ;
 who_question: 'who is' ENTITY_STATE
     | 'who are my new messages from'
@@ -1659,8 +1684,8 @@ where_reference: ENTITY 'is'
     | 'I am'
     | ENTITY 'are' 
     | 'it is'
-    | DETERMINER OBJECTS 'are'
-    | DETERMINER OBJECTS 'is'
+    | DETERMINER OBJECT 'are'
+    | DETERMINER OBJECT 'is'
     ;
 who_reference: 'who' BE ENTITY_STATE ;
 
