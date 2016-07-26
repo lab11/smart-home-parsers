@@ -30,7 +30,6 @@ var recurseTree = function(container, tree, ruleNames) {
     if (tree.children !== undefined) {
         for (var i = 0; i < tree.children.length; i++) {
             var child = tree.children[i];
-            console.log(ruleNames[child.ruleIndex]);
             recurseTree(container, child, ruleNames);
         }
         var nodeType = ruleNames[tree.ruleIndex];
@@ -42,6 +41,43 @@ var recurseTree = function(container, tree, ruleNames) {
     }
 };
 
+var ErrorListener = require('antlr4/error/ErrorListener').ErrorListener;
+function TestGrammarErrorListener() {
+    ErrorListener.call(this);
+    this.partialApplication = null;
+    this.errors = [];    
+    return this;
+}
+
+TestGrammarErrorListener.prototype = Object.create(ErrorListener.prototype);
+TestGrammarErrorListener.prototype.constructor = TestGrammarErrorListener;
+
+var testTokens; //TEST global for console stuff
+TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingSymbol, line, column, msg, e) {
+    this.errors.push(arguments);
+    testTokens = e.getExpectedTokens(); //CRITICAL. This is an interval set with the numbers that correspond to the expected token types
+    console.log(testTokens);
+
+    this.partialApplication = null;
+    var typeAssistTokens = ["VERB", "DETERMINER", "NOUN"];
+    console.log(recognizer);
+    var parser = recognizer._ctx.parser; 
+    var tokens = parser.getTokenStream().tokens;
+
+    // last token is always "fake" EOF token
+    if (tokens.length > 1) {
+        var lastToken = tokens[tokens.length - 2],
+            tokenType = parser.symbolicNames[lastToken.type];
+
+        this.tokenType = tokenType;
+        if (typeAssistTokens.indexOf(tokenType) >= 0) {
+            this.partialApplication = lastToken.text;
+            console.log("partial application" + this.partialApplication);
+        }
+    }
+};
+
+
 var antlr4 = require('antlr4/index');
 var NearbyLexer = require('generated-parser/NearbyLexer');
 var NearbyParser = require('generated-parser/NearbyParser');
@@ -51,10 +87,14 @@ document.getElementById("parse").addEventListener("click", function(){
     var lexer = new NearbyLexer.NearbyLexer(chars);
     var tokens  = new antlr4.CommonTokenStream(lexer);
     var parser = new NearbyParser.NearbyParser(tokens);
+    var listener = new TestGrammarErrorListener();
+    parser.removeErrorListeners();
+    parser.addErrorListener(listener);
     parser.buildParseTrees = true;
     var tree = parser.application();
     updateTree(tree, parser.ruleNames);
 });
+
 </script>
 </body>
 </html>
