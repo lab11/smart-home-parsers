@@ -1,14 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Parsing with ANTLR</title>
+    <script type="text/javascript" src="lib/require.js"></script>
+</head>
+<body>
 <div id="inputs">
-<textarea id="code">
+<textarea id="code" rows = "4" cols="50">
 turn on the lights
 </textarea>
-<br/>
+<br>
 <button id="parse">Parse</button>
 </div>
-
-<script type="text/javascript" src="lib/require.js"></script>
+<div id="treediv">
+</div>
 
 <script type="text/javascript">
+//Thanks to http://tomassetti.me/antlr-and-the-web/
+var updateTree = function(tree, ruleNames) {
+    var container = document.getElementById("treediv");
+    while (container.hasChildNodes()) {
+        container.removeChild(container.lastChild);
+    }
+    recurseTree(container, tree, ruleNames)
+};
+
+var recurseTree = function(container, tree, ruleNames) {
+    if (tree.children !== undefined) {
+        for (var i = 0; i < tree.children.length; i++) {
+            var child = tree.children[i];
+            console.log(ruleNames[child.ruleIndex]);
+            recurseTree(container, child, ruleNames);
+        }
+        var nodeType = ruleNames[tree.ruleIndex];
+        var newElement = document.createElement("div");
+        newElement.className = "NearbyApplication";
+        var newElementText = document.createTextNode(nodeType);//child.children[2].getText());
+        newElement.appendChild(newElementText);
+        container.appendChild(newElement);
+    }
+};
+
 var antlr4 = require('antlr4/index');
 var NearbyLexer = require('generated-parser/NearbyLexer');
 var NearbyParser = require('generated-parser/NearbyParser');
@@ -19,7 +52,9 @@ document.getElementById("parse").addEventListener("click", function(){
     var tokens  = new antlr4.CommonTokenStream(lexer);
     var parser = new NearbyParser.NearbyParser(tokens);
     parser.buildParseTrees = true;
-    var tree = parser.elements();
-    console.log("Parsed: "+ tree);
+    var tree = parser.application();
+    updateTree(tree, parser.ruleNames);
 });
 </script>
+</body>
+</html>
