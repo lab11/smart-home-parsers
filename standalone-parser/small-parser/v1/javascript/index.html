@@ -10,14 +10,14 @@ turn on the lights
 
 <script type="text/javascript">
 var antlr4 = require('antlr4/index');
-var TodoLexer = require('generated-parser/todoLexer');
-var TodoParser = require('generated-parser/todoParser');
+var NearbyLexer = require('generated-parser/NearbyLexer');
+var NearbyParser = require('generated-parser/NearbyParser');
 document.getElementById("parse").addEventListener("click", function(){
     var input = document.getElementById("code").value;
     var chars = new antlr4.InputStream(input);
-    var lexer = new TodoLexer.todoLexer(chars);
+    var lexer = new NearbyLexer.NearbyLexer(chars);
     var tokens  = new antlr4.CommonTokenStream(lexer);
-    var parser = new TodoParser.todoParser(tokens);
+    var parser = new NearbyParser.NearbyParser(tokens);
     parser.buildParseTrees = true;
     var tree = parser.elements();
     console.log("Parsed: "+ tree);
