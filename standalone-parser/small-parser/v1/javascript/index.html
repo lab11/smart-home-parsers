@@ -97,7 +97,7 @@ document.getElementById("parse").addEventListener("click", function(){
     parser.buildParseTrees = true;
     var tree = parser.application();
     updateTree(tree, parser.ruleNames);
-}
+});
 
 function showResult(str) {
   if (str.length==0) { 
@@ -120,7 +120,6 @@ function showResult(str) {
   xmlhttp.open("GET","lib/autocomplete.php?q="+str,true);
   xmlhttp.send();
 }
-);
 
 </script>
 </body>
