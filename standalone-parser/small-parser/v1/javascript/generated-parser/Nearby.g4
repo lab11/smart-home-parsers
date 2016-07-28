@@ -80,31 +80,31 @@ when someone leaves the room, flash the lights
 
 application 
     : action 
-    | query 
+    | QUERY 
     ;
 action
     : immediate_action 
     | conditional_action
     ;
 immediate_action
-    : verb determiner noun
+    : VERB DETERMINER NOUN 
     ;
 conditional_action
-    : condition verb determiner noun 
-    | verb determiner noun condition
+    : CONDITION VERB DETERMINER NOUN 
+    | VERB DETERMINER NOUN CONDITION
     ;
 
 //////////////////////////////
-
+/*
 query: QUERY | WS ;
 verb: VERB | WS ;
 determiner: DETERMINER | WS ;
 noun: NOUN | WS ;
 condition: CONDITION | WS ;
-
+*/
 ////////////////////////////////
 
-WS  : [ \t\r\n]+ -> skip ;
+//WS  : [ \t\r\n]+ -> skip ;
 
 QUERY
     : 'are the lights on?'
