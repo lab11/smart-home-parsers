@@ -100,6 +100,18 @@ document.getElementById("parse").addEventListener("click", function(){
 });
 
 function showResult(str) {
+    var input = str;
+    var chars = new antlr4.InputStream(input);
+    var lexer = new NearbyLexer.NearbyLexer(chars);
+    var tokens  = new antlr4.CommonTokenStream(lexer);
+    var parser = new NearbyParser.NearbyParser(tokens);
+    var listener = new TestGrammarErrorListener();
+    parser.removeErrorListeners();
+    parser.addErrorListener(listener);
+    parser.buildParseTrees = true;
+    var tree = parser.application();
+    updateTree(tree, parser.ruleNames);
+
   if (str.length==0) { 
     document.getElementById("autocomplete").innerHTML="";
     document.getElementById("autocomplete").style.border="0px";
