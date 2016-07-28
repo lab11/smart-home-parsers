@@ -60,12 +60,21 @@ var testTokens; //TEST global for console stuff
 TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingSymbol, line, column, msg, e) {
     this.errors.push(arguments);
     testTokens = e.getExpectedTokens(); //CRITICAL. This is an interval set with the numbers that correspond to the expected token types
-    console.log(testTokens);
+    tokenString = testTokens.toString()
+    tokenArray = tokenString.substring(1,tokenString.length-1).split(", ")
+    for (i in tokenArray) {
+        tokenArray[i] = parseInt(tokenArray[i], 10);
+    }
+    console.log(tokenArray);
 
     this.partialApplication = null;
     var typeAssistTokens = ["VERB", "DETERMINER", "NOUN"];
     console.log(recognizer);
     var parser = recognizer._ctx.parser; 
+    console.log(parser.ruleNames)
+    for (i in tokenArray) {
+        console.log(ruleNames(tokenArray[i]));
+    }
     var tokens = parser.getTokenStream().tokens;
 
     // last token is always "fake" EOF token
