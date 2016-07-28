@@ -79,8 +79,8 @@ when someone leaves the room, flash the lights
 */
 
 application 
-    : action 
-    | QUERY 
+    : action EOF 
+    | QUERY EOF
     ;
 action
     : immediate_action 
@@ -104,7 +104,7 @@ condition: CONDITION | WS ;
 */
 ////////////////////////////////
 
-//WS  : [ \t\r\n]+ -> skip ;
+WS  : [ \t\r\n]+ -> skip ;
 
 QUERY
     : 'are the lights on?'
