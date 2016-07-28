@@ -15,7 +15,7 @@ turn on the lights
 <div id="autocomplete"></div>
 </form>
 <br>
-<button id="parse">Parse</button>
+<!-- <button id="parse">Parse</button> -->
 </div>
 <div id="treediv">
 </div>
@@ -57,24 +57,26 @@ TestGrammarErrorListener.prototype = Object.create(ErrorListener.prototype);
 TestGrammarErrorListener.prototype.constructor = TestGrammarErrorListener;
 
 var testTokens; //TEST global for console stuff
+var testParser;
 TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingSymbol, line, column, msg, e) {
     this.errors.push(arguments);
-    testTokens = e.getExpectedTokens(); //CRITICAL. This is an interval set with the numbers that correspond to the expected token types
-    tokenString = testTokens.toString()
-    tokenArray = tokenString.substring(1,tokenString.length-1).split(", ")
+    console.log("PARSER ERROR");
+    console.log(msg);
+    var parser = recognizer._ctx.parser; 
+    testParser = recognizer._ctx.parser; 
+    testTokens = parser.getExpectedTokens(); //CRITICAL. This is an interval set with the numbers that correspond to the expected token types
+    tokenString = testTokens.toString();
+    tokenArray = tokenString.substring(1,tokenString.length-1).split(", ");
     for (i in tokenArray) {
         tokenArray[i] = parseInt(tokenArray[i], 10);
+    }
+    for (i in tokenArray) {
+        tokenArray[i] = parser.symbolicNames[tokenArray[i]];
     }
     console.log(tokenArray);
 
     this.partialApplication = null;
-    var typeAssistTokens = ["VERB", "DETERMINER", "NOUN"];
-    console.log(recognizer);
-    var parser = recognizer._ctx.parser; 
-    console.log(parser.ruleNames)
-    for (i in tokenArray) {
-        console.log(ruleNames(tokenArray[i]));
-    }
+    var typeAssistTokens = parser.symbolicNames;
     var tokens = parser.getTokenStream().tokens;
 
     // last token is always "fake" EOF token
@@ -85,7 +87,7 @@ TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingS
         this.tokenType = tokenType;
         if (typeAssistTokens.indexOf(tokenType) >= 0) {
             this.partialApplication = lastToken.text;
-            console.log("partial application" + this.partialApplication);
+            console.log("partial application: " + this.partialApplication);
         }
     }
 };
@@ -94,6 +96,8 @@ TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingS
 var antlr4 = require('antlr4/index');
 var NearbyLexer = require('generated-parser/NearbyLexer');
 var NearbyParser = require('generated-parser/NearbyParser');
+
+/*
 document.getElementById("parse").addEventListener("click", function(){
     var input = document.getElementById("autocomplete").value;
     var chars = new antlr4.InputStream(input);
@@ -106,7 +110,7 @@ document.getElementById("parse").addEventListener("click", function(){
     parser.buildParseTrees = true;
     var tree = parser.application();
     updateTree(tree, parser.ruleNames);
-});
+});*/
 
 function showResult(str) {
     var input = str;
