@@ -68,16 +68,18 @@ TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingS
     tokenString = testTokens.toString();
     tokenArray = tokenString.substring(1,tokenString.length-1).split(", ");
     for (i in tokenArray) {
-        tokenArray[i] = parseInt(tokenArray[i], 10);
-    }
-    for (i in tokenArray) {
-        tokenArray[i] = parser.symbolicNames[tokenArray[i]];
+        tokenArray[i] = parser.symbolicNames[parseInt(tokenArray[i], 10)];
     }
     console.log(tokenArray);
 
     this.partialApplication = null;
     var typeAssistTokens = parser.symbolicNames;
     var tokens = parser.getTokenStream().tokens;
+
+    console.log(tokens);
+    for (i in tokens) {
+        console.log(parser.symbolicNames[tokens[i].type]);
+    }
 
     // last token is always "fake" EOF token
     if (tokens.length > 1) {
