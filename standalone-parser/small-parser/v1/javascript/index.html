@@ -110,7 +110,11 @@ TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingS
               document.getElementById("autocomplete").style.border="1px solid #A5ACB2";
             }
         }
-        xmlhttp.open("GET","lib/autocomplete.php?q=_"+tokenArray[0],true);
+        var qString = "lib/autocomplete.php?";
+        for (i in tokenArray) {
+            qString += "q[]=_" + tokenArray[i] + "&";
+        }
+        xmlhttp.open("GET",qString,true);
         xmlhttp.send();
  //   }
 };
