@@ -11,11 +11,14 @@
 turn on the lights
 </textarea> -->
 <form>
-<input type="text" size="30" onkeyup="showResult(this.value)">
+<input type="text" size="80" onkeyup="showResult(this.value.toLowerCase())">
 <div id="autocomplete"></div>
 </form>
 <br>
-<!-- <button id="parse">Parse</button> -->
+<button id="parse">Parse</button>
+</div>
+<div id="tokens">
+<br>
 </div>
 <div id="treediv">
 </div>
@@ -31,7 +34,7 @@ var updateTree = function(tree, ruleNames) {
 };
 
 var recurseTree = function(container, tree, ruleNames) {
-    if (tree.children !== undefined) {
+    if (tree.children !== undefined && tree.children != null) {
         for (var i = 0; i < tree.children.length; i++) {
             var child = tree.children[i];
             recurseTree(container, child, ruleNames);
@@ -76,10 +79,11 @@ TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingS
     var typeAssistTokens = parser.symbolicNames;
     var tokens = parser.getTokenStream().tokens;
 
-    console.log(tokens);
-    for (i in tokens) {
-        console.log(parser.symbolicNames[tokens[i].type]);
-    }
+    //var tokenString = "";
+    //for (i in tokens) {
+    //    tokenString += parser.symbolicNames[tokens[i].type] + " ";
+    //}
+    //document.getElementById("tokens").innerHTML=tokenString;
 
     // last token is always "fake" EOF token
     if (tokens.length > 1) {
@@ -114,6 +118,14 @@ TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingS
         for (i in tokenArray) {
             qString += "q[]=_" + tokenArray[i] + "&";
         }
+        var text = "";
+        for (i in tokens) {
+            if (i < tokens.length - 1) {
+                text += tokens[i].text + " ";
+            }
+        }
+        qString += "text=" + text;
+        console.log(qString);
         xmlhttp.open("GET",qString,true);
         xmlhttp.send();
  //   }
@@ -124,7 +136,7 @@ var antlr4 = require('antlr4/index');
 var NearbyLexer = require('generated-parser/NearbyLexer');
 var NearbyParser = require('generated-parser/NearbyParser');
 
-/*
+
 document.getElementById("parse").addEventListener("click", function(){
     var input = document.getElementById("autocomplete").value;
     var chars = new antlr4.InputStream(input);
@@ -137,7 +149,9 @@ document.getElementById("parse").addEventListener("click", function(){
     parser.buildParseTrees = true;
     var tree = parser.application();
     updateTree(tree, parser.ruleNames);
-});*/
+});
+
+var BailErrorStrategy = require('antlr4/error/ErrorStrategy').BailErrorStrategy;
 
 function showResult(str) {
     var input = str;
@@ -149,8 +163,22 @@ function showResult(str) {
     parser.removeErrorListeners();
     parser.addErrorListener(listener);
     parser.buildParseTrees = true;
+    //parser._errHandler = new BailErrorStrategy();
+    console.log(parser._errHandler); //TEST
     var tree = parser.application();
     updateTree(tree, parser.ruleNames);
+              
+   document.getElementById("autocomplete").innerHTML="";
+   document.getElementById("autocomplete").style.border="0px";
+    
+    var tokens = parser.getTokenStream().tokens;
+    tokens = tokens.slice(0,tokens.length-1);
+
+    var tokenString = "";
+    for (i in tokens) {
+        tokenString += parser.symbolicNames[tokens[i].type] + " ";
+    }
+    document.getElementById("tokens").innerHTML=tokenString;
 }
 
 </script>
