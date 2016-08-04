@@ -1,5 +1,60 @@
 grammar Nearby;
 
+start
+    : application EOF
+    ;
+
+application 
+    : action  
+    | QUERY 
+    ;
+action
+    : immediate_action (CONDITION)? 
+    //| conditional_action
+    //| immediate_action CONDITION
+    | CONDITION immediate_action
+    ;
+immediate_action
+    : VERB DETERMINER NOUN 
+    ;
+/*
+conditional_action
+    : CONDITION immediate_action
+    | immediate_action CONDITION
+    ;
+*/
+
+//////////////////////////////
+/*
+query: QUERY | WS ;
+verb: VERB | WS ;
+determiner: DETERMINER | WS ;
+noun: NOUN | WS ;
+condition: CONDITION | WS ;
+*/
+////////////////////////////////
+
+WS  : [ \t\r\n]+ -> skip ;
+
+QUERY
+    : 'are the lights on?'
+    ;
+VERB
+    : 'turn on'
+    | 'turn off'
+    ;
+DETERMINER
+    : 'the'
+    ;
+NOUN
+    : 'lights'
+    ;
+CONDITION
+    : 'when there is motion'
+    ;
+
+
+
 /*
 Controllable devices:
 lights (power state)
@@ -77,54 +132,6 @@ when everyone leaves the room, turn off the lights
 when someone leaves the room, flash the lights
 
 */
-
-application 
-    : action EOF 
-    | QUERY EOF
-    ;
-action
-    : immediate_action 
-    | conditional_action
-    ;
-immediate_action
-    : VERB DETERMINER NOUN 
-    ;
-conditional_action
-    : CONDITION VERB DETERMINER NOUN 
-    | VERB DETERMINER NOUN CONDITION
-    ;
-
-//////////////////////////////
-/*
-query: QUERY | WS ;
-verb: VERB | WS ;
-determiner: DETERMINER | WS ;
-noun: NOUN | WS ;
-condition: CONDITION | WS ;
-*/
-////////////////////////////////
-
-WS  : [ \t\r\n]+ -> skip ;
-
-QUERY
-    : 'are the lights on?'
-    ;
-VERB
-    : 'turn on'
-    | 'turn off'
-    ;
-DETERMINER
-    : 'the'
-    ;
-NOUN
-    : 'lights'
-    ;
-CONDITION
-    : 'when there is motion'
-    ;
-
-
-
 
 
 

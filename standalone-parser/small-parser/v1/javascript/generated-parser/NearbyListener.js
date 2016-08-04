@@ -11,6 +11,15 @@ function NearbyListener() {
 NearbyListener.prototype = Object.create(antlr4.tree.ParseTreeListener.prototype);
 NearbyListener.prototype.constructor = NearbyListener;
 
+// Enter a parse tree produced by NearbyParser#start.
+NearbyListener.prototype.enterStart = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#start.
+NearbyListener.prototype.exitStart = function(ctx) {
+};
+
+
 // Enter a parse tree produced by NearbyParser#application.
 NearbyListener.prototype.enterApplication = function(ctx) {
 };
@@ -35,15 +44,6 @@ NearbyListener.prototype.enterImmediate_action = function(ctx) {
 
 // Exit a parse tree produced by NearbyParser#immediate_action.
 NearbyListener.prototype.exitImmediate_action = function(ctx) {
-};
-
-
-// Enter a parse tree produced by NearbyParser#conditional_action.
-NearbyListener.prototype.enterConditional_action = function(ctx) {
-};
-
-// Exit a parse tree produced by NearbyParser#conditional_action.
-NearbyListener.prototype.exitConditional_action = function(ctx) {
 };
 
 
