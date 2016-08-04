@@ -9,6 +9,7 @@ if ($conn->connect_error) {
 } 
 
 $mytable = $_GET["q"];
+$partialtext = $_GET["text"];
 
 for($i=0; $i<count($mytable); $i++) {
 $sql = "SELECT literal FROM " . $mytable[$i];
@@ -17,7 +18,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        echo $row["literal"] . "..." . "<br>";
+        echo $partialtext . ' ' . $row["literal"] . "..." . "<br>";
     }
 } //else {
 //    echo "0 results";
