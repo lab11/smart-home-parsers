@@ -1,0 +1,80 @@
+body {
+   padding: 0;
+    margin: 0px auto;
+    background-image: url("../media/weather.png");
+    background-color: #bcf2ff;
+    font-family: arial, verdana, sans-serif;
+    font-style: normal;
+}
+
+#header {
+  width: 100%;
+  margin-top: 5%;
+  text-align: center;
+  font-size: 100px;
+  color: #f38630;
+  font-weight: bold;
+  font-family: "Arial", sans-serif;
+}
+
+#wrapper {
+   border-radius: 15px;
+    background-color: rgba(170, 170, 170, 0.4);
+    padding: 20px;
+    width: 800px;
+    height: 545px;
+    margin: 0px auto;
+}
+
+.container {
+    display: flex;
+    width: 80%;
+    height: 48px;
+    margin-top: 20px;
+}
+
+
+input {
+   border-radius: 0px;
+   font-size: 20px;
+   padding: 12px;
+   margin-top: 0px;
+   margin-bottom: 0px;
+   flex-grow: 1;
+}
+
+.suggestions{
+   background-color: #FFFFFF;
+   text-align: left;
+   padding: 2px 12px;
+}
+
+button {
+  display: inline-block;
+  width: 60px;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Arial",sans-serif;
+  line-height: 1.8;
+  appearance: none;
+  box-shadow: none;
+  border-radius: 0;
+  color: #FFF;
+  background: #b795c7;
+  border: solid 0px #6496c8;
+}
+
+button:focus {
+  outline: none
+}
+
+button:hover,
+button.hover {
+  border-color: #346392;
+  color: #346392;
+}
+button:active,
+button.active {
+  border-color: #27496d;
+  color: #27496d;
+}
