@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>What is Nearby?</title>
+    <title>Scarlett</title>
     <script type="text/javascript" src="lib/require.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/flat-index.css" />
@@ -12,7 +12,7 @@
 <body>
 
 <div id="header">
-  <font color=#ffd9be>S</font><font color=#8fe9da>c</font><font color=#ffe07e>a</font><font color=#ffcfcf>r</font><font color=#b795c7>l</font><font color=#ffd9be>e</font><font color=#8fe9da>t</font><font color=#ffe07e>t</font>
+ <font color=#ffe07e>O</font><font color=#ffcfcf>K</font><font color=#b795c7>,</font> <font color=#ffd9be>S</font><font color=#8fe9da>c</font><font color=#ffe07e>a</font><font color=#ffcfcf>r</font><font color=#b795c7>l</font><font color=#ffd9be>e</font><font color=#8fe9da>t</font><font color=#ffe07e>t</font><font color=#ffcfcf>...</font>
 </div>
 
 <div id="inputs" align="center">
@@ -72,7 +72,6 @@ function TestGrammarErrorListener() {
     this.errors = [];    
     return this;
 }
-
 
 TestGrammarErrorListener.prototype = Object.create(ErrorListener.prototype);
 TestGrammarErrorListener.prototype.constructor = TestGrammarErrorListener;
@@ -159,6 +158,21 @@ function clearSuggestions() {
 var antlr4 = require('antlr4/index');
 var NearbyLexer = require('generated-parser/NearbyLexer');
 var NearbyParser = require('generated-parser/NearbyParser');
+
+
+//// LISTENER FOR CONSTRUCTING SENTENCES IN TARGET LANGUAGE
+var NearbyListener = require('generated-parser/NearbyListener').NearbyListener;
+TargetTranslator = function() {
+    NearbyListener.call(this);
+    return this;
+}
+
+TargetTranslator.prototype = Object.create(NearbyListener.prototype);
+TargetTranslator.prototype.constructor = TargetTranslator;
+
+TargetTranslator.prototype.enterCore_Action = function(ctx) {
+   console.log();
+};
 
 
 document.getElementById("parse").addEventListener("click", function(){

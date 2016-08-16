@@ -15,6 +15,7 @@ body {
   color: #f38630;
   font-weight: bold;
   font-family: "Arial", sans-serif;
+  text-shadow: -1px 0 #d7f7ff, 0 1px #d7f7ff, 1px 0 #d7f7ff, 0 -1px #d7f7ff;
 }
 
 #wrapper {
