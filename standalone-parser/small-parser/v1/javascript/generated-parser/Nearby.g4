@@ -6,35 +6,58 @@ start
 
 application 
     : action  
-    | QUERY 
+    | query 
     ;
 action
-    : core_action (CONDITION)? 
-    //| conditional_action
-    //| immediate_action CONDITION
-    | CONDITION core_action
+    : immediate_action
+    | conditional_action
     ;
-core_action
-    : VERB DETERMINER NOUN 
+immediate_action
+    : verb determiner noun 
     ;
-/*
+
 conditional_action
-    : CONDITION immediate_action
-    | immediate_action CONDITION
+    : condition immediate_action
     ;
-*/
+
+condition
+    : when when_condition
+    ;
+
+query
+    : are are_query
+    ;
 
 //////////////////////////////
-/*
-query: QUERY | WS ;
-verb: VERB | WS ;
-determiner: DETERMINER | WS ;
-noun: NOUN | WS ;
-condition: CONDITION | WS ;
-*/
+are: ARE ;
+are_query: ARE_QUERY ;
+verb: VERB ;
+determiner: DETERMINER ;
+noun: NOUN ;
+when: WHEN ;
+when_condition: WHEN_CONDITION ;
 ////////////////////////////////
 
-WS  : [ \t\r\n]+ -> skip ;
+ARE
+   : 'are'
+   ;
+
+ARE_QUERY
+   : 'the lights on'
+   ;
+
+WHEN
+    : 'when' 
+    | 'if'
+    ;
+
+WHEN_CONDITION
+    : 'there is motion'
+    ;
+
+WS  
+    : [ \t\r\n]+ -> skip
+    ;
 
 QUERY
     : 'are the lights on?'
@@ -49,9 +72,6 @@ DETERMINER
 NOUN
     : 'lights'
     | 'projector'
-    ;
-CONDITION
-    : 'when there is motion'
     ;
 
 
