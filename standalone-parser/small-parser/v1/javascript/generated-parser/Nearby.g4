@@ -9,12 +9,12 @@ application
     | QUERY 
     ;
 action
-    : immediate_action (CONDITION)? 
+    : core_action (CONDITION)? 
     //| conditional_action
     //| immediate_action CONDITION
-    | CONDITION immediate_action
+    | CONDITION core_action
     ;
-immediate_action
+core_action
     : VERB DETERMINER NOUN 
     ;
 /*
@@ -48,6 +48,7 @@ DETERMINER
     ;
 NOUN
     : 'lights'
+    | 'projector'
     ;
 CONDITION
     : 'when there is motion'

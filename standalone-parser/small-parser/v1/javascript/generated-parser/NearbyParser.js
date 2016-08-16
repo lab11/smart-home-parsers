@@ -5,13 +5,14 @@ var NearbyListener = require('./NearbyListener').NearbyListener;
 var grammarFileName = "Nearby.g4";
 
 var serializedATN = ["\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
-    "\3\b\33\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\3\2\3\2\3\2\3\3\3\3\5\3\20\n",
-    "\3\3\4\3\4\3\4\5\4\25\n\4\3\5\3\5\3\5\3\5\3\5\2\2\6\2\4\6\b\2\2\30\2",
-    "\n\3\2\2\2\4\17\3\2\2\2\6\24\3\2\2\2\b\26\3\2\2\2\n\13\5\4\3\2\13\f",
-    "\7\2\2\3\f\3\3\2\2\2\r\20\5\6\4\2\16\20\7\4\2\2\17\r\3\2\2\2\17\16\3",
-    "\2\2\2\20\5\3\2\2\2\21\25\5\b\5\2\22\23\7\b\2\2\23\25\5\b\5\2\24\21",
-    "\3\2\2\2\24\22\3\2\2\2\25\7\3\2\2\2\26\27\7\5\2\2\27\30\7\6\2\2\30\31",
-    "\7\7\2\2\31\t\3\2\2\2\4\17\24"].join("");
+    "\3\b\36\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\3\2\3\2\3\2\3\3\3\3\5\3\20\n",
+    "\3\3\4\3\4\5\4\24\n\4\3\4\3\4\5\4\30\n\4\3\5\3\5\3\5\3\5\3\5\2\2\6\2",
+    "\4\6\b\2\2\34\2\n\3\2\2\2\4\17\3\2\2\2\6\27\3\2\2\2\b\31\3\2\2\2\n\13",
+    "\5\4\3\2\13\f\7\2\2\3\f\3\3\2\2\2\r\20\5\6\4\2\16\20\7\4\2\2\17\r\3",
+    "\2\2\2\17\16\3\2\2\2\20\5\3\2\2\2\21\23\5\b\5\2\22\24\7\b\2\2\23\22",
+    "\3\2\2\2\23\24\3\2\2\2\24\30\3\2\2\2\25\26\7\b\2\2\26\30\5\b\5\2\27",
+    "\21\3\2\2\2\27\25\3\2\2\2\30\7\3\2\2\2\31\32\7\5\2\2\32\33\7\6\2\2\33",
+    "\34\7\7\2\2\34\t\3\2\2\2\5\17\23\27"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -21,12 +22,12 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 var sharedContextCache = new antlr4.PredictionContextCache();
 
 var literalNames = [ 'null', 'null', "'are the lights on?'", 'null', "'the'", 
-                     "'lights'", "'when there is motion'" ];
+                     'null', "'when there is motion'" ];
 
 var symbolicNames = [ 'null', "WS", "QUERY", "VERB", "DETERMINER", "NOUN", 
                       "CONDITION" ];
 
-var ruleNames =  [ "start", "application", "action", "immediate_action" ];
+var ruleNames =  [ "start", "application", "action", "core_action" ];
 
 function NearbyParser (input) {
 	antlr4.Parser.call(this, input);
@@ -57,7 +58,7 @@ NearbyParser.CONDITION = 6;
 NearbyParser.RULE_start = 0;
 NearbyParser.RULE_application = 1;
 NearbyParser.RULE_action = 2;
-NearbyParser.RULE_immediate_action = 3;
+NearbyParser.RULE_core_action = 3;
 
 function StartContext(parser, parent, invokingState) {
 	if(parent===undefined) {
@@ -216,8 +217,8 @@ function ActionContext(parser, parent, invokingState) {
 ActionContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 ActionContext.prototype.constructor = ActionContext;
 
-ActionContext.prototype.immediate_action = function() {
-    return this.getTypedRuleContext(Immediate_actionContext,0);
+ActionContext.prototype.core_action = function() {
+    return this.getTypedRuleContext(Core_actionContext,0);
 };
 
 ActionContext.prototype.CONDITION = function() {
@@ -245,20 +246,28 @@ NearbyParser.prototype.action = function() {
 
     var localctx = new ActionContext(this, this._ctx, this.state);
     this.enterRule(localctx, 4, NearbyParser.RULE_action);
+    var _la = 0; // Token type
     try {
-        this.state = 18;
+        this.state = 21;
         switch(this._input.LA(1)) {
         case NearbyParser.VERB:
             this.enterOuterAlt(localctx, 1);
             this.state = 15;
-            this.immediate_action();
+            this.core_action();
+            this.state = 17;
+            _la = this._input.LA(1);
+            if(_la===NearbyParser.CONDITION) {
+                this.state = 16;
+                this.match(NearbyParser.CONDITION);
+            }
+
             break;
         case NearbyParser.CONDITION:
             this.enterOuterAlt(localctx, 2);
-            this.state = 16;
+            this.state = 19;
             this.match(NearbyParser.CONDITION);
-            this.state = 17;
-            this.immediate_action();
+            this.state = 20;
+            this.core_action();
             break;
         default:
             throw new antlr4.error.NoViableAltException(this);
@@ -277,7 +286,7 @@ NearbyParser.prototype.action = function() {
     return localctx;
 };
 
-function Immediate_actionContext(parser, parent, invokingState) {
+function Core_actionContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -286,53 +295,53 @@ function Immediate_actionContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = NearbyParser.RULE_immediate_action;
+    this.ruleIndex = NearbyParser.RULE_core_action;
     return this;
 }
 
-Immediate_actionContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-Immediate_actionContext.prototype.constructor = Immediate_actionContext;
+Core_actionContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+Core_actionContext.prototype.constructor = Core_actionContext;
 
-Immediate_actionContext.prototype.VERB = function() {
+Core_actionContext.prototype.VERB = function() {
     return this.getToken(NearbyParser.VERB, 0);
 };
 
-Immediate_actionContext.prototype.DETERMINER = function() {
+Core_actionContext.prototype.DETERMINER = function() {
     return this.getToken(NearbyParser.DETERMINER, 0);
 };
 
-Immediate_actionContext.prototype.NOUN = function() {
+Core_actionContext.prototype.NOUN = function() {
     return this.getToken(NearbyParser.NOUN, 0);
 };
 
-Immediate_actionContext.prototype.enterRule = function(listener) {
+Core_actionContext.prototype.enterRule = function(listener) {
     if(listener instanceof NearbyListener ) {
-        listener.enterImmediate_action(this);
+        listener.enterCore_action(this);
 	}
 };
 
-Immediate_actionContext.prototype.exitRule = function(listener) {
+Core_actionContext.prototype.exitRule = function(listener) {
     if(listener instanceof NearbyListener ) {
-        listener.exitImmediate_action(this);
+        listener.exitCore_action(this);
 	}
 };
 
 
 
 
-NearbyParser.Immediate_actionContext = Immediate_actionContext;
+NearbyParser.Core_actionContext = Core_actionContext;
 
-NearbyParser.prototype.immediate_action = function() {
+NearbyParser.prototype.core_action = function() {
 
-    var localctx = new Immediate_actionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 6, NearbyParser.RULE_immediate_action);
+    var localctx = new Core_actionContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 6, NearbyParser.RULE_core_action);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 20;
+        this.state = 23;
         this.match(NearbyParser.VERB);
-        this.state = 21;
+        this.state = 24;
         this.match(NearbyParser.DETERMINER);
-        this.state = 22;
+        this.state = 25;
         this.match(NearbyParser.NOUN);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {

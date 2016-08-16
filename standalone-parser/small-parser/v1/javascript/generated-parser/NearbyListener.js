@@ -38,12 +38,12 @@ NearbyListener.prototype.exitAction = function(ctx) {
 };
 
 
-// Enter a parse tree produced by NearbyParser#immediate_action.
-NearbyListener.prototype.enterImmediate_action = function(ctx) {
+// Enter a parse tree produced by NearbyParser#core_action.
+NearbyListener.prototype.enterCore_action = function(ctx) {
 };
 
-// Exit a parse tree produced by NearbyParser#immediate_action.
-NearbyListener.prototype.exitImmediate_action = function(ctx) {
+// Exit a parse tree produced by NearbyParser#core_action.
+NearbyListener.prototype.exitCore_action = function(ctx) {
 };
 
 
