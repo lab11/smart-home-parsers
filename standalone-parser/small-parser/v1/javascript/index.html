@@ -173,7 +173,7 @@ var NearbyLexer = require('generated-parser/NearbyLexer');
 var NearbyParser = require('generated-parser/NearbyParser');
 
 document.getElementById("parse").addEventListener("click", function(){
-    var input = document.getElementById("user_input").value;
+    var input = document.getElementById("user_input").value.toLowerCase();
     var chars = new antlr4.InputStream(input);
     var lexer = new NearbyLexer.NearbyLexer(chars);
     var tokens  = new antlr4.CommonTokenStream(lexer);
@@ -187,11 +187,11 @@ document.getElementById("parse").addEventListener("click", function(){
     var translator = new TargetTranslator();
     antlr4.tree.ParseTreeWalker.DEFAULT.walk(translator, tree);
     console.log(translator.target_sentence);
-    //var str_json = JSON.stringify(translator.target_sentence);
-    //var request = new XMLHttpRequest();
-    //request.open("POST", "lib/post-to-target.php", true);
-    //request.setRequestHeader("Content-type", "application/json");
-    //request.send(str_json); 
+    var str_json = JSON.stringify(translator.target_sentence);
+    var request = new XMLHttpRequest();
+    request.open("POST", "lib/post-to-target.php", true);
+    request.setRequestHeader("Content-type", "application/json");
+    request.send(str_json); 
 });
 
 //var BailErrorStrategy = require('antlr4/error/ErrorStrategy').BailErrorStrategy;
