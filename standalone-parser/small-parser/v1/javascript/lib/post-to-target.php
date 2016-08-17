@@ -13,7 +13,7 @@ $options = array(
     )
 );
 
-$url = "http://68.40.57.31:8080/post1";
+$url = "http://141.212.11.202:1337/programs";
 
 $context  = stream_context_create( $options );
 $result = file_get_contents( $url, false, $context );
