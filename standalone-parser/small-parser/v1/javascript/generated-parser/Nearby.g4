@@ -59,9 +59,6 @@ WS
     : [ \t\r\n]+ -> skip
     ;
 
-QUERY
-    : 'are the lights on?'
-    ;
 VERB
     : 'turn on'
     | 'turn off'

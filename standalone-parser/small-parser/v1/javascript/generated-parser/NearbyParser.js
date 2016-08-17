@@ -5,7 +5,7 @@ var NearbyListener = require('./NearbyListener').NearbyListener;
 var grammarFileName = "Nearby.g4";
 
 var serializedATN = ["\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
-    "\3\13E\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t",
+    "\3\nE\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t",
     "\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\3\2\3\2\3\2",
     "\3\3\3\3\5\3$\n\3\3\4\3\4\5\4(\n\4\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\7\3",
     "\7\3\7\3\b\3\b\3\b\3\t\3\t\3\n\3\n\3\13\3\13\3\f\3\f\3\r\3\r\3\16\3",
@@ -17,9 +17,9 @@ var serializedATN = ["\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "(\5\n\6\2\'%\3\2\2\2\'&\3\2\2\2(\7\3\2\2\2)*\5\24\13\2*+\5\26\f\2+,",
     "\5\30\r\2,\t\3\2\2\2-.\5\f\7\2./\5\b\5\2/\13\3\2\2\2\60\61\5\32\16\2",
     "\61\62\5\34\17\2\62\r\3\2\2\2\63\64\5\20\t\2\64\65\5\22\n\2\65\17\3",
-    "\2\2\2\66\67\7\3\2\2\67\21\3\2\2\289\7\4\2\29\23\3\2\2\2:;\7\t\2\2;",
-    "\25\3\2\2\2<=\7\n\2\2=\27\3\2\2\2>?\7\13\2\2?\31\3\2\2\2@A\7\5\2\2A",
-    "\33\3\2\2\2BC\7\6\2\2C\35\3\2\2\2\4#\'"].join("");
+    "\2\2\2\66\67\7\3\2\2\67\21\3\2\2\289\7\4\2\29\23\3\2\2\2:;\7\b\2\2;",
+    "\25\3\2\2\2<=\7\t\2\2=\27\3\2\2\2>?\7\n\2\2?\31\3\2\2\2@A\7\5\2\2A\33",
+    "\3\2\2\2BC\7\6\2\2C\35\3\2\2\2\4#\'"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -29,10 +29,10 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 var sharedContextCache = new antlr4.PredictionContextCache();
 
 var literalNames = [ 'null', "'are'", "'the lights on'", 'null', "'there is motion'", 
-                     'null', "'are the lights on?'", 'null', "'the'" ];
+                     'null', 'null', "'the'" ];
 
 var symbolicNames = [ 'null', "ARE", "ARE_QUERY", "WHEN", "WHEN_CONDITION", 
-                      "WS", "QUERY", "VERB", "DETERMINER", "NOUN" ];
+                      "WS", "VERB", "DETERMINER", "NOUN" ];
 
 var ruleNames =  [ "start", "application", "action", "immediate_action", 
                    "conditional_action", "condition", "query", "are", "are_query", 
@@ -62,10 +62,9 @@ NearbyParser.ARE_QUERY = 2;
 NearbyParser.WHEN = 3;
 NearbyParser.WHEN_CONDITION = 4;
 NearbyParser.WS = 5;
-NearbyParser.QUERY = 6;
-NearbyParser.VERB = 7;
-NearbyParser.DETERMINER = 8;
-NearbyParser.NOUN = 9;
+NearbyParser.VERB = 6;
+NearbyParser.DETERMINER = 7;
+NearbyParser.NOUN = 8;
 
 NearbyParser.RULE_start = 0;
 NearbyParser.RULE_application = 1;
