@@ -5,6 +5,7 @@
 <head>
     <title>Scarlett</title>
     <script type="text/javascript" src="lib/require.js"></script>
+    <script type="text/javascript" src="lib/translator.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/flat-index.css" />
 </head>
@@ -18,7 +19,7 @@
 <div id="inputs" align="center">
   <form>
     <div class = "container">
-      <input type="text" onkeyup="showResult(this.value.toLowerCase())" onfocusout="clearSuggestions()">
+      <input type="text" id="user_input" onkeyup="showResult(this.value.toLowerCase())" onfocusout="clearSuggestions()">
       <button id="parse" class="button" type="button">&#9655;</button><!-- filled in: &#9654; outline: &#9655;-->
     </div>
 
@@ -136,11 +137,12 @@ TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingS
             qString += "q[]=_" + tokenArray[i] + "&";
         }
         var text = "";
-        for (i in tokens) {
-            if (i < tokens.length - 1) {
-                text += tokens[i].text + " ";
-            }
-        }
+        //for (i in tokens) {
+        //    if (i < tokens.length - 1) {
+        //        text += tokens[i].text + " ";
+        //    }
+        //}
+        text = document.getElementById("user_input").value;
         qString += "text=" + text;
         console.log(qString);
         xmlhttp.open("GET",qString,true);
@@ -159,50 +161,26 @@ var antlr4 = require('antlr4/index');
 var NearbyLexer = require('generated-parser/NearbyLexer');
 var NearbyParser = require('generated-parser/NearbyParser');
 
-
-//// LISTENER FOR CONSTRUCTING SENTENCES IN TARGET LANGUAGE
-var NearbyListener = require('generated-parser/NearbyListener').NearbyListener;
-TargetTranslator = function() {
-    NearbyListener.call(this);
-    return this;
-}
-
-TargetTranslator.prototype = Object.create(NearbyListener.prototype);
-TargetTranslator.prototype.constructor = TargetTranslator;
-
-TargetTranslator.prototype.enterCore_Action = function(ctx) {
-   console.log();
-};
-
-
 document.getElementById("parse").addEventListener("click", function(){
-    //var input = document.getElementById("autocomplete").value;
-    //var chars = new antlr4.InputStream(input);
-    //var lexer = new NearbyLexer.NearbyLexer(chars);
-    //var tokens  = new antlr4.CommonTokenStream(lexer);
-    //var parser = new NearbyParser.NearbyParser(tokens);
-    //var listener = new TestGrammarErrorListener();
-    //parser.removeErrorListeners();
-    //parser.addErrorListener(listener);
-    //parser.buildParseTrees = true;
-    //var tree = parser.application();
-    //updateTree(tree, parser.ruleNames);
-    var target_sentence = {
-  'type': 'immediate action',
-  'action': {
-    'verb': 'turn on',
-    'object': {
-      'determiner': 'the',
-      'noun': 'lights'
-    }
-  }
-};
-    console.log(target_sentence);
-    var str_json = JSON.stringify(target_sentence);
-    var request = new XMLHttpRequest();
-    request.open("POST", "lib/post-to-target.php", true);
-    request.setRequestHeader("Content-type", "application/json");
-    request.send(str_json); 
+    var input = document.getElementById("user_input").value;
+    var chars = new antlr4.InputStream(input);
+    var lexer = new NearbyLexer.NearbyLexer(chars);
+    var tokens  = new antlr4.CommonTokenStream(lexer);
+    var parser = new NearbyParser.NearbyParser(tokens);
+    var listener = new TestGrammarErrorListener();
+    parser.removeErrorListeners();
+    parser.addErrorListener(listener);
+    parser.buildParseTrees = true;
+    var tree = parser.application();
+    updateTree(tree, parser.ruleNames);
+    var translator = new TargetTranslator();
+    antlr4.tree.ParseTreeWalker.DEFAULT.walk(translator, tree);
+    console.log(translator.target_sentence);
+    //var str_json = JSON.stringify(translator.target_sentence);
+    //var request = new XMLHttpRequest();
+    //request.open("POST", "lib/post-to-target.php", true);
+    //request.setRequestHeader("Content-type", "application/json");
+    //request.send(str_json); 
 });
 
 //var BailErrorStrategy = require('antlr4/error/ErrorStrategy').BailErrorStrategy;
