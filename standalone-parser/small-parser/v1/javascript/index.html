@@ -141,7 +141,8 @@ TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingS
             if (xmlhttp.readyState==4 && xmlhttp.status==200) {
               document.getElementById("autocomplete").innerHTML=xmlhttp.responseText;
               document.getElementById("autocomplete").style.border="1px solid #A5ACB2";
-            }
+              document.getElementById("autocomplete").style.fontSize="larger";
+	    }
         }
         var qString = "lib/autocomplete.php?";
         for (i in tokenArray) {
@@ -209,7 +210,7 @@ function showResult(str) {
     //parser._errHandler = new BailErrorStrategy();
     console.log(parser._errHandler); //TEST
     var tree = parser.application();
-    updateTree(tree, parser.ruleNames);
+    //updateTree(tree, parser.ruleNames);
               
    document.getElementById("autocomplete").innerHTML="";
    document.getElementById("autocomplete").style.border="0px";
@@ -221,7 +222,7 @@ function showResult(str) {
     for (i in tokens) {
         tokenString += parser.symbolicNames[tokens[i].type] + " ";
     }
-    document.getElementById("tokens").innerHTML=tokenString;
+    //document.getElementById("tokens").innerHTML=tokenString;
 }
 
 </script>
