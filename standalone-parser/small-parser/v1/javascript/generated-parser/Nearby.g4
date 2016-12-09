@@ -70,8 +70,10 @@ fact
     ;
 
 question
-    : IS TURNABLE TURN_STATE
-    | ARE TURNABLES TURN_STATE
+    : is turnable on
+    | is turnable off
+    | are turnables on
+    | are turnables off
     ;
 
 percent
@@ -79,16 +81,90 @@ percent
     ;
 
 //////////////////////////////////////////////
-// PARSER TO LEXER RULES
+// LEXER RULES
 //////////////////////////////////////////////
 
+TURN_ON
+    : 'turn on'
+    ;
 turn_on: TURN_ON;
+
+TURN_OFF
+    : 'turn off'
+    ;
 turn_off: TURN_OFF;
+
+LOCK
+    : 'lock'
+    ;
 lock: LOCK;
+
+UNLOCK
+    : 'unlock'
+    ;
 unlock: UNLOCK;
+
+DIM
+    : 'dim'
+    ;
 dim: DIM;
+
+BRIGHTEN
+    : 'brighten'
+    ;
 brighten: BRIGHTEN;
+
+TELL_ME
+    : 'tell me'
+    ;
 tell_me: TELL_ME;
+
+IS
+  : 'is'
+  ;
+is: IS;
+
+ARE
+  : 'are'
+  ;
+are: ARE;
+
+ON
+  : 'on'
+  ;
+on: ON;
+
+OFF
+  : 'off'
+  ;
+off: OFF;
+
+LOCKED
+  : 'locked'
+  ;
+locked: LOCKED;
+
+UNLOCKED
+  : 'unlocked'
+  ;
+unlocked: UNLOCKED;
+
+TEMPERATURE
+    : 'the temperature'
+    ;
+temperature: TEMPERATURE;
+
+HUMIDITY
+    : 'the humidity'
+    ;
+humidity: HUMIDITY;
+
+BRIGHTNESS
+    : 'the brightness'
+    ;
+brightness: BRIGHTNESS;
+
+
 
 turnable: TURNABLE;
 turnables: TURNABLES;
@@ -97,16 +173,7 @@ lockable: LOCKABLE;
 dimmable: DIMMABLE;
 dimmables: DIMMABLES;
 
-is: IS;
-are: ARE;
-on: ON;
-off: OFF;
-locked: LOCKED;
-unlocked: UNLOCKED;
 
-temperature: TEMPERATURE;
-humidity: HUMIDITY;
-brightness: BRIGHTNESS;
 
 
 //////////////////////////////////////////////
@@ -119,22 +186,6 @@ brightness: BRIGHTNESS;
 //    | 'you da best'
 //    | 'you da real MVP'
 //    ;
-
-TEMPERATURE
-    : 'the temperature'
-    ;
-
-HUMIDITY
-    : 'the humidity'
-    ;
-
-BRIGHTNESS
-    : 'the brightness'
-    ;
-
-TELL_ME
-    : 'tell me'
-    ;
 
 WHETHER
     : 'whether'
@@ -159,41 +210,6 @@ TO
   : 'to'
   ;
 
-TURN_VERB
-  : 'turn on'
-  | 'turn off'
-  ;
-
-LOCK_VERB
-  : 'unlock'
-  | 'lock'
-  ;
-
-DIM_VERB
-  : 'dim'
-  | 'brighten'
-  ;
-
-TURN_STATE
-  : 'on'
-  | 'off'
-  ;
-
-LOCKED
-  : 'locked'
-  ;
-
-UNLOCKED
-  : 'unlocked'
-  ;
-
-IS
-  : 'is'
-  ;
-
-ARE
-  : 'are'
-  ;
 
 
 //////////////////////////////////////////////

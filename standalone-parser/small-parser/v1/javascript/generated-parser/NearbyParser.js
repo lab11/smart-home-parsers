@@ -5,7 +5,7 @@ var NearbyListener = require('./NearbyListener').NearbyListener;
 var grammarFileName = "Nearby.g4";
 
 var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
-    "\u0003\u001c\u00d1\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
+    "\u0003\u001c\u00d9\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
     "\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007",
     "\u0004\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004\f\t\f",
     "\u0004\r\t\r\u0004\u000e\t\u000e\u0004\u000f\t\u000f\u0004\u0010\t\u0010",
@@ -28,103 +28,108 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003",
     "\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003",
     "\b\u0005\b\u0098\n\b\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t",
-    "\u0003\t\u0003\t\u0005\t\u00a2\n\t\u0003\n\u0003\n\u0003\n\u0003\u000b",
-    "\u0003\u000b\u0003\f\u0003\f\u0003\r\u0003\r\u0003\u000e\u0003\u000e",
-    "\u0003\u000f\u0003\u000f\u0003\u0010\u0003\u0010\u0003\u0011\u0003\u0011",
-    "\u0003\u0012\u0003\u0012\u0003\u0013\u0003\u0013\u0003\u0014\u0003\u0014",
-    "\u0003\u0015\u0003\u0015\u0003\u0016\u0003\u0016\u0003\u0017\u0003\u0017",
-    "\u0003\u0018\u0003\u0018\u0003\u0019\u0003\u0019\u0003\u001a\u0003\u001a",
-    "\u0003\u001b\u0003\u001b\u0003\u001c\u0003\u001c\u0003\u001d\u0003\u001d",
-    "\u0003\u001e\u0003\u001e\u0003\u001f\u0003\u001f\u0003\u001f\u0002\u0002",
-    " \u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a",
-    "\u001c\u001e \"$&(*,.02468:<\u0002\u0002\u00c9\u0002?\u0003\u0002\u0002",
-    "\u0002\u0004F\u0003\u0002\u0002\u0002\u0006J\u0003\u0002\u0002\u0002",
-    "\bs\u0003\u0002\u0002\u0002\n|\u0003\u0002\u0002\u0002\f\u0081\u0003",
-    "\u0002\u0002\u0002\u000e\u0097\u0003\u0002\u0002\u0002\u0010\u00a1\u0003",
-    "\u0002\u0002\u0002\u0012\u00a3\u0003\u0002\u0002\u0002\u0014\u00a6\u0003",
-    "\u0002\u0002\u0002\u0016\u00a8\u0003\u0002\u0002\u0002\u0018\u00aa\u0003",
-    "\u0002\u0002\u0002\u001a\u00ac\u0003\u0002\u0002\u0002\u001c\u00ae\u0003",
-    "\u0002\u0002\u0002\u001e\u00b0\u0003\u0002\u0002\u0002 \u00b2\u0003",
-    "\u0002\u0002\u0002\"\u00b4\u0003\u0002\u0002\u0002$\u00b6\u0003\u0002",
-    "\u0002\u0002&\u00b8\u0003\u0002\u0002\u0002(\u00ba\u0003\u0002\u0002",
-    "\u0002*\u00bc\u0003\u0002\u0002\u0002,\u00be\u0003\u0002\u0002\u0002",
-    ".\u00c0\u0003\u0002\u0002\u00020\u00c2\u0003\u0002\u0002\u00022\u00c4",
-    "\u0003\u0002\u0002\u00024\u00c6\u0003\u0002\u0002\u00026\u00c8\u0003",
-    "\u0002\u0002\u00028\u00ca\u0003\u0002\u0002\u0002:\u00cc\u0003\u0002",
-    "\u0002\u0002<\u00ce\u0003\u0002\u0002\u0002>@\u0007\b\u0002\u0002?>",
-    "\u0003\u0002\u0002\u0002?@\u0003\u0002\u0002\u0002@A\u0003\u0002\u0002",
-    "\u0002AB\u0005\u0004\u0003\u0002BC\u0007\u0002\u0002\u0003C\u0003\u0003",
-    "\u0002\u0002\u0002DG\u0005\u0006\u0004\u0002EG\u0005\u0010\t\u0002F",
-    "D\u0003\u0002\u0002\u0002FE\u0003\u0002\u0002\u0002G\u0005\u0003\u0002",
-    "\u0002\u0002HK\u0005\b\u0005\u0002IK\u0005\n\u0006\u0002JH\u0003\u0002",
-    "\u0002\u0002JI\u0003\u0002\u0002\u0002K\u0007\u0003\u0002\u0002\u0002",
-    "LM\u0005\u0014\u000b\u0002MN\u0005\"\u0012\u0002Nt\u0003\u0002\u0002",
-    "\u0002OP\u0005\u0016\f\u0002PQ\u0005\"\u0012\u0002Qt\u0003\u0002\u0002",
-    "\u0002RS\u0005\u0014\u000b\u0002ST\u0005$\u0013\u0002Tt\u0003\u0002",
-    "\u0002\u0002UV\u0005\u0016\f\u0002VW\u0005$\u0013\u0002Wt\u0003\u0002",
-    "\u0002\u0002XY\u0005\u001a\u000e\u0002YZ\u0005&\u0014\u0002Zt\u0003",
-    "\u0002\u0002\u0002[\\\u0005\u001c\u000f\u0002\\_\u0005(\u0015\u0002",
-    "]^\u0007\u000b\u0002\u0002^`\u0005\u0012\n\u0002_]\u0003\u0002\u0002",
-    "\u0002_`\u0003\u0002\u0002\u0002`t\u0003\u0002\u0002\u0002ab\u0005\u001e",
-    "\u0010\u0002be\u0005(\u0015\u0002cd\u0007\u000b\u0002\u0002df\u0005",
-    "\u0012\n\u0002ec\u0003\u0002\u0002\u0002ef\u0003\u0002\u0002\u0002f",
-    "t\u0003\u0002\u0002\u0002gh\u0005\u001c\u000f\u0002hk\u0005*\u0016\u0002",
-    "ij\u0007\u000b\u0002\u0002jl\u0005\u0012\n\u0002ki\u0003\u0002\u0002",
-    "\u0002kl\u0003\u0002\u0002\u0002lt\u0003\u0002\u0002\u0002mn\u0005\u001e",
-    "\u0010\u0002nq\u0005*\u0016\u0002op\u0007\u000b\u0002\u0002pr\u0005",
-    "\u0012\n\u0002qo\u0003\u0002\u0002\u0002qr\u0003\u0002\u0002\u0002r",
-    "t\u0003\u0002\u0002\u0002sL\u0003\u0002\u0002\u0002sO\u0003\u0002\u0002",
-    "\u0002sR\u0003\u0002\u0002\u0002sU\u0003\u0002\u0002\u0002sX\u0003\u0002",
-    "\u0002\u0002s[\u0003\u0002\u0002\u0002sa\u0003\u0002\u0002\u0002sg\u0003",
-    "\u0002\u0002\u0002sm\u0003\u0002\u0002\u0002t\t\u0003\u0002\u0002\u0002",
-    "uv\u0005 \u0011\u0002vw\u0005\f\u0007\u0002w}\u0003\u0002\u0002\u0002",
-    "xy\u0005 \u0011\u0002yz\u0007\u0007\u0002\u0002z{\u0005\u000e\b\u0002",
-    "{}\u0003\u0002\u0002\u0002|u\u0003\u0002\u0002\u0002|x\u0003\u0002\u0002",
-    "\u0002}\u000b\u0003\u0002\u0002\u0002~\u0082\u00058\u001d\u0002\u007f",
-    "\u0082\u0005:\u001e\u0002\u0080\u0082\u0005<\u001f\u0002\u0081~\u0003",
-    "\u0002\u0002\u0002\u0081\u007f\u0003\u0002\u0002\u0002\u0081\u0080\u0003",
-    "\u0002\u0002\u0002\u0082\r\u0003\u0002\u0002\u0002\u0083\u0084\u0005",
-    "&\u0014\u0002\u0084\u0085\u0005,\u0017\u0002\u0085\u0086\u00054\u001b",
-    "\u0002\u0086\u0098\u0003\u0002\u0002\u0002\u0087\u0088\u0005\"\u0012",
-    "\u0002\u0088\u0089\u0005,\u0017\u0002\u0089\u008a\u00050\u0019\u0002",
-    "\u008a\u0098\u0003\u0002\u0002\u0002\u008b\u008c\u0005\"\u0012\u0002",
-    "\u008c\u008d\u0005,\u0017\u0002\u008d\u008e\u00052\u001a\u0002\u008e",
-    "\u0098\u0003\u0002\u0002\u0002\u008f\u0090\u0005$\u0013\u0002\u0090",
-    "\u0091\u0005.\u0018\u0002\u0091\u0092\u00050\u0019\u0002\u0092\u0098",
-    "\u0003\u0002\u0002\u0002\u0093\u0094\u0005$\u0013\u0002\u0094\u0095",
-    "\u0005.\u0018\u0002\u0095\u0096\u00052\u001a\u0002\u0096\u0098\u0003",
-    "\u0002\u0002\u0002\u0097\u0083\u0003\u0002\u0002\u0002\u0097\u0087\u0003",
-    "\u0002\u0002\u0002\u0097\u008b\u0003\u0002\u0002\u0002\u0097\u008f\u0003",
-    "\u0002\u0002\u0002\u0097\u0093\u0003\u0002\u0002\u0002\u0098\u000f\u0003",
-    "\u0002\u0002\u0002\u0099\u009a\u0005,\u0017\u0002\u009a\u009b\u0005",
-    "\"\u0012\u0002\u009b\u009c\u00050\u0019\u0002\u009c\u00a2\u0003\u0002",
-    "\u0002\u0002\u009d\u009e\u0005.\u0018\u0002\u009e\u009f\u0005$\u0013",
-    "\u0002\u009f\u00a0\u00052\u001a\u0002\u00a0\u00a2\u0003\u0002\u0002",
-    "\u0002\u00a1\u0099\u0003\u0002\u0002\u0002\u00a1\u009d\u0003\u0002\u0002",
-    "\u0002\u00a2\u0011\u0003\u0002\u0002\u0002\u00a3\u00a4\u0007\n\u0002",
-    "\u0002\u00a4\u00a5\u0007\t\u0002\u0002\u00a5\u0013\u0003\u0002\u0002",
-    "\u0002\u00a6\u00a7\u0007\f\u0002\u0002\u00a7\u0015\u0003\u0002\u0002",
-    "\u0002\u00a8\u00a9\u0007\r\u0002\u0002\u00a9\u0017\u0003\u0002\u0002",
-    "\u0002\u00aa\u00ab\u0007\u000f\u0002\u0002\u00ab\u0019\u0003\u0002\u0002",
-    "\u0002\u00ac\u00ad\u0007\u000e\u0002\u0002\u00ad\u001b\u0003\u0002\u0002",
-    "\u0002\u00ae\u00af\u0007\u0010\u0002\u0002\u00af\u001d\u0003\u0002\u0002",
-    "\u0002\u00b0\u00b1\u0007\u0011\u0002\u0002\u00b1\u001f\u0003\u0002\u0002",
-    "\u0002\u00b2\u00b3\u0007\u0006\u0002\u0002\u00b3!\u0003\u0002\u0002",
-    "\u0002\u00b4\u00b5\u0007\u0018\u0002\u0002\u00b5#\u0003\u0002\u0002",
-    "\u0002\u00b6\u00b7\u0007\u0019\u0002\u0002\u00b7%\u0003\u0002\u0002",
-    "\u0002\u00b8\u00b9\u0007\u001c\u0002\u0002\u00b9\'\u0003\u0002\u0002",
-    "\u0002\u00ba\u00bb\u0007\u001a\u0002\u0002\u00bb)\u0003\u0002\u0002",
-    "\u0002\u00bc\u00bd\u0007\u001b\u0002\u0002\u00bd+\u0003\u0002\u0002",
-    "\u0002\u00be\u00bf\u0007\u0016\u0002\u0002\u00bf-\u0003\u0002\u0002",
-    "\u0002\u00c0\u00c1\u0007\u0017\u0002\u0002\u00c1/\u0003\u0002\u0002",
-    "\u0002\u00c2\u00c3\u0007\u0012\u0002\u0002\u00c31\u0003\u0002\u0002",
-    "\u0002\u00c4\u00c5\u0007\u0013\u0002\u0002\u00c53\u0003\u0002\u0002",
-    "\u0002\u00c6\u00c7\u0007\u0014\u0002\u0002\u00c75\u0003\u0002\u0002",
-    "\u0002\u00c8\u00c9\u0007\u0015\u0002\u0002\u00c97\u0003\u0002\u0002",
-    "\u0002\u00ca\u00cb\u0007\u0003\u0002\u0002\u00cb9\u0003\u0002\u0002",
-    "\u0002\u00cc\u00cd\u0007\u0004\u0002\u0002\u00cd;\u0003\u0002\u0002",
-    "\u0002\u00ce\u00cf\u0007\u0005\u0002\u0002\u00cf=\u0003\u0002\u0002",
-    "\u0002\u000e?FJ_ekqs|\u0081\u0097\u00a1"].join("");
+    "\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003",
+    "\t\u0003\t\u0005\t\u00aa\n\t\u0003\n\u0003\n\u0003\n\u0003\u000b\u0003",
+    "\u000b\u0003\f\u0003\f\u0003\r\u0003\r\u0003\u000e\u0003\u000e\u0003",
+    "\u000f\u0003\u000f\u0003\u0010\u0003\u0010\u0003\u0011\u0003\u0011\u0003",
+    "\u0012\u0003\u0012\u0003\u0013\u0003\u0013\u0003\u0014\u0003\u0014\u0003",
+    "\u0015\u0003\u0015\u0003\u0016\u0003\u0016\u0003\u0017\u0003\u0017\u0003",
+    "\u0018\u0003\u0018\u0003\u0019\u0003\u0019\u0003\u001a\u0003\u001a\u0003",
+    "\u001b\u0003\u001b\u0003\u001c\u0003\u001c\u0003\u001d\u0003\u001d\u0003",
+    "\u001e\u0003\u001e\u0003\u001f\u0003\u001f\u0003\u001f\u0002\u0002 ",
+    "\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u001c",
+    "\u001e \"$&(*,.02468:<\u0002\u0002\u00d3\u0002?\u0003\u0002\u0002\u0002",
+    "\u0004F\u0003\u0002\u0002\u0002\u0006J\u0003\u0002\u0002\u0002\bs\u0003",
+    "\u0002\u0002\u0002\n|\u0003\u0002\u0002\u0002\f\u0081\u0003\u0002\u0002",
+    "\u0002\u000e\u0097\u0003\u0002\u0002\u0002\u0010\u00a9\u0003\u0002\u0002",
+    "\u0002\u0012\u00ab\u0003\u0002\u0002\u0002\u0014\u00ae\u0003\u0002\u0002",
+    "\u0002\u0016\u00b0\u0003\u0002\u0002\u0002\u0018\u00b2\u0003\u0002\u0002",
+    "\u0002\u001a\u00b4\u0003\u0002\u0002\u0002\u001c\u00b6\u0003\u0002\u0002",
+    "\u0002\u001e\u00b8\u0003\u0002\u0002\u0002 \u00ba\u0003\u0002\u0002",
+    "\u0002\"\u00bc\u0003\u0002\u0002\u0002$\u00be\u0003\u0002\u0002\u0002",
+    "&\u00c0\u0003\u0002\u0002\u0002(\u00c2\u0003\u0002\u0002\u0002*\u00c4",
+    "\u0003\u0002\u0002\u0002,\u00c6\u0003\u0002\u0002\u0002.\u00c8\u0003",
+    "\u0002\u0002\u00020\u00ca\u0003\u0002\u0002\u00022\u00cc\u0003\u0002",
+    "\u0002\u00024\u00ce\u0003\u0002\u0002\u00026\u00d0\u0003\u0002\u0002",
+    "\u00028\u00d2\u0003\u0002\u0002\u0002:\u00d4\u0003\u0002\u0002\u0002",
+    "<\u00d6\u0003\u0002\u0002\u0002>@\u0007\u0014\u0002\u0002?>\u0003\u0002",
+    "\u0002\u0002?@\u0003\u0002\u0002\u0002@A\u0003\u0002\u0002\u0002AB\u0005",
+    "\u0004\u0003\u0002BC\u0007\u0002\u0002\u0003C\u0003\u0003\u0002\u0002",
+    "\u0002DG\u0005\u0006\u0004\u0002EG\u0005\u0010\t\u0002FD\u0003\u0002",
+    "\u0002\u0002FE\u0003\u0002\u0002\u0002G\u0005\u0003\u0002\u0002\u0002",
+    "HK\u0005\b\u0005\u0002IK\u0005\n\u0006\u0002JH\u0003\u0002\u0002\u0002",
+    "JI\u0003\u0002\u0002\u0002K\u0007\u0003\u0002\u0002\u0002LM\u0005\u0014",
+    "\u000b\u0002MN\u00054\u001b\u0002Nt\u0003\u0002\u0002\u0002OP\u0005",
+    "\u0016\f\u0002PQ\u00054\u001b\u0002Qt\u0003\u0002\u0002\u0002RS\u0005",
+    "\u0014\u000b\u0002ST\u00056\u001c\u0002Tt\u0003\u0002\u0002\u0002UV",
+    "\u0005\u0016\f\u0002VW\u00056\u001c\u0002Wt\u0003\u0002\u0002\u0002",
+    "XY\u0005\u001a\u000e\u0002YZ\u00058\u001d\u0002Zt\u0003\u0002\u0002",
+    "\u0002[\\\u0005\u001c\u000f\u0002\\_\u0005:\u001e\u0002]^\u0007\u0017",
+    "\u0002\u0002^`\u0005\u0012\n\u0002_]\u0003\u0002\u0002\u0002_`\u0003",
+    "\u0002\u0002\u0002`t\u0003\u0002\u0002\u0002ab\u0005\u001e\u0010\u0002",
+    "be\u0005:\u001e\u0002cd\u0007\u0017\u0002\u0002df\u0005\u0012\n\u0002",
+    "ec\u0003\u0002\u0002\u0002ef\u0003\u0002\u0002\u0002ft\u0003\u0002\u0002",
+    "\u0002gh\u0005\u001c\u000f\u0002hk\u0005<\u001f\u0002ij\u0007\u0017",
+    "\u0002\u0002jl\u0005\u0012\n\u0002ki\u0003\u0002\u0002\u0002kl\u0003",
+    "\u0002\u0002\u0002lt\u0003\u0002\u0002\u0002mn\u0005\u001e\u0010\u0002",
+    "nq\u0005<\u001f\u0002op\u0007\u0017\u0002\u0002pr\u0005\u0012\n\u0002",
+    "qo\u0003\u0002\u0002\u0002qr\u0003\u0002\u0002\u0002rt\u0003\u0002\u0002",
+    "\u0002sL\u0003\u0002\u0002\u0002sO\u0003\u0002\u0002\u0002sR\u0003\u0002",
+    "\u0002\u0002sU\u0003\u0002\u0002\u0002sX\u0003\u0002\u0002\u0002s[\u0003",
+    "\u0002\u0002\u0002sa\u0003\u0002\u0002\u0002sg\u0003\u0002\u0002\u0002",
+    "sm\u0003\u0002\u0002\u0002t\t\u0003\u0002\u0002\u0002uv\u0005 \u0011",
+    "\u0002vw\u0005\f\u0007\u0002w}\u0003\u0002\u0002\u0002xy\u0005 \u0011",
+    "\u0002yz\u0007\u0013\u0002\u0002z{\u0005\u000e\b\u0002{}\u0003\u0002",
+    "\u0002\u0002|u\u0003\u0002\u0002\u0002|x\u0003\u0002\u0002\u0002}\u000b",
+    "\u0003\u0002\u0002\u0002~\u0082\u0005.\u0018\u0002\u007f\u0082\u0005",
+    "0\u0019\u0002\u0080\u0082\u00052\u001a\u0002\u0081~\u0003\u0002\u0002",
+    "\u0002\u0081\u007f\u0003\u0002\u0002\u0002\u0081\u0080\u0003\u0002\u0002",
+    "\u0002\u0082\r\u0003\u0002\u0002\u0002\u0083\u0084\u00058\u001d\u0002",
+    "\u0084\u0085\u0005\"\u0012\u0002\u0085\u0086\u0005*\u0016\u0002\u0086",
+    "\u0098\u0003\u0002\u0002\u0002\u0087\u0088\u00054\u001b\u0002\u0088",
+    "\u0089\u0005\"\u0012\u0002\u0089\u008a\u0005&\u0014\u0002\u008a\u0098",
+    "\u0003\u0002\u0002\u0002\u008b\u008c\u00054\u001b\u0002\u008c\u008d",
+    "\u0005\"\u0012\u0002\u008d\u008e\u0005(\u0015\u0002\u008e\u0098\u0003",
+    "\u0002\u0002\u0002\u008f\u0090\u00056\u001c\u0002\u0090\u0091\u0005",
+    "$\u0013\u0002\u0091\u0092\u0005&\u0014\u0002\u0092\u0098\u0003\u0002",
+    "\u0002\u0002\u0093\u0094\u00056\u001c\u0002\u0094\u0095\u0005$\u0013",
+    "\u0002\u0095\u0096\u0005(\u0015\u0002\u0096\u0098\u0003\u0002\u0002",
+    "\u0002\u0097\u0083\u0003\u0002\u0002\u0002\u0097\u0087\u0003\u0002\u0002",
+    "\u0002\u0097\u008b\u0003\u0002\u0002\u0002\u0097\u008f\u0003\u0002\u0002",
+    "\u0002\u0097\u0093\u0003\u0002\u0002\u0002\u0098\u000f\u0003\u0002\u0002",
+    "\u0002\u0099\u009a\u0005\"\u0012\u0002\u009a\u009b\u00054\u001b\u0002",
+    "\u009b\u009c\u0005&\u0014\u0002\u009c\u00aa\u0003\u0002\u0002\u0002",
+    "\u009d\u009e\u0005\"\u0012\u0002\u009e\u009f\u00054\u001b\u0002\u009f",
+    "\u00a0\u0005(\u0015\u0002\u00a0\u00aa\u0003\u0002\u0002\u0002\u00a1",
+    "\u00a2\u0005$\u0013\u0002\u00a2\u00a3\u00056\u001c\u0002\u00a3\u00a4",
+    "\u0005&\u0014\u0002\u00a4\u00aa\u0003\u0002\u0002\u0002\u00a5\u00a6",
+    "\u0005$\u0013\u0002\u00a6\u00a7\u00056\u001c\u0002\u00a7\u00a8\u0005",
+    "(\u0015\u0002\u00a8\u00aa\u0003\u0002\u0002\u0002\u00a9\u0099\u0003",
+    "\u0002\u0002\u0002\u00a9\u009d\u0003\u0002\u0002\u0002\u00a9\u00a1\u0003",
+    "\u0002\u0002\u0002\u00a9\u00a5\u0003\u0002\u0002\u0002\u00aa\u0011\u0003",
+    "\u0002\u0002\u0002\u00ab\u00ac\u0007\u0016\u0002\u0002\u00ac\u00ad\u0007",
+    "\u0015\u0002\u0002\u00ad\u0013\u0003\u0002\u0002\u0002\u00ae\u00af\u0007",
+    "\u0003\u0002\u0002\u00af\u0015\u0003\u0002\u0002\u0002\u00b0\u00b1\u0007",
+    "\u0004\u0002\u0002\u00b1\u0017\u0003\u0002\u0002\u0002\u00b2\u00b3\u0007",
+    "\u0005\u0002\u0002\u00b3\u0019\u0003\u0002\u0002\u0002\u00b4\u00b5\u0007",
+    "\u0006\u0002\u0002\u00b5\u001b\u0003\u0002\u0002\u0002\u00b6\u00b7\u0007",
+    "\u0007\u0002\u0002\u00b7\u001d\u0003\u0002\u0002\u0002\u00b8\u00b9\u0007",
+    "\b\u0002\u0002\u00b9\u001f\u0003\u0002\u0002\u0002\u00ba\u00bb\u0007",
+    "\t\u0002\u0002\u00bb!\u0003\u0002\u0002\u0002\u00bc\u00bd\u0007\n\u0002",
+    "\u0002\u00bd#\u0003\u0002\u0002\u0002\u00be\u00bf\u0007\u000b\u0002",
+    "\u0002\u00bf%\u0003\u0002\u0002\u0002\u00c0\u00c1\u0007\f\u0002\u0002",
+    "\u00c1\'\u0003\u0002\u0002\u0002\u00c2\u00c3\u0007\r\u0002\u0002\u00c3",
+    ")\u0003\u0002\u0002\u0002\u00c4\u00c5\u0007\u000e\u0002\u0002\u00c5",
+    "+\u0003\u0002\u0002\u0002\u00c6\u00c7\u0007\u000f\u0002\u0002\u00c7",
+    "-\u0003\u0002\u0002\u0002\u00c8\u00c9\u0007\u0010\u0002\u0002\u00c9",
+    "/\u0003\u0002\u0002\u0002\u00ca\u00cb\u0007\u0011\u0002\u0002\u00cb",
+    "1\u0003\u0002\u0002\u0002\u00cc\u00cd\u0007\u0012\u0002\u0002\u00cd",
+    "3\u0003\u0002\u0002\u0002\u00ce\u00cf\u0007\u0018\u0002\u0002\u00cf",
+    "5\u0003\u0002\u0002\u0002\u00d0\u00d1\u0007\u0019\u0002\u0002\u00d1",
+    "7\u0003\u0002\u0002\u0002\u00d2\u00d3\u0007\u001c\u0002\u0002\u00d3",
+    "9\u0003\u0002\u0002\u0002\u00d4\u00d5\u0007\u001a\u0002\u0002\u00d5",
+    ";\u0003\u0002\u0002\u0002\u00d6\u00d7\u0007\u001b\u0002\u0002\u00d7",
+    "=\u0003\u0002\u0002\u0002\u000e?FJ_ekqs|\u0081\u0097\u00a9"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -133,25 +138,25 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 
 var sharedContextCache = new antlr4.PredictionContextCache();
 
-var literalNames = [ null, "'the temperature'", "'the humidity'", "'the brightness'", 
-                     "'tell me'", "'whether'", null, "'%'", null, "'to'", 
-                     "'turn on'", "'turn off'", "'unlock'", "'lock'", "'dim'", 
-                     "'brighten'", "'on'", "'off'", "'locked'", "'unlocked'", 
-                     "'is'", "'are'", "'the light'", "'the lights'", "'hue light'", 
-                     "'the hue lights'", "'the door'" ];
+var literalNames = [ null, "'turn on'", "'turn off'", "'lock'", "'unlock'", 
+                     "'dim'", "'brighten'", "'tell me'", "'is'", "'are'", 
+                     "'on'", "'off'", "'locked'", "'unlocked'", "'the temperature'", 
+                     "'the humidity'", "'the brightness'", "'whether'", 
+                     null, "'%'", null, "'to'", "'the light'", "'the lights'", 
+                     "'hue light'", "'the hue lights'", "'the door'" ];
 
-var symbolicNames = [ null, "TEMPERATURE", "HUMIDITY", "BRIGHTNESS", "TELL_ME", 
-                      "WHETHER", "PLEASANTRY", "PCT", "INTEGER", "TO", "TURN_ON", 
-                      "TURN_OFF", "UNLOCK", "LOCK", "DIM", "BRIGHTEN", "ON", 
-                      "OFF", "LOCKED", "UNLOCKED", "IS", "ARE", "TURNABLE", 
+var symbolicNames = [ null, "TURN_ON", "TURN_OFF", "LOCK", "UNLOCK", "DIM", 
+                      "BRIGHTEN", "TELL_ME", "IS", "ARE", "ON", "OFF", "LOCKED", 
+                      "UNLOCKED", "TEMPERATURE", "HUMIDITY", "BRIGHTNESS", 
+                      "WHETHER", "PLEASANTRY", "PCT", "INTEGER", "TO", "TURNABLE", 
                       "TURNABLES", "DIMMABLE", "DIMMABLES", "LOCKABLE" ];
 
 var ruleNames =  [ "start", "application", "command", "action", "info_request", 
                    "metric", "fact", "question", "percent", "turn_on", "turn_off", 
-                   "lock", "unlock", "dim", "brighten", "tell_me", "turnable", 
-                   "turnables", "lockable", "dimmable", "dimmables", "is", 
+                   "lock", "unlock", "dim", "brighten", "tell_me", "is", 
                    "are", "on", "off", "locked", "unlocked", "temperature", 
-                   "humidity", "brightness" ];
+                   "humidity", "brightness", "turnable", "turnables", "lockable", 
+                   "dimmable", "dimmables" ];
 
 function NearbyParser (input) {
 	antlr4.Parser.call(this, input);
@@ -172,27 +177,27 @@ Object.defineProperty(NearbyParser.prototype, "atn", {
 });
 
 NearbyParser.EOF = antlr4.Token.EOF;
-NearbyParser.TEMPERATURE = 1;
-NearbyParser.HUMIDITY = 2;
-NearbyParser.BRIGHTNESS = 3;
-NearbyParser.TELL_ME = 4;
-NearbyParser.WHETHER = 5;
-NearbyParser.PLEASANTRY = 6;
-NearbyParser.PCT = 7;
-NearbyParser.INTEGER = 8;
-NearbyParser.TO = 9;
-NearbyParser.TURN_ON = 10;
-NearbyParser.TURN_OFF = 11;
-NearbyParser.UNLOCK = 12;
-NearbyParser.LOCK = 13;
-NearbyParser.DIM = 14;
-NearbyParser.BRIGHTEN = 15;
-NearbyParser.ON = 16;
-NearbyParser.OFF = 17;
-NearbyParser.LOCKED = 18;
-NearbyParser.UNLOCKED = 19;
-NearbyParser.IS = 20;
-NearbyParser.ARE = 21;
+NearbyParser.TURN_ON = 1;
+NearbyParser.TURN_OFF = 2;
+NearbyParser.LOCK = 3;
+NearbyParser.UNLOCK = 4;
+NearbyParser.DIM = 5;
+NearbyParser.BRIGHTEN = 6;
+NearbyParser.TELL_ME = 7;
+NearbyParser.IS = 8;
+NearbyParser.ARE = 9;
+NearbyParser.ON = 10;
+NearbyParser.OFF = 11;
+NearbyParser.LOCKED = 12;
+NearbyParser.UNLOCKED = 13;
+NearbyParser.TEMPERATURE = 14;
+NearbyParser.HUMIDITY = 15;
+NearbyParser.BRIGHTNESS = 16;
+NearbyParser.WHETHER = 17;
+NearbyParser.PLEASANTRY = 18;
+NearbyParser.PCT = 19;
+NearbyParser.INTEGER = 20;
+NearbyParser.TO = 21;
 NearbyParser.TURNABLE = 22;
 NearbyParser.TURNABLES = 23;
 NearbyParser.DIMMABLE = 24;
@@ -215,20 +220,20 @@ NearbyParser.RULE_unlock = 12;
 NearbyParser.RULE_dim = 13;
 NearbyParser.RULE_brighten = 14;
 NearbyParser.RULE_tell_me = 15;
-NearbyParser.RULE_turnable = 16;
-NearbyParser.RULE_turnables = 17;
-NearbyParser.RULE_lockable = 18;
-NearbyParser.RULE_dimmable = 19;
-NearbyParser.RULE_dimmables = 20;
-NearbyParser.RULE_is = 21;
-NearbyParser.RULE_are = 22;
-NearbyParser.RULE_on = 23;
-NearbyParser.RULE_off = 24;
-NearbyParser.RULE_locked = 25;
-NearbyParser.RULE_unlocked = 26;
-NearbyParser.RULE_temperature = 27;
-NearbyParser.RULE_humidity = 28;
-NearbyParser.RULE_brightness = 29;
+NearbyParser.RULE_is = 16;
+NearbyParser.RULE_are = 17;
+NearbyParser.RULE_on = 18;
+NearbyParser.RULE_off = 19;
+NearbyParser.RULE_locked = 20;
+NearbyParser.RULE_unlocked = 21;
+NearbyParser.RULE_temperature = 22;
+NearbyParser.RULE_humidity = 23;
+NearbyParser.RULE_brightness = 24;
+NearbyParser.RULE_turnable = 25;
+NearbyParser.RULE_turnables = 26;
+NearbyParser.RULE_lockable = 27;
+NearbyParser.RULE_dimmable = 28;
+NearbyParser.RULE_dimmables = 29;
 
 function StartContext(parser, parent, invokingState) {
 	if(parent===undefined) {
@@ -355,12 +360,12 @@ NearbyParser.prototype.application = function() {
     try {
         this.state = 68;
         switch(this._input.LA(1)) {
-        case NearbyParser.TELL_ME:
         case NearbyParser.TURN_ON:
         case NearbyParser.TURN_OFF:
         case NearbyParser.UNLOCK:
         case NearbyParser.DIM:
         case NearbyParser.BRIGHTEN:
+        case NearbyParser.TELL_ME:
             this.enterOuterAlt(localctx, 1);
             this.state = 66;
             this.command();
@@ -1011,24 +1016,28 @@ function QuestionContext(parser, parent, invokingState) {
 QuestionContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 QuestionContext.prototype.constructor = QuestionContext;
 
-QuestionContext.prototype.IS = function() {
-    return this.getToken(NearbyParser.IS, 0);
+QuestionContext.prototype.is = function() {
+    return this.getTypedRuleContext(IsContext,0);
 };
 
-QuestionContext.prototype.TURNABLE = function() {
-    return this.getToken(NearbyParser.TURNABLE, 0);
+QuestionContext.prototype.turnable = function() {
+    return this.getTypedRuleContext(TurnableContext,0);
 };
 
-QuestionContext.prototype.TURN_STATE = function() {
-    return this.getToken(NearbyParser.TURN_STATE, 0);
+QuestionContext.prototype.on = function() {
+    return this.getTypedRuleContext(OnContext,0);
 };
 
-QuestionContext.prototype.ARE = function() {
-    return this.getToken(NearbyParser.ARE, 0);
+QuestionContext.prototype.off = function() {
+    return this.getTypedRuleContext(OffContext,0);
 };
 
-QuestionContext.prototype.TURNABLES = function() {
-    return this.getToken(NearbyParser.TURNABLES, 0);
+QuestionContext.prototype.are = function() {
+    return this.getTypedRuleContext(AreContext,0);
+};
+
+QuestionContext.prototype.turnables = function() {
+    return this.getTypedRuleContext(TurnablesContext,0);
 };
 
 QuestionContext.prototype.enterRule = function(listener) {
@@ -1053,9 +1062,11 @@ NearbyParser.prototype.question = function() {
     var localctx = new QuestionContext(this, this._ctx, this.state);
     this.enterRule(localctx, 14, NearbyParser.RULE_question);
     try {
-        this.state = 159;
-        switch(this._input.LA(1)) {
-        case NearbyParser.IS:
+        this.state = 167;
+        this._errHandler.sync(this);
+        var la_ = this._interp.adaptivePredict(this._input,11,this._ctx);
+        switch(la_) {
+        case 1:
             this.enterOuterAlt(localctx, 1);
             this.state = 151;
             this.is();
@@ -1064,17 +1075,37 @@ NearbyParser.prototype.question = function() {
             this.state = 153;
             this.on();
             break;
-        case NearbyParser.ARE:
+
+        case 2:
             this.enterOuterAlt(localctx, 2);
             this.state = 155;
-            this.are();
+            this.is();
             this.state = 156;
-            this.turnables();
+            this.turnable();
             this.state = 157;
             this.off();
             break;
-        default:
-            throw new antlr4.error.NoViableAltException(this);
+
+        case 3:
+            this.enterOuterAlt(localctx, 3);
+            this.state = 159;
+            this.are();
+            this.state = 160;
+            this.turnables();
+            this.state = 161;
+            this.on();
+            break;
+
+        case 4:
+            this.enterOuterAlt(localctx, 4);
+            this.state = 163;
+            this.are();
+            this.state = 164;
+            this.turnables();
+            this.state = 165;
+            this.off();
+            break;
+
         }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1137,9 +1168,9 @@ NearbyParser.prototype.percent = function() {
     this.enterRule(localctx, 16, NearbyParser.RULE_percent);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 161;
+        this.state = 169;
         this.match(NearbyParser.INTEGER);
-        this.state = 162;
+        this.state = 170;
         this.match(NearbyParser.PCT);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1198,7 +1229,7 @@ NearbyParser.prototype.turn_on = function() {
     this.enterRule(localctx, 18, NearbyParser.RULE_turn_on);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 164;
+        this.state = 172;
         this.match(NearbyParser.TURN_ON);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1257,7 +1288,7 @@ NearbyParser.prototype.turn_off = function() {
     this.enterRule(localctx, 20, NearbyParser.RULE_turn_off);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 166;
+        this.state = 174;
         this.match(NearbyParser.TURN_OFF);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1316,7 +1347,7 @@ NearbyParser.prototype.lock = function() {
     this.enterRule(localctx, 22, NearbyParser.RULE_lock);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 168;
+        this.state = 176;
         this.match(NearbyParser.LOCK);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1375,7 +1406,7 @@ NearbyParser.prototype.unlock = function() {
     this.enterRule(localctx, 24, NearbyParser.RULE_unlock);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 170;
+        this.state = 178;
         this.match(NearbyParser.UNLOCK);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1434,7 +1465,7 @@ NearbyParser.prototype.dim = function() {
     this.enterRule(localctx, 26, NearbyParser.RULE_dim);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 172;
+        this.state = 180;
         this.match(NearbyParser.DIM);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1493,7 +1524,7 @@ NearbyParser.prototype.brighten = function() {
     this.enterRule(localctx, 28, NearbyParser.RULE_brighten);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 174;
+        this.state = 182;
         this.match(NearbyParser.BRIGHTEN);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1552,303 +1583,8 @@ NearbyParser.prototype.tell_me = function() {
     this.enterRule(localctx, 30, NearbyParser.RULE_tell_me);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 176;
-        this.match(NearbyParser.TELL_ME);
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-function TurnableContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = NearbyParser.RULE_turnable;
-    return this;
-}
-
-TurnableContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-TurnableContext.prototype.constructor = TurnableContext;
-
-TurnableContext.prototype.TURNABLE = function() {
-    return this.getToken(NearbyParser.TURNABLE, 0);
-};
-
-TurnableContext.prototype.enterRule = function(listener) {
-    if(listener instanceof NearbyListener ) {
-        listener.enterTurnable(this);
-	}
-};
-
-TurnableContext.prototype.exitRule = function(listener) {
-    if(listener instanceof NearbyListener ) {
-        listener.exitTurnable(this);
-	}
-};
-
-
-
-
-NearbyParser.TurnableContext = TurnableContext;
-
-NearbyParser.prototype.turnable = function() {
-
-    var localctx = new TurnableContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 32, NearbyParser.RULE_turnable);
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 178;
-        this.match(NearbyParser.TURNABLE);
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-function TurnablesContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = NearbyParser.RULE_turnables;
-    return this;
-}
-
-TurnablesContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-TurnablesContext.prototype.constructor = TurnablesContext;
-
-TurnablesContext.prototype.TURNABLES = function() {
-    return this.getToken(NearbyParser.TURNABLES, 0);
-};
-
-TurnablesContext.prototype.enterRule = function(listener) {
-    if(listener instanceof NearbyListener ) {
-        listener.enterTurnables(this);
-	}
-};
-
-TurnablesContext.prototype.exitRule = function(listener) {
-    if(listener instanceof NearbyListener ) {
-        listener.exitTurnables(this);
-	}
-};
-
-
-
-
-NearbyParser.TurnablesContext = TurnablesContext;
-
-NearbyParser.prototype.turnables = function() {
-
-    var localctx = new TurnablesContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 34, NearbyParser.RULE_turnables);
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 180;
-        this.match(NearbyParser.TURNABLES);
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-function LockableContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = NearbyParser.RULE_lockable;
-    return this;
-}
-
-LockableContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-LockableContext.prototype.constructor = LockableContext;
-
-LockableContext.prototype.LOCKABLE = function() {
-    return this.getToken(NearbyParser.LOCKABLE, 0);
-};
-
-LockableContext.prototype.enterRule = function(listener) {
-    if(listener instanceof NearbyListener ) {
-        listener.enterLockable(this);
-	}
-};
-
-LockableContext.prototype.exitRule = function(listener) {
-    if(listener instanceof NearbyListener ) {
-        listener.exitLockable(this);
-	}
-};
-
-
-
-
-NearbyParser.LockableContext = LockableContext;
-
-NearbyParser.prototype.lockable = function() {
-
-    var localctx = new LockableContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 36, NearbyParser.RULE_lockable);
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 182;
-        this.match(NearbyParser.LOCKABLE);
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-function DimmableContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = NearbyParser.RULE_dimmable;
-    return this;
-}
-
-DimmableContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-DimmableContext.prototype.constructor = DimmableContext;
-
-DimmableContext.prototype.DIMMABLE = function() {
-    return this.getToken(NearbyParser.DIMMABLE, 0);
-};
-
-DimmableContext.prototype.enterRule = function(listener) {
-    if(listener instanceof NearbyListener ) {
-        listener.enterDimmable(this);
-	}
-};
-
-DimmableContext.prototype.exitRule = function(listener) {
-    if(listener instanceof NearbyListener ) {
-        listener.exitDimmable(this);
-	}
-};
-
-
-
-
-NearbyParser.DimmableContext = DimmableContext;
-
-NearbyParser.prototype.dimmable = function() {
-
-    var localctx = new DimmableContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 38, NearbyParser.RULE_dimmable);
-    try {
-        this.enterOuterAlt(localctx, 1);
         this.state = 184;
-        this.match(NearbyParser.DIMMABLE);
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-function DimmablesContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = NearbyParser.RULE_dimmables;
-    return this;
-}
-
-DimmablesContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-DimmablesContext.prototype.constructor = DimmablesContext;
-
-DimmablesContext.prototype.DIMMABLES = function() {
-    return this.getToken(NearbyParser.DIMMABLES, 0);
-};
-
-DimmablesContext.prototype.enterRule = function(listener) {
-    if(listener instanceof NearbyListener ) {
-        listener.enterDimmables(this);
-	}
-};
-
-DimmablesContext.prototype.exitRule = function(listener) {
-    if(listener instanceof NearbyListener ) {
-        listener.exitDimmables(this);
-	}
-};
-
-
-
-
-NearbyParser.DimmablesContext = DimmablesContext;
-
-NearbyParser.prototype.dimmables = function() {
-
-    var localctx = new DimmablesContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 40, NearbyParser.RULE_dimmables);
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 186;
-        this.match(NearbyParser.DIMMABLES);
+        this.match(NearbyParser.TELL_ME);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -1903,10 +1639,10 @@ NearbyParser.IsContext = IsContext;
 NearbyParser.prototype.is = function() {
 
     var localctx = new IsContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 42, NearbyParser.RULE_is);
+    this.enterRule(localctx, 32, NearbyParser.RULE_is);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 188;
+        this.state = 186;
         this.match(NearbyParser.IS);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1962,10 +1698,10 @@ NearbyParser.AreContext = AreContext;
 NearbyParser.prototype.are = function() {
 
     var localctx = new AreContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 44, NearbyParser.RULE_are);
+    this.enterRule(localctx, 34, NearbyParser.RULE_are);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 190;
+        this.state = 188;
         this.match(NearbyParser.ARE);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2021,10 +1757,10 @@ NearbyParser.OnContext = OnContext;
 NearbyParser.prototype.on = function() {
 
     var localctx = new OnContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 46, NearbyParser.RULE_on);
+    this.enterRule(localctx, 36, NearbyParser.RULE_on);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 192;
+        this.state = 190;
         this.match(NearbyParser.ON);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2080,10 +1816,10 @@ NearbyParser.OffContext = OffContext;
 NearbyParser.prototype.off = function() {
 
     var localctx = new OffContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 48, NearbyParser.RULE_off);
+    this.enterRule(localctx, 38, NearbyParser.RULE_off);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 194;
+        this.state = 192;
         this.match(NearbyParser.OFF);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2139,10 +1875,10 @@ NearbyParser.LockedContext = LockedContext;
 NearbyParser.prototype.locked = function() {
 
     var localctx = new LockedContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 50, NearbyParser.RULE_locked);
+    this.enterRule(localctx, 40, NearbyParser.RULE_locked);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 196;
+        this.state = 194;
         this.match(NearbyParser.LOCKED);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2198,10 +1934,10 @@ NearbyParser.UnlockedContext = UnlockedContext;
 NearbyParser.prototype.unlocked = function() {
 
     var localctx = new UnlockedContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 52, NearbyParser.RULE_unlocked);
+    this.enterRule(localctx, 42, NearbyParser.RULE_unlocked);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 198;
+        this.state = 196;
         this.match(NearbyParser.UNLOCKED);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2257,10 +1993,10 @@ NearbyParser.TemperatureContext = TemperatureContext;
 NearbyParser.prototype.temperature = function() {
 
     var localctx = new TemperatureContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 54, NearbyParser.RULE_temperature);
+    this.enterRule(localctx, 44, NearbyParser.RULE_temperature);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 200;
+        this.state = 198;
         this.match(NearbyParser.TEMPERATURE);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2316,10 +2052,10 @@ NearbyParser.HumidityContext = HumidityContext;
 NearbyParser.prototype.humidity = function() {
 
     var localctx = new HumidityContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 56, NearbyParser.RULE_humidity);
+    this.enterRule(localctx, 46, NearbyParser.RULE_humidity);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 202;
+        this.state = 200;
         this.match(NearbyParser.HUMIDITY);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2375,11 +2111,306 @@ NearbyParser.BrightnessContext = BrightnessContext;
 NearbyParser.prototype.brightness = function() {
 
     var localctx = new BrightnessContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 58, NearbyParser.RULE_brightness);
+    this.enterRule(localctx, 48, NearbyParser.RULE_brightness);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 202;
+        this.match(NearbyParser.BRIGHTNESS);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+function TurnableContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = NearbyParser.RULE_turnable;
+    return this;
+}
+
+TurnableContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+TurnableContext.prototype.constructor = TurnableContext;
+
+TurnableContext.prototype.TURNABLE = function() {
+    return this.getToken(NearbyParser.TURNABLE, 0);
+};
+
+TurnableContext.prototype.enterRule = function(listener) {
+    if(listener instanceof NearbyListener ) {
+        listener.enterTurnable(this);
+	}
+};
+
+TurnableContext.prototype.exitRule = function(listener) {
+    if(listener instanceof NearbyListener ) {
+        listener.exitTurnable(this);
+	}
+};
+
+
+
+
+NearbyParser.TurnableContext = TurnableContext;
+
+NearbyParser.prototype.turnable = function() {
+
+    var localctx = new TurnableContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 50, NearbyParser.RULE_turnable);
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 204;
-        this.match(NearbyParser.BRIGHTNESS);
+        this.match(NearbyParser.TURNABLE);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+function TurnablesContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = NearbyParser.RULE_turnables;
+    return this;
+}
+
+TurnablesContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+TurnablesContext.prototype.constructor = TurnablesContext;
+
+TurnablesContext.prototype.TURNABLES = function() {
+    return this.getToken(NearbyParser.TURNABLES, 0);
+};
+
+TurnablesContext.prototype.enterRule = function(listener) {
+    if(listener instanceof NearbyListener ) {
+        listener.enterTurnables(this);
+	}
+};
+
+TurnablesContext.prototype.exitRule = function(listener) {
+    if(listener instanceof NearbyListener ) {
+        listener.exitTurnables(this);
+	}
+};
+
+
+
+
+NearbyParser.TurnablesContext = TurnablesContext;
+
+NearbyParser.prototype.turnables = function() {
+
+    var localctx = new TurnablesContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 52, NearbyParser.RULE_turnables);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 206;
+        this.match(NearbyParser.TURNABLES);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+function LockableContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = NearbyParser.RULE_lockable;
+    return this;
+}
+
+LockableContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+LockableContext.prototype.constructor = LockableContext;
+
+LockableContext.prototype.LOCKABLE = function() {
+    return this.getToken(NearbyParser.LOCKABLE, 0);
+};
+
+LockableContext.prototype.enterRule = function(listener) {
+    if(listener instanceof NearbyListener ) {
+        listener.enterLockable(this);
+	}
+};
+
+LockableContext.prototype.exitRule = function(listener) {
+    if(listener instanceof NearbyListener ) {
+        listener.exitLockable(this);
+	}
+};
+
+
+
+
+NearbyParser.LockableContext = LockableContext;
+
+NearbyParser.prototype.lockable = function() {
+
+    var localctx = new LockableContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 54, NearbyParser.RULE_lockable);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 208;
+        this.match(NearbyParser.LOCKABLE);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+function DimmableContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = NearbyParser.RULE_dimmable;
+    return this;
+}
+
+DimmableContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+DimmableContext.prototype.constructor = DimmableContext;
+
+DimmableContext.prototype.DIMMABLE = function() {
+    return this.getToken(NearbyParser.DIMMABLE, 0);
+};
+
+DimmableContext.prototype.enterRule = function(listener) {
+    if(listener instanceof NearbyListener ) {
+        listener.enterDimmable(this);
+	}
+};
+
+DimmableContext.prototype.exitRule = function(listener) {
+    if(listener instanceof NearbyListener ) {
+        listener.exitDimmable(this);
+	}
+};
+
+
+
+
+NearbyParser.DimmableContext = DimmableContext;
+
+NearbyParser.prototype.dimmable = function() {
+
+    var localctx = new DimmableContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 56, NearbyParser.RULE_dimmable);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 210;
+        this.match(NearbyParser.DIMMABLE);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+function DimmablesContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = NearbyParser.RULE_dimmables;
+    return this;
+}
+
+DimmablesContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+DimmablesContext.prototype.constructor = DimmablesContext;
+
+DimmablesContext.prototype.DIMMABLES = function() {
+    return this.getToken(NearbyParser.DIMMABLES, 0);
+};
+
+DimmablesContext.prototype.enterRule = function(listener) {
+    if(listener instanceof NearbyListener ) {
+        listener.enterDimmables(this);
+	}
+};
+
+DimmablesContext.prototype.exitRule = function(listener) {
+    if(listener instanceof NearbyListener ) {
+        listener.exitDimmables(this);
+	}
+};
+
+
+
+
+NearbyParser.DimmablesContext = DimmablesContext;
+
+NearbyParser.prototype.dimmables = function() {
+
+    var localctx = new DimmablesContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 58, NearbyParser.RULE_dimmables);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 212;
+        this.match(NearbyParser.DIMMABLES);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;

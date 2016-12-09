@@ -155,51 +155,6 @@ NearbyListener.prototype.exitTell_me = function(ctx) {
 };
 
 
-// Enter a parse tree produced by NearbyParser#turnable.
-NearbyListener.prototype.enterTurnable = function(ctx) {
-};
-
-// Exit a parse tree produced by NearbyParser#turnable.
-NearbyListener.prototype.exitTurnable = function(ctx) {
-};
-
-
-// Enter a parse tree produced by NearbyParser#turnables.
-NearbyListener.prototype.enterTurnables = function(ctx) {
-};
-
-// Exit a parse tree produced by NearbyParser#turnables.
-NearbyListener.prototype.exitTurnables = function(ctx) {
-};
-
-
-// Enter a parse tree produced by NearbyParser#lockable.
-NearbyListener.prototype.enterLockable = function(ctx) {
-};
-
-// Exit a parse tree produced by NearbyParser#lockable.
-NearbyListener.prototype.exitLockable = function(ctx) {
-};
-
-
-// Enter a parse tree produced by NearbyParser#dimmable.
-NearbyListener.prototype.enterDimmable = function(ctx) {
-};
-
-// Exit a parse tree produced by NearbyParser#dimmable.
-NearbyListener.prototype.exitDimmable = function(ctx) {
-};
-
-
-// Enter a parse tree produced by NearbyParser#dimmables.
-NearbyListener.prototype.enterDimmables = function(ctx) {
-};
-
-// Exit a parse tree produced by NearbyParser#dimmables.
-NearbyListener.prototype.exitDimmables = function(ctx) {
-};
-
-
 // Enter a parse tree produced by NearbyParser#is.
 NearbyListener.prototype.enterIs = function(ctx) {
 };
@@ -278,6 +233,51 @@ NearbyListener.prototype.enterBrightness = function(ctx) {
 
 // Exit a parse tree produced by NearbyParser#brightness.
 NearbyListener.prototype.exitBrightness = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#turnable.
+NearbyListener.prototype.enterTurnable = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#turnable.
+NearbyListener.prototype.exitTurnable = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#turnables.
+NearbyListener.prototype.enterTurnables = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#turnables.
+NearbyListener.prototype.exitTurnables = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#lockable.
+NearbyListener.prototype.enterLockable = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#lockable.
+NearbyListener.prototype.exitLockable = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#dimmable.
+NearbyListener.prototype.enterDimmable = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#dimmable.
+NearbyListener.prototype.exitDimmable = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#dimmables.
+NearbyListener.prototype.enterDimmables = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#dimmables.
+NearbyListener.prototype.exitDimmables = function(ctx) {
 };
 
 
