@@ -27,22 +27,52 @@ application
     ;
 
 command
-    : TURN_VERB TURNABLE
-    | TURN_VERB TURNABLES
-    | LOCK_VERB LOCKABLE
-//    | LOCK_VERB LOCKABLES
-    | DIM_VERB DIMMABLE (TO percent)?
-    | DIM_VERB DIMMABLES (TO percent)?
+    : turn_on turnable
+    | turn_off turnable
+    | turn_on turnables
+    | turn_off turnables
+    | unlock lockable
+//    | lock lockable
+//    | unlock lockables
+//    | lock lockables
+    | dim dimmable (TO percent)?
+    | brighten dimmable (TO percent)?
+    | dim dimmables (TO percent)?
+    | brighten dimmables (TO percent)?
     ;
 
 question
-    : IS TURNABLE TURN_STATE
-    | ARE TURNABLES TURN_STATE
+    : is turnable on
+    | are turnables off
     ;
 
 percent
     : INTEGER PCT
     ;
+
+//############################################
+//##### PARSER TO LEXER RULES
+//############################################
+
+turn_on: TURN_ON;
+turn_off: TURN_OFF;
+lock: LOCK;
+unlock: UNLOCK;
+dim: DIM;
+brighten: BRIGHTEN;
+
+turnable: TURNABLE;
+turnables: TURNABLES;
+lockable: LOCKABLE;
+//lockables: LOCKABLES;
+dimmable: DIMMABLE;
+dimmables: DIMMABLES;
+
+is: IS;
+are: ARE;
+on: ON;
+off: OFF;
+
 
 //############################################
 //##### LEXER RULES
@@ -74,24 +104,36 @@ TO
   : 'to'
   ;
 
-TURN_VERB
+TURN_ON
   : 'turn on'
-  | 'turn off'
   ;
 
-LOCK_VERB
+TURN_OFF
+  : 'turn off'
+  ;
+
+UNLOCK
   : 'unlock'
-  | 'lock'
   ;
 
-DIM_VERB
+LOCK
+  : 'lock'
+  ;
+
+DIM
   : 'dim'
-  | 'brighten'
   ;
 
-TURN_STATE
+BRIGHTEN
+  : 'brighten'
+  ;
+
+ON
   : 'on'
-  | 'off'
+  ;
+
+OFF
+  : 'off'
   ;
 
 IS
