@@ -38,6 +38,42 @@ NearbyListener.prototype.exitCommand = function(ctx) {
 };
 
 
+// Enter a parse tree produced by NearbyParser#action.
+NearbyListener.prototype.enterAction = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#action.
+NearbyListener.prototype.exitAction = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#info_request.
+NearbyListener.prototype.enterInfo_request = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#info_request.
+NearbyListener.prototype.exitInfo_request = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#metric.
+NearbyListener.prototype.enterMetric = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#metric.
+NearbyListener.prototype.exitMetric = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#fact.
+NearbyListener.prototype.enterFact = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#fact.
+NearbyListener.prototype.exitFact = function(ctx) {
+};
+
+
 // Enter a parse tree produced by NearbyParser#question.
 NearbyListener.prototype.enterQuestion = function(ctx) {
 };
@@ -107,6 +143,15 @@ NearbyListener.prototype.enterBrighten = function(ctx) {
 
 // Exit a parse tree produced by NearbyParser#brighten.
 NearbyListener.prototype.exitBrighten = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#tell_me.
+NearbyListener.prototype.enterTell_me = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#tell_me.
+NearbyListener.prototype.exitTell_me = function(ctx) {
 };
 
 
@@ -188,6 +233,51 @@ NearbyListener.prototype.enterOff = function(ctx) {
 
 // Exit a parse tree produced by NearbyParser#off.
 NearbyListener.prototype.exitOff = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#locked.
+NearbyListener.prototype.enterLocked = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#locked.
+NearbyListener.prototype.exitLocked = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#unlocked.
+NearbyListener.prototype.enterUnlocked = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#unlocked.
+NearbyListener.prototype.exitUnlocked = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#temperature.
+NearbyListener.prototype.enterTemperature = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#temperature.
+NearbyListener.prototype.exitTemperature = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#humidity.
+NearbyListener.prototype.enterHumidity = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#humidity.
+NearbyListener.prototype.exitHumidity = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#brightness.
+NearbyListener.prototype.enterBrightness = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#brightness.
+NearbyListener.prototype.exitBrightness = function(ctx) {
 };
 
 

@@ -27,6 +27,11 @@ application
     ;
 
 command
+    : action
+    | info_request
+    ;
+
+action
     : turn_on turnable
     | turn_off turnable
     | turn_on turnables
@@ -39,6 +44,26 @@ command
     | brighten dimmable (TO percent)?
     | dim dimmables (TO percent)?
     | brighten dimmables (TO percent)?
+    ;
+
+info_request
+    : tell_me metric
+    | tell_me WHETHER fact
+    ;
+
+metric
+    : temperature
+    | humidity
+    | brightness
+    ;
+
+fact
+    : lockable is locked
+//    | lockables are locked
+    | turnable is on
+    | turnable is off
+    | turnables are on
+    | turnables are off
     ;
 
 question
@@ -60,6 +85,7 @@ lock: LOCK;
 unlock: UNLOCK;
 dim: DIM;
 brighten: BRIGHTEN;
+tell_me: TELL_ME;
 
 turnable: TURNABLE;
 turnables: TURNABLES;
@@ -72,6 +98,13 @@ is: IS;
 are: ARE;
 on: ON;
 off: OFF;
+locked: LOCKED;
+unlocked: UNLOCKED;
+
+temperature: TEMPERATURE;
+humidity: HUMIDITY;
+brightness: BRIGHTNESS;
+
 
 
 //############################################
@@ -84,6 +117,26 @@ off: OFF;
 //    | 'you da best'
 //    | 'you da real MVP'
 //    ;
+
+TEMPERATURE
+    : 'the temperature'
+    ;
+
+HUMIDITY
+    : 'the humidity'
+    ;
+
+BRIGHTNESS
+    : 'the brightness'
+    ;
+
+TELL_ME
+    : 'tell me'
+    ;
+
+WHETHER
+    : 'whether'
+    ;
 
 PLEASANTRY
     : 'could you'
@@ -134,6 +187,14 @@ ON
 
 OFF
   : 'off'
+  ;
+
+LOCKED
+  : 'locked'
+  ;
+
+UNLOCKED
+  : 'unlocked'
   ;
 
 IS
