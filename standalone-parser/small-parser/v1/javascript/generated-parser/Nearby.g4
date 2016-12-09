@@ -1,19 +1,164 @@
 grammar Nearby;
 
+// NOTE: NO CONDITIONS, FEW FACTS
+
+//Tell me <metric>
+//  <metric> = the [current] temperature, the humidity, the brightness,
+//  <how_metric> = how hot it is, how cold it is, how humid it is, how dry it is, how bright it is, how dark it is
+//Tell me whether <fact>
+//  <fact> = the <lockable> is locked, the <turnables> are on, the <turnable> is on, //<occupant> is in the room, there has been motion in the last X minutes, <moveable> has moved
+
+//What is <metric>?
+//<inverted how metric>?
+//  how hot is it, how cold is it...
+
+//############################################
+//##### PARSER RULES
+//############################################
+
+start
+    : (PLEASANTRY)? application EOF
+//    | THANKS EOF
+    ;
+
+application
+    : command
+    | question
+    ;
+
+command
+    : TURN_VERB TURNABLE
+    | TURN_VERB TURNABLES
+    | LOCK_VERB LOCKABLE
+//    | LOCK_VERB LOCKABLES
+    | DIM_VERB DIMMABLE (TO percent)?
+    | DIM_VERB DIMMABLES (TO percent)?
+    ;
+
+question
+    : IS TURNABLE TURN_STATE
+    | ARE TURNABLES TURN_STATE
+    ;
+
+percent
+    : INTEGER PCT
+    ;
+
+//############################################
+//##### LEXER RULES
+//############################################
+
+//THANKS
+//    : 'thanks'
+//    | 'thank you'
+//    | 'you da best'
+//    | 'you da real MVP'
+//    ;
+
+PLEASANTRY
+    : 'could you'
+    | 'could you please'
+    | 'please'
+    | 'i would like you to'
+    ;
+
+PCT
+  : '%'
+  ;
+
+INTEGER
+  : [0-9]+
+  ;
+
+TO
+  : 'to'
+  ;
+
+TURN_VERB
+  : 'turn on'
+  | 'turn off'
+  ;
+
+LOCK_VERB
+  : 'unlock'
+  | 'lock'
+  ;
+
+DIM_VERB
+  : 'dim'
+  | 'brighten'
+  ;
+
+TURN_STATE
+  : 'on'
+  | 'off'
+  ;
+
+IS
+  : 'is'
+  ;
+
+ARE
+  : 'are'
+  ;
+
+//############################################
+//##### DYNAMIC LEXER RULES
+//############################################
+
+TURNABLE
+    : 'the light'
+    ;
+
+TURNABLES
+    : 'the lights'
+    ;
+
+DIMMABLE
+    : 'hue light'
+    ;
+
+DIMMABLES
+    : 'the hue lights'
+    ;
+
+LOCKABLE
+    : 'the door'
+    ;
+
+//LOCKABLES
+//    : ''
+//    ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* KNOWN GOOD SMALL GRAMMAR BELOW - ORIGINAL DEMO GRAMMAR
+
 start
     : application EOF
     ;
 
-application 
-    : action  
-    | query 
+application
+    : action
+    | query
     ;
 action
     : immediate_action
     | conditional_action
     ;
 immediate_action
-    : verb determiner noun 
+    : verb determiner noun
     ;
 
 conditional_action
@@ -47,7 +192,7 @@ ARE_QUERY
    ;
 
 WHEN
-    : 'when' 
+    : 'when'
     | 'if'
     ;
 
@@ -55,7 +200,7 @@ WHEN_CONDITION
     : 'there is motion'
     ;
 
-WS  
+WS
     : [ \t\r\n]+ -> skip
     ;
 
@@ -70,6 +215,21 @@ NOUN
     : 'lights'
     | 'projector'
     ;
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -170,8 +330,8 @@ sentence: action_sentence (PERIOD)? ;
 action_sentence: action
     | action BOOLEAN_OPERATOR action_sentence
     ;
-action: command 
-    //| command_with_conditions 
+action: command
+    //| command_with_conditions
     //| command UNLESS
     //| command_with_conditions UNLESS
     ;
@@ -237,10 +397,10 @@ number: NUMBER | WS ;
 NUMBER:             INTEGER | FLOAT ;
 //24 hour clock, covers some invalid times too
 clock_time: CLOCK_TIME | WS ;
-CLOCK_TIME:       ('0'..'2')?('0'..'9')(':'('0'..'5')('0'..'9'))?('a.m.'|'p.m.'|'am'|'pm')? ; 
+CLOCK_TIME:       ('0'..'2')?('0'..'9')(':'('0'..'5')('0'..'9'))?('a.m.'|'p.m.'|'am'|'pm')? ;
 
 string: STRING | WS ;
-STRING: 'why';//  (~[\r\n])+ ; 
+STRING: 'why';//  (~[\r\n])+ ;
 
 
 //logic!
@@ -282,9 +442,9 @@ DIRECT_ACTION_VERBS: 'check and see'
     | 'make sure that'
     | 'keep'
     | 'monitor'
-    | 'notify me' 
-    | 'check' 
-    | 'check on' 
+    | 'notify me'
+    | 'check'
+    | 'check on'
     | 'keep track of when'
 //  | 'tell'
 //  | 'inform'
@@ -934,7 +1094,7 @@ ONLINE_SERVICE: 'Facebook'
     | 'my email'
     ;
 
-//OBJECTS: OBJECT 
+//OBJECTS: OBJECT
 //    | OBJECT BOOLEAN_OPERATOR OBJECT
 //    ;
 object: OBJECT | WS ;
@@ -1726,9 +1886,9 @@ indirect_reference: 'what' options_for_what
     | 'how long' options_for_how_long
     | 'how many' OPTIONS_FOR_how_many
     | 'how much' options_for_how_much
-    | 'how much electricity' options_for_how_much_electricity 
+    | 'how much electricity' options_for_how_much_electricity
     | 'how much I' options_for_how_much_I
-    | 'how to' options_for_how_to 
+    | 'how to' options_for_how_to
     | 'when' when_reference
     | 'where' where_reference
     | 'who' who_reference
@@ -1845,7 +2005,7 @@ options_for_how_to: 'be healthier'
 
 where_reference: ENTITY 'is'
     | 'I am'
-    | ENTITY 'are' 
+    | ENTITY 'are'
     | 'it is'
     | DETERMINER OBJECT 'are'
     | DETERMINER OBJECT 'is'
@@ -1863,12 +2023,12 @@ BEFORE: 'before' ;
 AFTER: 'after' ;
 UNTIL: 'until' ;
 UNLESS: 'unless' ;
-IN_ORDER_TO: 'in order to' 
+IN_ORDER_TO: 'in order to'
     | 'so that';
 
-DEFINITE_ARTICLE: 'that' 
+DEFINITE_ARTICLE: 'that'
     | 'the'
-    | 'those' 
+    | 'those'
     ;
 
 ENTITY_CRITERIA: 'have left' OBJECT_STATE
