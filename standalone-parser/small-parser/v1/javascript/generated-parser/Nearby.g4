@@ -67,8 +67,8 @@ fact
     ;
 
 question
-    : is turnable on
-    | are turnables off
+    : IS TURNABLE TURN_STATE
+    | ARE TURNABLES TURN_STATE
     ;
 
 percent
@@ -157,36 +157,24 @@ TO
   : 'to'
   ;
 
-TURN_ON
+TURN_VERB
   : 'turn on'
+  | 'turn off'
   ;
 
-TURN_OFF
-  : 'turn off'
-  ;
-
-UNLOCK
+LOCK_VERB
   : 'unlock'
+  | 'lock'
   ;
 
-LOCK
-  : 'lock'
-  ;
-
-DIM
+DIM_VERB
   : 'dim'
+  | 'brighten'
   ;
 
-BRIGHTEN
-  : 'brighten'
-  ;
-
-ON
+TURN_STATE
   : 'on'
-  ;
-
-OFF
-  : 'off'
+  | 'off'
   ;
 
 LOCKED

@@ -1011,28 +1011,24 @@ function QuestionContext(parser, parent, invokingState) {
 QuestionContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 QuestionContext.prototype.constructor = QuestionContext;
 
-QuestionContext.prototype.is = function() {
-    return this.getTypedRuleContext(IsContext,0);
+QuestionContext.prototype.IS = function() {
+    return this.getToken(NearbyParser.IS, 0);
 };
 
-QuestionContext.prototype.turnable = function() {
-    return this.getTypedRuleContext(TurnableContext,0);
+QuestionContext.prototype.TURNABLE = function() {
+    return this.getToken(NearbyParser.TURNABLE, 0);
 };
 
-QuestionContext.prototype.on = function() {
-    return this.getTypedRuleContext(OnContext,0);
+QuestionContext.prototype.TURN_STATE = function() {
+    return this.getToken(NearbyParser.TURN_STATE, 0);
 };
 
-QuestionContext.prototype.are = function() {
-    return this.getTypedRuleContext(AreContext,0);
+QuestionContext.prototype.ARE = function() {
+    return this.getToken(NearbyParser.ARE, 0);
 };
 
-QuestionContext.prototype.turnables = function() {
-    return this.getTypedRuleContext(TurnablesContext,0);
-};
-
-QuestionContext.prototype.off = function() {
-    return this.getTypedRuleContext(OffContext,0);
+QuestionContext.prototype.TURNABLES = function() {
+    return this.getToken(NearbyParser.TURNABLES, 0);
 };
 
 QuestionContext.prototype.enterRule = function(listener) {
