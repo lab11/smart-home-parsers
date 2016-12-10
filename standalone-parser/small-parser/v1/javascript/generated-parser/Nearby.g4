@@ -35,18 +35,16 @@ command
     ;
 
 action
-    : turn_on turnable
-    | turn_off turnable
-    | turn_on turnables
-    | turn_off turnables
+    : turn_on (turnable | turnables)
+    | turn_off (turnable | turnables)
     | unlock lockable
 //    | lock lockable
 //    | unlock lockables
 //    | lock lockables
-    | dim dimmable (TO percent)?
-    | brighten dimmable (TO percent)?
-    | dim dimmables (TO percent)?
-    | brighten dimmables (TO percent)?
+  //  | dim dimmable (TO percent)?
+  //  | brighten dimmable (TO percent)?
+  //  | dim dimmables (TO percent)?
+  //  | brighten dimmables (TO percent)?
     ;
 
 info_request
