@@ -215,15 +215,17 @@ TO
 //////////////////////////////////////////////
 
 TURNABLE
-    : 'the light'
+    : 'the workbench light'
+    | 'the projector'
     ;
 
 TURNABLES
     : 'the lights'
+    | 'the floor lamps'
     ;
 
 DIMMABLE
-    : 'hue light'
+    : 'Pat"s hue light'
     ;
 
 DIMMABLES
