@@ -5,7 +5,7 @@ var NearbyListener = require('./NearbyListener').NearbyListener;
 var grammarFileName = "Nearby.g4";
 
 var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
-    "\u0003\u001c\u00bf\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
+    "\u0003\u001c\u00c8\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
     "\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007",
     "\u0004\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004\f\t\f",
     "\u0004\r\t\r\u0004\u000e\t\u000e\u0004\u000f\t\u000f\u0004\u0010\t\u0010",
@@ -17,15 +17,17 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u0002\u0003\u0002\u0003\u0003\u0003\u0003\u0005\u0003G\n\u0003\u0003",
     "\u0004\u0003\u0004\u0005\u0004K\n\u0004\u0003\u0005\u0003\u0005\u0003",
     "\u0005\u0005\u0005P\n\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0005",
-    "\u0005U\n\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0005\u0005Z\n\u0005",
-    "\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006",
-    "\u0003\u0006\u0005\u0006c\n\u0006\u0003\u0007\u0003\u0007\u0003\u0007",
-    "\u0005\u0007h\n\u0007\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003",
-    "\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003",
-    "\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0005\b~\n\b\u0003\t\u0003",
-    "\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003",
-    "\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0005\t\u0090\n\t\u0003\n",
-    "\u0003\n\u0003\n\u0003\u000b\u0003\u000b\u0003\f\u0003\f\u0003\r\u0003",
+    "\u0005U\n\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003",
+    "\u0005\u0003\u0005\u0005\u0005]\n\u0005\u0003\u0005\u0003\u0005\u0005",
+    "\u0005a\n\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0005\u0005f\n\u0005",
+    "\u0003\u0005\u0003\u0005\u0005\u0005j\n\u0005\u0005\u0005l\n\u0005\u0003",
+    "\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0005",
+    "\u0006t\n\u0006\u0003\u0007\u0003\u0007\u0003\u0007\u0005\u0007y\n\u0007",
+    "\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0005",
+    "\b\u0083\n\b\u0003\b\u0003\b\u0003\b\u0003\b\u0005\b\u0089\n\b\u0005",
+    "\b\u008b\n\b\u0003\t\u0003\t\u0003\t\u0003\t\u0005\t\u0091\n\t\u0003",
+    "\t\u0003\t\u0003\t\u0003\t\u0005\t\u0097\n\t\u0005\t\u0099\n\t\u0003",
+    "\n\u0003\n\u0003\n\u0003\u000b\u0003\u000b\u0003\f\u0003\f\u0003\r\u0003",
     "\r\u0003\u000e\u0003\u000e\u0003\u000f\u0003\u000f\u0003\u0010\u0003",
     "\u0010\u0003\u0011\u0003\u0011\u0003\u0012\u0003\u0012\u0003\u0013\u0003",
     "\u0013\u0003\u0014\u0003\u0014\u0003\u0015\u0003\u0015\u0003\u0016\u0003",
@@ -34,81 +36,89 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u001c\u0003\u001d\u0003\u001d\u0003\u001e\u0003\u001e\u0003\u001f\u0003",
     "\u001f\u0003\u001f\u0002\u0002 \u0002\u0004\u0006\b\n\f\u000e\u0010",
     "\u0012\u0014\u0016\u0018\u001a\u001c\u001e \"$&(*,.02468:<\u0002\u0002",
-    "\u00b1\u0002?\u0003\u0002\u0002\u0002\u0004F\u0003\u0002\u0002\u0002",
-    "\u0006J\u0003\u0002\u0002\u0002\bY\u0003\u0002\u0002\u0002\nb\u0003",
-    "\u0002\u0002\u0002\fg\u0003\u0002\u0002\u0002\u000e}\u0003\u0002\u0002",
-    "\u0002\u0010\u008f\u0003\u0002\u0002\u0002\u0012\u0091\u0003\u0002\u0002",
-    "\u0002\u0014\u0094\u0003\u0002\u0002\u0002\u0016\u0096\u0003\u0002\u0002",
-    "\u0002\u0018\u0098\u0003\u0002\u0002\u0002\u001a\u009a\u0003\u0002\u0002",
-    "\u0002\u001c\u009c\u0003\u0002\u0002\u0002\u001e\u009e\u0003\u0002\u0002",
-    "\u0002 \u00a0\u0003\u0002\u0002\u0002\"\u00a2\u0003\u0002\u0002\u0002",
-    "$\u00a4\u0003\u0002\u0002\u0002&\u00a6\u0003\u0002\u0002\u0002(\u00a8",
-    "\u0003\u0002\u0002\u0002*\u00aa\u0003\u0002\u0002\u0002,\u00ac\u0003",
-    "\u0002\u0002\u0002.\u00ae\u0003\u0002\u0002\u00020\u00b0\u0003\u0002",
-    "\u0002\u00022\u00b2\u0003\u0002\u0002\u00024\u00b4\u0003\u0002\u0002",
-    "\u00026\u00b6\u0003\u0002\u0002\u00028\u00b8\u0003\u0002\u0002\u0002",
-    ":\u00ba\u0003\u0002\u0002\u0002<\u00bc\u0003\u0002\u0002\u0002>@\u0007",
-    "\u0014\u0002\u0002?>\u0003\u0002\u0002\u0002?@\u0003\u0002\u0002\u0002",
-    "@A\u0003\u0002\u0002\u0002AB\u0005\u0004\u0003\u0002BC\u0007\u0002\u0002",
-    "\u0003C\u0003\u0003\u0002\u0002\u0002DG\u0005\u0006\u0004\u0002EG\u0005",
-    "\u0010\t\u0002FD\u0003\u0002\u0002\u0002FE\u0003\u0002\u0002\u0002G",
-    "\u0005\u0003\u0002\u0002\u0002HK\u0005\b\u0005\u0002IK\u0005\n\u0006",
-    "\u0002JH\u0003\u0002\u0002\u0002JI\u0003\u0002\u0002\u0002K\u0007\u0003",
-    "\u0002\u0002\u0002LO\u0005\u0014\u000b\u0002MP\u00054\u001b\u0002NP",
-    "\u00056\u001c\u0002OM\u0003\u0002\u0002\u0002ON\u0003\u0002\u0002\u0002",
-    "PZ\u0003\u0002\u0002\u0002QT\u0005\u0016\f\u0002RU\u00054\u001b\u0002",
-    "SU\u00056\u001c\u0002TR\u0003\u0002\u0002\u0002TS\u0003\u0002\u0002",
-    "\u0002UZ\u0003\u0002\u0002\u0002VW\u0005\u001a\u000e\u0002WX\u00058",
-    "\u001d\u0002XZ\u0003\u0002\u0002\u0002YL\u0003\u0002\u0002\u0002YQ\u0003",
-    "\u0002\u0002\u0002YV\u0003\u0002\u0002\u0002Z\t\u0003\u0002\u0002\u0002",
-    "[\\\u0005 \u0011\u0002\\]\u0005\f\u0007\u0002]c\u0003\u0002\u0002\u0002",
-    "^_\u0005 \u0011\u0002_`\u0007\u0013\u0002\u0002`a\u0005\u000e\b\u0002",
-    "ac\u0003\u0002\u0002\u0002b[\u0003\u0002\u0002\u0002b^\u0003\u0002\u0002",
-    "\u0002c\u000b\u0003\u0002\u0002\u0002dh\u0005.\u0018\u0002eh\u00050",
-    "\u0019\u0002fh\u00052\u001a\u0002gd\u0003\u0002\u0002\u0002ge\u0003",
-    "\u0002\u0002\u0002gf\u0003\u0002\u0002\u0002h\r\u0003\u0002\u0002\u0002",
-    "ij\u00058\u001d\u0002jk\u0005\"\u0012\u0002kl\u0005*\u0016\u0002l~\u0003",
-    "\u0002\u0002\u0002mn\u00054\u001b\u0002no\u0005\"\u0012\u0002op\u0005",
-    "&\u0014\u0002p~\u0003\u0002\u0002\u0002qr\u00054\u001b\u0002rs\u0005",
-    "\"\u0012\u0002st\u0005(\u0015\u0002t~\u0003\u0002\u0002\u0002uv\u0005",
-    "6\u001c\u0002vw\u0005$\u0013\u0002wx\u0005&\u0014\u0002x~\u0003\u0002",
-    "\u0002\u0002yz\u00056\u001c\u0002z{\u0005$\u0013\u0002{|\u0005(\u0015",
-    "\u0002|~\u0003\u0002\u0002\u0002}i\u0003\u0002\u0002\u0002}m\u0003\u0002",
-    "\u0002\u0002}q\u0003\u0002\u0002\u0002}u\u0003\u0002\u0002\u0002}y\u0003",
-    "\u0002\u0002\u0002~\u000f\u0003\u0002\u0002\u0002\u007f\u0080\u0005",
-    "\"\u0012\u0002\u0080\u0081\u00054\u001b\u0002\u0081\u0082\u0005&\u0014",
-    "\u0002\u0082\u0090\u0003\u0002\u0002\u0002\u0083\u0084\u0005\"\u0012",
-    "\u0002\u0084\u0085\u00054\u001b\u0002\u0085\u0086\u0005(\u0015\u0002",
-    "\u0086\u0090\u0003\u0002\u0002\u0002\u0087\u0088\u0005$\u0013\u0002",
-    "\u0088\u0089\u00056\u001c\u0002\u0089\u008a\u0005&\u0014\u0002\u008a",
-    "\u0090\u0003\u0002\u0002\u0002\u008b\u008c\u0005$\u0013\u0002\u008c",
-    "\u008d\u00056\u001c\u0002\u008d\u008e\u0005(\u0015\u0002\u008e\u0090",
-    "\u0003\u0002\u0002\u0002\u008f\u007f\u0003\u0002\u0002\u0002\u008f\u0083",
-    "\u0003\u0002\u0002\u0002\u008f\u0087\u0003\u0002\u0002\u0002\u008f\u008b",
-    "\u0003\u0002\u0002\u0002\u0090\u0011\u0003\u0002\u0002\u0002\u0091\u0092",
-    "\u0007\u0016\u0002\u0002\u0092\u0093\u0007\u0015\u0002\u0002\u0093\u0013",
-    "\u0003\u0002\u0002\u0002\u0094\u0095\u0007\u0003\u0002\u0002\u0095\u0015",
-    "\u0003\u0002\u0002\u0002\u0096\u0097\u0007\u0004\u0002\u0002\u0097\u0017",
-    "\u0003\u0002\u0002\u0002\u0098\u0099\u0007\u0005\u0002\u0002\u0099\u0019",
-    "\u0003\u0002\u0002\u0002\u009a\u009b\u0007\u0006\u0002\u0002\u009b\u001b",
-    "\u0003\u0002\u0002\u0002\u009c\u009d\u0007\u0007\u0002\u0002\u009d\u001d",
-    "\u0003\u0002\u0002\u0002\u009e\u009f\u0007\b\u0002\u0002\u009f\u001f",
-    "\u0003\u0002\u0002\u0002\u00a0\u00a1\u0007\t\u0002\u0002\u00a1!\u0003",
-    "\u0002\u0002\u0002\u00a2\u00a3\u0007\n\u0002\u0002\u00a3#\u0003\u0002",
-    "\u0002\u0002\u00a4\u00a5\u0007\u000b\u0002\u0002\u00a5%\u0003\u0002",
-    "\u0002\u0002\u00a6\u00a7\u0007\f\u0002\u0002\u00a7\'\u0003\u0002\u0002",
-    "\u0002\u00a8\u00a9\u0007\r\u0002\u0002\u00a9)\u0003\u0002\u0002\u0002",
-    "\u00aa\u00ab\u0007\u000e\u0002\u0002\u00ab+\u0003\u0002\u0002\u0002",
-    "\u00ac\u00ad\u0007\u000f\u0002\u0002\u00ad-\u0003\u0002\u0002\u0002",
-    "\u00ae\u00af\u0007\u0010\u0002\u0002\u00af/\u0003\u0002\u0002\u0002",
-    "\u00b0\u00b1\u0007\u0011\u0002\u0002\u00b11\u0003\u0002\u0002\u0002",
-    "\u00b2\u00b3\u0007\u0012\u0002\u0002\u00b33\u0003\u0002\u0002\u0002",
-    "\u00b4\u00b5\u0007\u0018\u0002\u0002\u00b55\u0003\u0002\u0002\u0002",
-    "\u00b6\u00b7\u0007\u0019\u0002\u0002\u00b77\u0003\u0002\u0002\u0002",
-    "\u00b8\u00b9\u0007\u001c\u0002\u0002\u00b99\u0003\u0002\u0002\u0002",
-    "\u00ba\u00bb\u0007\u001a\u0002\u0002\u00bb;\u0003\u0002\u0002\u0002",
-    "\u00bc\u00bd\u0007\u001b\u0002\u0002\u00bd=\u0003\u0002\u0002\u0002",
-    "\f?FJOTYbg}\u008f"].join("");
+    "\u00c0\u0002?\u0003\u0002\u0002\u0002\u0004F\u0003\u0002\u0002\u0002",
+    "\u0006J\u0003\u0002\u0002\u0002\bk\u0003\u0002\u0002\u0002\nm\u0003",
+    "\u0002\u0002\u0002\fx\u0003\u0002\u0002\u0002\u000e\u008a\u0003\u0002",
+    "\u0002\u0002\u0010\u0098\u0003\u0002\u0002\u0002\u0012\u009a\u0003\u0002",
+    "\u0002\u0002\u0014\u009d\u0003\u0002\u0002\u0002\u0016\u009f\u0003\u0002",
+    "\u0002\u0002\u0018\u00a1\u0003\u0002\u0002\u0002\u001a\u00a3\u0003\u0002",
+    "\u0002\u0002\u001c\u00a5\u0003\u0002\u0002\u0002\u001e\u00a7\u0003\u0002",
+    "\u0002\u0002 \u00a9\u0003\u0002\u0002\u0002\"\u00ab\u0003\u0002\u0002",
+    "\u0002$\u00ad\u0003\u0002\u0002\u0002&\u00af\u0003\u0002\u0002\u0002",
+    "(\u00b1\u0003\u0002\u0002\u0002*\u00b3\u0003\u0002\u0002\u0002,\u00b5",
+    "\u0003\u0002\u0002\u0002.\u00b7\u0003\u0002\u0002\u00020\u00b9\u0003",
+    "\u0002\u0002\u00022\u00bb\u0003\u0002\u0002\u00024\u00bd\u0003\u0002",
+    "\u0002\u00026\u00bf\u0003\u0002\u0002\u00028\u00c1\u0003\u0002\u0002",
+    "\u0002:\u00c3\u0003\u0002\u0002\u0002<\u00c5\u0003\u0002\u0002\u0002",
+    ">@\u0007\u0014\u0002\u0002?>\u0003\u0002\u0002\u0002?@\u0003\u0002\u0002",
+    "\u0002@A\u0003\u0002\u0002\u0002AB\u0005\u0004\u0003\u0002BC\u0007\u0002",
+    "\u0002\u0003C\u0003\u0003\u0002\u0002\u0002DG\u0005\u0006\u0004\u0002",
+    "EG\u0005\u0010\t\u0002FD\u0003\u0002\u0002\u0002FE\u0003\u0002\u0002",
+    "\u0002G\u0005\u0003\u0002\u0002\u0002HK\u0005\b\u0005\u0002IK\u0005",
+    "\n\u0006\u0002JH\u0003\u0002\u0002\u0002JI\u0003\u0002\u0002\u0002K",
+    "\u0007\u0003\u0002\u0002\u0002LO\u0005\u0014\u000b\u0002MP\u00054\u001b",
+    "\u0002NP\u00056\u001c\u0002OM\u0003\u0002\u0002\u0002ON\u0003\u0002",
+    "\u0002\u0002Pl\u0003\u0002\u0002\u0002QT\u0005\u0016\f\u0002RU\u0005",
+    "4\u001b\u0002SU\u00056\u001c\u0002TR\u0003\u0002\u0002\u0002TS\u0003",
+    "\u0002\u0002\u0002Ul\u0003\u0002\u0002\u0002VW\u0005\u001a\u000e\u0002",
+    "WX\u00058\u001d\u0002Xl\u0003\u0002\u0002\u0002Y\\\u0005\u001c\u000f",
+    "\u0002Z]\u0005:\u001e\u0002[]\u0005<\u001f\u0002\\Z\u0003\u0002\u0002",
+    "\u0002\\[\u0003\u0002\u0002\u0002]`\u0003\u0002\u0002\u0002^_\u0007",
+    "\u0017\u0002\u0002_a\u0005\u0012\n\u0002`^\u0003\u0002\u0002\u0002`",
+    "a\u0003\u0002\u0002\u0002al\u0003\u0002\u0002\u0002be\u0005\u001e\u0010",
+    "\u0002cf\u0005:\u001e\u0002df\u0005<\u001f\u0002ec\u0003\u0002\u0002",
+    "\u0002ed\u0003\u0002\u0002\u0002fi\u0003\u0002\u0002\u0002gh\u0007\u0017",
+    "\u0002\u0002hj\u0005\u0012\n\u0002ig\u0003\u0002\u0002\u0002ij\u0003",
+    "\u0002\u0002\u0002jl\u0003\u0002\u0002\u0002kL\u0003\u0002\u0002\u0002",
+    "kQ\u0003\u0002\u0002\u0002kV\u0003\u0002\u0002\u0002kY\u0003\u0002\u0002",
+    "\u0002kb\u0003\u0002\u0002\u0002l\t\u0003\u0002\u0002\u0002ms\u0005",
+    " \u0011\u0002nt\u0005\f\u0007\u0002op\u0005 \u0011\u0002pq\u0007\u0013",
+    "\u0002\u0002qr\u0005\u000e\b\u0002rt\u0003\u0002\u0002\u0002sn\u0003",
+    "\u0002\u0002\u0002so\u0003\u0002\u0002\u0002t\u000b\u0003\u0002\u0002",
+    "\u0002uy\u0005.\u0018\u0002vy\u00050\u0019\u0002wy\u00052\u001a\u0002",
+    "xu\u0003\u0002\u0002\u0002xv\u0003\u0002\u0002\u0002xw\u0003\u0002\u0002",
+    "\u0002y\r\u0003\u0002\u0002\u0002z{\u00058\u001d\u0002{|\u0005\"\u0012",
+    "\u0002|}\u0005*\u0016\u0002}\u008b\u0003\u0002\u0002\u0002~\u007f\u0005",
+    "4\u001b\u0002\u007f\u0082\u0005\"\u0012\u0002\u0080\u0083\u0005&\u0014",
+    "\u0002\u0081\u0083\u0005(\u0015\u0002\u0082\u0080\u0003\u0002\u0002",
+    "\u0002\u0082\u0081\u0003\u0002\u0002\u0002\u0083\u008b\u0003\u0002\u0002",
+    "\u0002\u0084\u0085\u00056\u001c\u0002\u0085\u0088\u0005$\u0013\u0002",
+    "\u0086\u0089\u0005&\u0014\u0002\u0087\u0089\u0005(\u0015\u0002\u0088",
+    "\u0086\u0003\u0002\u0002\u0002\u0088\u0087\u0003\u0002\u0002\u0002\u0089",
+    "\u008b\u0003\u0002\u0002\u0002\u008az\u0003\u0002\u0002\u0002\u008a",
+    "~\u0003\u0002\u0002\u0002\u008a\u0084\u0003\u0002\u0002\u0002\u008b",
+    "\u000f\u0003\u0002\u0002\u0002\u008c\u008d\u0005\"\u0012\u0002\u008d",
+    "\u0090\u00054\u001b\u0002\u008e\u0091\u0005&\u0014\u0002\u008f\u0091",
+    "\u0005(\u0015\u0002\u0090\u008e\u0003\u0002\u0002\u0002\u0090\u008f",
+    "\u0003\u0002\u0002\u0002\u0091\u0099\u0003\u0002\u0002\u0002\u0092\u0093",
+    "\u0005$\u0013\u0002\u0093\u0096\u00056\u001c\u0002\u0094\u0097\u0005",
+    "&\u0014\u0002\u0095\u0097\u0005(\u0015\u0002\u0096\u0094\u0003\u0002",
+    "\u0002\u0002\u0096\u0095\u0003\u0002\u0002\u0002\u0097\u0099\u0003\u0002",
+    "\u0002\u0002\u0098\u008c\u0003\u0002\u0002\u0002\u0098\u0092\u0003\u0002",
+    "\u0002\u0002\u0099\u0011\u0003\u0002\u0002\u0002\u009a\u009b\u0007\u0016",
+    "\u0002\u0002\u009b\u009c\u0007\u0015\u0002\u0002\u009c\u0013\u0003\u0002",
+    "\u0002\u0002\u009d\u009e\u0007\u0003\u0002\u0002\u009e\u0015\u0003\u0002",
+    "\u0002\u0002\u009f\u00a0\u0007\u0004\u0002\u0002\u00a0\u0017\u0003\u0002",
+    "\u0002\u0002\u00a1\u00a2\u0007\u0005\u0002\u0002\u00a2\u0019\u0003\u0002",
+    "\u0002\u0002\u00a3\u00a4\u0007\u0006\u0002\u0002\u00a4\u001b\u0003\u0002",
+    "\u0002\u0002\u00a5\u00a6\u0007\u0007\u0002\u0002\u00a6\u001d\u0003\u0002",
+    "\u0002\u0002\u00a7\u00a8\u0007\b\u0002\u0002\u00a8\u001f\u0003\u0002",
+    "\u0002\u0002\u00a9\u00aa\u0007\t\u0002\u0002\u00aa!\u0003\u0002\u0002",
+    "\u0002\u00ab\u00ac\u0007\n\u0002\u0002\u00ac#\u0003\u0002\u0002\u0002",
+    "\u00ad\u00ae\u0007\u000b\u0002\u0002\u00ae%\u0003\u0002\u0002\u0002",
+    "\u00af\u00b0\u0007\f\u0002\u0002\u00b0\'\u0003\u0002\u0002\u0002\u00b1",
+    "\u00b2\u0007\r\u0002\u0002\u00b2)\u0003\u0002\u0002\u0002\u00b3\u00b4",
+    "\u0007\u000e\u0002\u0002\u00b4+\u0003\u0002\u0002\u0002\u00b5\u00b6",
+    "\u0007\u000f\u0002\u0002\u00b6-\u0003\u0002\u0002\u0002\u00b7\u00b8",
+    "\u0007\u0010\u0002\u0002\u00b8/\u0003\u0002\u0002\u0002\u00b9\u00ba",
+    "\u0007\u0011\u0002\u0002\u00ba1\u0003\u0002\u0002\u0002\u00bb\u00bc",
+    "\u0007\u0012\u0002\u0002\u00bc3\u0003\u0002\u0002\u0002\u00bd\u00be",
+    "\u0007\u0018\u0002\u0002\u00be5\u0003\u0002\u0002\u0002\u00bf\u00c0",
+    "\u0007\u0019\u0002\u0002\u00c07\u0003\u0002\u0002\u0002\u00c1\u00c2",
+    "\u0007\u001c\u0002\u0002\u00c29\u0003\u0002\u0002\u0002\u00c3\u00c4",
+    "\u0007\u001a\u0002\u0002\u00c4;\u0003\u0002\u0002\u0002\u00c5\u00c6",
+    "\u0007\u001b\u0002\u0002\u00c6=\u0003\u0002\u0002\u0002\u0014?FJOT\\",
+    "`eiksx\u0082\u0088\u008a\u0090\u0096\u0098"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -342,6 +352,8 @@ NearbyParser.prototype.application = function() {
         case NearbyParser.TURN_ON:
         case NearbyParser.TURN_OFF:
         case NearbyParser.UNLOCK:
+        case NearbyParser.DIM:
+        case NearbyParser.BRIGHTEN:
         case NearbyParser.TELL_ME:
             this.enterOuterAlt(localctx, 1);
             this.state = 66;
@@ -421,6 +433,8 @@ NearbyParser.prototype.command = function() {
         case NearbyParser.TURN_ON:
         case NearbyParser.TURN_OFF:
         case NearbyParser.UNLOCK:
+        case NearbyParser.DIM:
+        case NearbyParser.BRIGHTEN:
             this.enterOuterAlt(localctx, 1);
             this.state = 70;
             this.action();
@@ -487,6 +501,30 @@ ActionContext.prototype.lockable = function() {
     return this.getTypedRuleContext(LockableContext,0);
 };
 
+ActionContext.prototype.dim = function() {
+    return this.getTypedRuleContext(DimContext,0);
+};
+
+ActionContext.prototype.dimmable = function() {
+    return this.getTypedRuleContext(DimmableContext,0);
+};
+
+ActionContext.prototype.dimmables = function() {
+    return this.getTypedRuleContext(DimmablesContext,0);
+};
+
+ActionContext.prototype.TO = function() {
+    return this.getToken(NearbyParser.TO, 0);
+};
+
+ActionContext.prototype.percent = function() {
+    return this.getTypedRuleContext(PercentContext,0);
+};
+
+ActionContext.prototype.brighten = function() {
+    return this.getTypedRuleContext(BrightenContext,0);
+};
+
 ActionContext.prototype.enterRule = function(listener) {
     if(listener instanceof NearbyListener ) {
         listener.enterAction(this);
@@ -508,8 +546,9 @@ NearbyParser.prototype.action = function() {
 
     var localctx = new ActionContext(this, this._ctx, this.state);
     this.enterRule(localctx, 6, NearbyParser.RULE_action);
+    var _la = 0; // Token type
     try {
-        this.state = 87;
+        this.state = 105;
         switch(this._input.LA(1)) {
         case NearbyParser.TURN_ON:
             this.enterOuterAlt(localctx, 1);
@@ -554,6 +593,60 @@ NearbyParser.prototype.action = function() {
             this.state = 85;
             this.lockable();
             break;
+        case NearbyParser.DIM:
+            this.enterOuterAlt(localctx, 4);
+            this.state = 87;
+            this.dim();
+            this.state = 90;
+            switch(this._input.LA(1)) {
+            case NearbyParser.DIMMABLE:
+                this.state = 88;
+                this.dimmable();
+                break;
+            case NearbyParser.DIMMABLES:
+                this.state = 89;
+                this.dimmables();
+                break;
+            default:
+                throw new antlr4.error.NoViableAltException(this);
+            }
+            this.state = 94;
+            _la = this._input.LA(1);
+            if(_la===NearbyParser.TO) {
+                this.state = 92;
+                this.match(NearbyParser.TO);
+                this.state = 93;
+                this.percent();
+            }
+
+            break;
+        case NearbyParser.BRIGHTEN:
+            this.enterOuterAlt(localctx, 5);
+            this.state = 96;
+            this.brighten();
+            this.state = 99;
+            switch(this._input.LA(1)) {
+            case NearbyParser.DIMMABLE:
+                this.state = 97;
+                this.dimmable();
+                break;
+            case NearbyParser.DIMMABLES:
+                this.state = 98;
+                this.dimmables();
+                break;
+            default:
+                throw new antlr4.error.NoViableAltException(this);
+            }
+            this.state = 103;
+            _la = this._input.LA(1);
+            if(_la===NearbyParser.TO) {
+                this.state = 101;
+                this.match(NearbyParser.TO);
+                this.state = 102;
+                this.percent();
+            }
+
+            break;
         default:
             throw new antlr4.error.NoViableAltException(this);
         }
@@ -587,8 +680,15 @@ function Info_requestContext(parser, parent, invokingState) {
 Info_requestContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 Info_requestContext.prototype.constructor = Info_requestContext;
 
-Info_requestContext.prototype.tell_me = function() {
-    return this.getTypedRuleContext(Tell_meContext,0);
+Info_requestContext.prototype.tell_me = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(Tell_meContext);
+    } else {
+        return this.getTypedRuleContext(Tell_meContext,i);
+    }
 };
 
 Info_requestContext.prototype.metric = function() {
@@ -625,28 +725,27 @@ NearbyParser.prototype.info_request = function() {
     var localctx = new Info_requestContext(this, this._ctx, this.state);
     this.enterRule(localctx, 8, NearbyParser.RULE_info_request);
     try {
-        this.state = 96;
-        this._errHandler.sync(this);
-        var la_ = this._interp.adaptivePredict(this._input,6,this._ctx);
-        switch(la_) {
-        case 1:
-            this.enterOuterAlt(localctx, 1);
-            this.state = 89;
-            this.tell_me();
-            this.state = 90;
+        this.enterOuterAlt(localctx, 1);
+        this.state = 107;
+        this.tell_me();
+        this.state = 113;
+        switch(this._input.LA(1)) {
+        case NearbyParser.TEMPERATURE:
+        case NearbyParser.HUMIDITY:
+        case NearbyParser.BRIGHTNESS:
+            this.state = 108;
             this.metric();
             break;
-
-        case 2:
-            this.enterOuterAlt(localctx, 2);
-            this.state = 92;
+        case NearbyParser.TELL_ME:
+            this.state = 109;
             this.tell_me();
-            this.state = 93;
+            this.state = 110;
             this.match(NearbyParser.WHETHER);
-            this.state = 94;
+            this.state = 111;
             this.fact();
             break;
-
+        default:
+            throw new antlr4.error.NoViableAltException(this);
         }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -712,21 +811,21 @@ NearbyParser.prototype.metric = function() {
     var localctx = new MetricContext(this, this._ctx, this.state);
     this.enterRule(localctx, 10, NearbyParser.RULE_metric);
     try {
-        this.state = 101;
+        this.state = 118;
         switch(this._input.LA(1)) {
         case NearbyParser.TEMPERATURE:
             this.enterOuterAlt(localctx, 1);
-            this.state = 98;
+            this.state = 115;
             this.temperature();
             break;
         case NearbyParser.HUMIDITY:
             this.enterOuterAlt(localctx, 2);
-            this.state = 99;
+            this.state = 116;
             this.humidity();
             break;
         case NearbyParser.BRIGHTNESS:
             this.enterOuterAlt(localctx, 3);
-            this.state = 100;
+            this.state = 117;
             this.brightness();
             break;
         default:
@@ -816,60 +915,59 @@ NearbyParser.prototype.fact = function() {
     var localctx = new FactContext(this, this._ctx, this.state);
     this.enterRule(localctx, 12, NearbyParser.RULE_fact);
     try {
-        this.state = 123;
-        this._errHandler.sync(this);
-        var la_ = this._interp.adaptivePredict(this._input,8,this._ctx);
-        switch(la_) {
-        case 1:
+        this.state = 136;
+        switch(this._input.LA(1)) {
+        case NearbyParser.LOCKABLE:
             this.enterOuterAlt(localctx, 1);
-            this.state = 103;
+            this.state = 120;
             this.lockable();
-            this.state = 104;
+            this.state = 121;
             this.is();
-            this.state = 105;
+            this.state = 122;
             this.locked();
             break;
-
-        case 2:
+        case NearbyParser.TURNABLE:
             this.enterOuterAlt(localctx, 2);
-            this.state = 107;
+            this.state = 124;
             this.turnable();
-            this.state = 108;
+            this.state = 125;
             this.is();
-            this.state = 109;
-            this.on();
+            this.state = 128;
+            switch(this._input.LA(1)) {
+            case NearbyParser.ON:
+                this.state = 126;
+                this.on();
+                break;
+            case NearbyParser.OFF:
+                this.state = 127;
+                this.off();
+                break;
+            default:
+                throw new antlr4.error.NoViableAltException(this);
+            }
             break;
-
-        case 3:
+        case NearbyParser.TURNABLES:
             this.enterOuterAlt(localctx, 3);
-            this.state = 111;
-            this.turnable();
-            this.state = 112;
-            this.is();
-            this.state = 113;
-            this.off();
-            break;
-
-        case 4:
-            this.enterOuterAlt(localctx, 4);
-            this.state = 115;
+            this.state = 130;
             this.turnables();
-            this.state = 116;
+            this.state = 131;
             this.are();
-            this.state = 117;
-            this.on();
+            this.state = 134;
+            switch(this._input.LA(1)) {
+            case NearbyParser.ON:
+                this.state = 132;
+                this.on();
+                break;
+            case NearbyParser.OFF:
+                this.state = 133;
+                this.off();
+                break;
+            default:
+                throw new antlr4.error.NoViableAltException(this);
+            }
             break;
-
-        case 5:
-            this.enterOuterAlt(localctx, 5);
-            this.state = 119;
-            this.turnables();
-            this.state = 120;
-            this.are();
-            this.state = 121;
-            this.off();
-            break;
-
+        default:
+            throw new antlr4.error.NoViableAltException(this);
         }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -947,50 +1045,50 @@ NearbyParser.prototype.question = function() {
     var localctx = new QuestionContext(this, this._ctx, this.state);
     this.enterRule(localctx, 14, NearbyParser.RULE_question);
     try {
-        this.state = 141;
-        this._errHandler.sync(this);
-        var la_ = this._interp.adaptivePredict(this._input,9,this._ctx);
-        switch(la_) {
-        case 1:
+        this.state = 150;
+        switch(this._input.LA(1)) {
+        case NearbyParser.IS:
             this.enterOuterAlt(localctx, 1);
-            this.state = 125;
-            this.is();
-            this.state = 126;
-            this.turnable();
-            this.state = 127;
-            this.on();
-            break;
-
-        case 2:
-            this.enterOuterAlt(localctx, 2);
-            this.state = 129;
-            this.is();
-            this.state = 130;
-            this.turnable();
-            this.state = 131;
-            this.off();
-            break;
-
-        case 3:
-            this.enterOuterAlt(localctx, 3);
-            this.state = 133;
-            this.are();
-            this.state = 134;
-            this.turnables();
-            this.state = 135;
-            this.on();
-            break;
-
-        case 4:
-            this.enterOuterAlt(localctx, 4);
-            this.state = 137;
-            this.are();
             this.state = 138;
-            this.turnables();
+            this.is();
             this.state = 139;
-            this.off();
+            this.turnable();
+            this.state = 142;
+            switch(this._input.LA(1)) {
+            case NearbyParser.ON:
+                this.state = 140;
+                this.on();
+                break;
+            case NearbyParser.OFF:
+                this.state = 141;
+                this.off();
+                break;
+            default:
+                throw new antlr4.error.NoViableAltException(this);
+            }
             break;
-
+        case NearbyParser.ARE:
+            this.enterOuterAlt(localctx, 2);
+            this.state = 144;
+            this.are();
+            this.state = 145;
+            this.turnables();
+            this.state = 148;
+            switch(this._input.LA(1)) {
+            case NearbyParser.ON:
+                this.state = 146;
+                this.on();
+                break;
+            case NearbyParser.OFF:
+                this.state = 147;
+                this.off();
+                break;
+            default:
+                throw new antlr4.error.NoViableAltException(this);
+            }
+            break;
+        default:
+            throw new antlr4.error.NoViableAltException(this);
         }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1053,9 +1151,9 @@ NearbyParser.prototype.percent = function() {
     this.enterRule(localctx, 16, NearbyParser.RULE_percent);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 143;
+        this.state = 152;
         this.match(NearbyParser.INTEGER);
-        this.state = 144;
+        this.state = 153;
         this.match(NearbyParser.PCT);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1114,7 +1212,7 @@ NearbyParser.prototype.turn_on = function() {
     this.enterRule(localctx, 18, NearbyParser.RULE_turn_on);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 146;
+        this.state = 155;
         this.match(NearbyParser.TURN_ON);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1173,7 +1271,7 @@ NearbyParser.prototype.turn_off = function() {
     this.enterRule(localctx, 20, NearbyParser.RULE_turn_off);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 148;
+        this.state = 157;
         this.match(NearbyParser.TURN_OFF);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1232,7 +1330,7 @@ NearbyParser.prototype.lock = function() {
     this.enterRule(localctx, 22, NearbyParser.RULE_lock);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 150;
+        this.state = 159;
         this.match(NearbyParser.LOCK);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1291,7 +1389,7 @@ NearbyParser.prototype.unlock = function() {
     this.enterRule(localctx, 24, NearbyParser.RULE_unlock);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 152;
+        this.state = 161;
         this.match(NearbyParser.UNLOCK);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1350,7 +1448,7 @@ NearbyParser.prototype.dim = function() {
     this.enterRule(localctx, 26, NearbyParser.RULE_dim);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 154;
+        this.state = 163;
         this.match(NearbyParser.DIM);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1409,7 +1507,7 @@ NearbyParser.prototype.brighten = function() {
     this.enterRule(localctx, 28, NearbyParser.RULE_brighten);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 156;
+        this.state = 165;
         this.match(NearbyParser.BRIGHTEN);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1468,7 +1566,7 @@ NearbyParser.prototype.tell_me = function() {
     this.enterRule(localctx, 30, NearbyParser.RULE_tell_me);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 158;
+        this.state = 167;
         this.match(NearbyParser.TELL_ME);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1527,7 +1625,7 @@ NearbyParser.prototype.is = function() {
     this.enterRule(localctx, 32, NearbyParser.RULE_is);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 160;
+        this.state = 169;
         this.match(NearbyParser.IS);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1586,7 +1684,7 @@ NearbyParser.prototype.are = function() {
     this.enterRule(localctx, 34, NearbyParser.RULE_are);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 162;
+        this.state = 171;
         this.match(NearbyParser.ARE);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1645,7 +1743,7 @@ NearbyParser.prototype.on = function() {
     this.enterRule(localctx, 36, NearbyParser.RULE_on);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 164;
+        this.state = 173;
         this.match(NearbyParser.ON);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1704,7 +1802,7 @@ NearbyParser.prototype.off = function() {
     this.enterRule(localctx, 38, NearbyParser.RULE_off);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 166;
+        this.state = 175;
         this.match(NearbyParser.OFF);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1763,7 +1861,7 @@ NearbyParser.prototype.locked = function() {
     this.enterRule(localctx, 40, NearbyParser.RULE_locked);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 168;
+        this.state = 177;
         this.match(NearbyParser.LOCKED);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1822,7 +1920,7 @@ NearbyParser.prototype.unlocked = function() {
     this.enterRule(localctx, 42, NearbyParser.RULE_unlocked);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 170;
+        this.state = 179;
         this.match(NearbyParser.UNLOCKED);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1881,7 +1979,7 @@ NearbyParser.prototype.temperature = function() {
     this.enterRule(localctx, 44, NearbyParser.RULE_temperature);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 172;
+        this.state = 181;
         this.match(NearbyParser.TEMPERATURE);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1940,7 +2038,7 @@ NearbyParser.prototype.humidity = function() {
     this.enterRule(localctx, 46, NearbyParser.RULE_humidity);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 174;
+        this.state = 183;
         this.match(NearbyParser.HUMIDITY);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1999,7 +2097,7 @@ NearbyParser.prototype.brightness = function() {
     this.enterRule(localctx, 48, NearbyParser.RULE_brightness);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 176;
+        this.state = 185;
         this.match(NearbyParser.BRIGHTNESS);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2058,7 +2156,7 @@ NearbyParser.prototype.turnable = function() {
     this.enterRule(localctx, 50, NearbyParser.RULE_turnable);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 178;
+        this.state = 187;
         this.match(NearbyParser.TURNABLE);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2117,7 +2215,7 @@ NearbyParser.prototype.turnables = function() {
     this.enterRule(localctx, 52, NearbyParser.RULE_turnables);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 180;
+        this.state = 189;
         this.match(NearbyParser.TURNABLES);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2176,7 +2274,7 @@ NearbyParser.prototype.lockable = function() {
     this.enterRule(localctx, 54, NearbyParser.RULE_lockable);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 182;
+        this.state = 191;
         this.match(NearbyParser.LOCKABLE);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2235,7 +2333,7 @@ NearbyParser.prototype.dimmable = function() {
     this.enterRule(localctx, 56, NearbyParser.RULE_dimmable);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 184;
+        this.state = 193;
         this.match(NearbyParser.DIMMABLE);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2294,7 +2392,7 @@ NearbyParser.prototype.dimmables = function() {
     this.enterRule(localctx, 58, NearbyParser.RULE_dimmables);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 186;
+        this.state = 195;
         this.match(NearbyParser.DIMMABLES);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {

@@ -41,15 +41,12 @@ action
 //    | lock lockable
 //    | unlock lockables
 //    | lock lockables
-  //  | dim dimmable (TO percent)?
-  //  | brighten dimmable (TO percent)?
-  //  | dim dimmables (TO percent)?
-  //  | brighten dimmables (TO percent)?
+      | dim (dimmable | dimmables) (TO percent)?
+      | brighten (dimmable | dimmables) (TO percent)?
     ;
 
 info_request
-    : tell_me metric
-    | tell_me WHETHER fact
+    : tell_me (metric | tell_me WHETHER fact)
     ;
 
 metric
@@ -61,17 +58,13 @@ metric
 fact
     : lockable is locked
 //    | lockables are locked
-    | turnable is on
-    | turnable is off
-    | turnables are on
-    | turnables are off
+    | turnable is (on | off)
+    | turnables are (on | off)
     ;
 
 question
-    : is turnable on
-    | is turnable off
-    | are turnables on
-    | are turnables off
+    : is turnable (on | off)
+    | are turnables (on | off)
     ;
 
 percent
