@@ -236,6 +236,15 @@ NearbyListener.prototype.exitBrightness = function(ctx) {
 };
 
 
+// Enter a parse tree produced by NearbyParser#what.
+NearbyListener.prototype.enterWhat = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#what.
+NearbyListener.prototype.exitWhat = function(ctx) {
+};
+
+
 // Enter a parse tree produced by NearbyParser#turnable.
 NearbyListener.prototype.enterTurnable = function(ctx) {
 };

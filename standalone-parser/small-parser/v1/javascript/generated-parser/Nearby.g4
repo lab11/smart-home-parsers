@@ -46,7 +46,8 @@ action
     ;
 
 info_request
-    : tell_me (metric | tell_me WHETHER fact)
+    : tell_me (metric | WHETHER fact)
+    | what is metric
     ;
 
 metric
@@ -154,6 +155,11 @@ BRIGHTNESS
     : 'the brightness'
     ;
 brightness: BRIGHTNESS;
+
+WHAT
+    : 'what'
+    ;
+what: WHAT;
 
 
 
