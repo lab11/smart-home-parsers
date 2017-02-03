@@ -82,6 +82,7 @@ def get_lexer_rules(lines):
 def connect_mysql():
     # Connect to the database
     connection = pymysql.connect(host='localhost',
+				 port=config.port,
                                  user=config.username,
                                  password=config.password,
                                  cursorclass=pymysql.cursors.DictCursor)
@@ -90,6 +91,7 @@ def connect_mysql():
 def connect_tokens_db():
     # Connect to the database
     connection = pymysql.connect(host='localhost',
+				 port=config.port,
                                  user=config.username,
                                  password=config.password,
                                  db=config.dbname,
