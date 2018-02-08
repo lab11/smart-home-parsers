@@ -1,0 +1,356 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>Scarlett</title>
+    <script src="node_modules/stanza.io/build/stanzaio.bundle.js"></script>
+    <script type="text/javascript" src="lib/require.js"></script>
+    <script type="text/javascript" src="lib/translator.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/flat-index2.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.conversejs.org/css/converse.min.css">
+</head>
+
+<body>
+
+  <div id="settings">
+    <form id="loginInfo">
+      <label>User: <input id="user" type="text" name="user"/></label>
+      <label>Password: <input id="password" type="password" name="password" /></label>
+      <input id="connect" type="button" value="Connect" />
+      <label id="connection_status">Disconnected</label>
+    </form>
+  </div>
+
+<script>
+  var client = null;
+  var loginInfo = document.getElementById('connect');
+  loginInfo.onclick = function (e) {
+    console.log("yeee haw")
+    if (e.preventDefault) e.preventDefault();
+
+    var user = document.getElementById('user').value;
+    var jid = user + "@aubade"
+
+    if (client !== null) {
+      client.disconnect();
+    }
+
+    client = XMPP.createClient({
+      jid: jid,
+      password: document.getElementById('password').value,
+
+      // If you have a .well-known/host-meta.json file for your
+      // domain, the connection transport config can be skipped.
+
+      transport: 'websocket',
+      wsURL: 'ws://127.0.0.1:5280/websocket'//'ws://127.0.0.1:5280/websocket'
+      // (or `boshURL` if using 'bosh' as the transport)
+  });
+
+  client.on('session:started', function () {
+    console.log("Started XMPP session")
+    document.getElementById('connection_status').innerHTML = "Connected as " + user;
+      document.getElementById("history_box").innerHTML = "";
+      client.joinRoom("test_room@conference.aubade", user, {joinMuc: {history: {maxstanzas: 20}}} );
+      client.getRoster();
+      client.sendPresence();
+      client.enableCarbons(function (err) {
+              if (err) {
+                  console.log('Server does not support carbons');
+              }
+          });
+      //client.sendMessage({to: "test_room@conference.aubade", body: "Hello!", type: 'groupchat'});
+      //client.searchHistory({
+      //          jid: "test_room@conference.aubade",
+      //          rsm: {max: number || 20, before: user.firstTimestamp || true},
+      //          complete: false
+//})
+  });
+
+  client.on('message', function (msg) {
+    console.log("hit on 'message'");
+    console.log(msg);
+    //console.log("From: " + msg.from.resource + " Msg: " + msg.body);
+    if ("delay" in msg) {
+      var d = new Date(Date.parse(msg.delay.stamp));
+      var record = d.toLocaleString() + "\t" + msg.from.resource + ":\t" + msg.body;
+      console.log(record);
+      document.getElementById("history_box").innerHTML = document.getElementById("history_box").innerHTML + record + "\n";
+      document.getElementById("history_box").scrollTop = document.getElementById("history_box").scrollHeight;
+    } else if ("body" in msg){
+      var d = new Date(); //"Wed Mar 25 2015 09:56:24 GMT+0100 (W. Europe Standard Time)"
+      var record = d.toLocaleString() + "\t" + msg.from.resource + ":\t" + msg.body;
+      console.log(msg);
+      document.getElementById("history_box").innerHTML = document.getElementById("history_box").innerHTML + record + "\n";
+      document.getElementById("history_box").scrollTop = document.getElementById("history_box").scrollHeight;
+    };
+    //console.log(msg.body);
+  });
+
+  client.on('chat', function (msg) {
+    console.log("hit on 'chat'");
+    //  client.sendMessage({
+    //    to: msg.from,
+    //    body: 'You sent: ' + msg.body
+    //  });
+  });
+
+  client.on('raw:incoming', function (msg) {
+  //  console.log("hit on 'raw:incoming'");
+  //  console.log(msg);
+    //  client.sendMessage({
+    //    to: msg.from,
+    //    body: 'You sent: ' + msg.body
+    //  });
+  });
+
+  client.connect();
+  return false;
+};
+  </script>
+
+  <div id="header">
+   <!-- <font color=#ffe07e>O</font><font color=#ffcfcf>K</font><font color=#b795c7>,</font> <font color=#ffd9be>S</font><font color=#8fe9da>c</font><font color=#ffe07e>a</font><font color=#ffcfcf>r</font><font color=#b795c7>l</font><font color=#ffd9be>e</font><font color=#8fe9da>t</font><font color=#ffe07e>t</font><font color=#ffcfcf>...</font> -->
+   Ok, Scarlett...
+  </div>
+
+  <div id="history" align="center">
+    <textarea id="history_box" style="width: 80%; height: 300px;" readonly="readonly" disabled="disabled"> </textarea>
+
+  </div>
+
+  <div id="inputs" align="center">
+    <form>
+      <div class = "container">
+        <input type="text" id="user_input" onkeyup="showResult(this.value.toLowerCase())" onfocusout="clearSuggestions()" onfocus="showResult(this.value.toLowerCase())">
+        <button id="parse" class="button" type="button">&#9655;</button><!-- filled in: &#9654; outline: &#9655;-->
+      </div>
+
+      <div style="width: 80%; display: table;">
+      <div style="display: table-row">
+          <div style="display: table-cell;"><div id="autocomplete" class="suggestions"></div></div>
+          <div style="display: table-cell;width:60px;"></div>
+      </div>
+      </div>
+    </form>
+  <!--
+    <div class="container">
+       <div id="autocomplete" class="suggestions"></div>
+       <div style="width:60px;"></div>
+    </div>-->
+  </div>
+  <div align="center" style="margin-top:10px;">
+     <div id="tokens" style="width:80%;text-align:left;"><br></div>
+     <div id="treediv" style="width:80%;text-align:left;"></div>
+  </div>
+
+  <script type="text/javascript">
+
+  $(document).ready(function() {
+    $(window).keydown(function(event){
+      if(event.keyCode == 13) {
+        event.preventDefault();
+        document.getElementById("parse").click();
+        return false;
+      }
+    });
+  });
+
+  //Thanks to http://tomassetti.me/antlr-and-the-web/
+  var updateTree = function(tree, ruleNames) {
+      var container = document.getElementById("treediv");
+      while (container.hasChildNodes()) {
+          container.removeChild(container.lastChild);
+      }
+      recurseTree(container, tree, ruleNames)
+  };
+
+  var recurseTree = function(container, tree, ruleNames) {
+      if (tree.children !== undefined && tree.children != null) {
+          for (var i = 0; i < tree.children.length; i++) {
+              var child = tree.children[i];
+              recurseTree(container, child, ruleNames);
+          }
+          var nodeType = ruleNames[tree.ruleIndex];
+          var newElement = document.createElement("div");
+          newElement.className = "NearbyApplication";
+          var newElementText = document.createTextNode(nodeType);//child.children[2].getText());
+          newElement.appendChild(newElementText);
+          container.appendChild(newElement);
+      }
+  };
+
+  var ErrorListener = require('antlr4/error/ErrorListener').ErrorListener;
+  function TestGrammarErrorListener() {
+      ErrorListener.call(this);
+      this.partialApplication = null;
+      this.errors = [];
+      return this;
+  }
+
+  TestGrammarErrorListener.prototype = Object.create(ErrorListener.prototype);
+  TestGrammarErrorListener.prototype.constructor = TestGrammarErrorListener;
+
+  var testTokens; //TEST global for console stuff
+  var testParser;
+  TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingSymbol, line, column, msg, e) {
+      this.errors.push(arguments);
+      console.log("PARSER ERROR");
+      console.log(msg);
+      var parser = recognizer._ctx.parser;
+      testParser = recognizer._ctx.parser;
+      testTokens = parser.getExpectedTokens(); //CRITICAL. This is an interval set with the numbers that correspond to the expected token types
+      tokenString = testTokens.toString(); //String like '{1..2, 4..9}' or '8..9'
+       console.log(tokenString);
+       var tokenStrArray = tokenString.replace('{', '').replace('}', '').split(", "); //Array of strings like ['1..2', '4..9']
+       var tokenArray = [];
+       console.log(tokenStrArray);
+       for (i = 0; i < tokenStrArray.length; i++) {
+           intInterval = tokenStrArray[i];
+           if (intInterval.indexOf('..') !== -1) {
+               var endpoints = intInterval.split('..');
+               var start = parseInt(endpoints[0], 10);
+               var end = parseInt(endpoints[1], 10);
+               for (j = start; j < end+1; j++) {
+                   tokenArray.push(j);
+               }
+           } else {
+               tokenArray.push(parseInt(intInterval, 10));
+           }
+       }
+      console.log(tokenArray);
+       // End interval set to array of integers conversion
+       // Begin convert from array of integers to array of symbolic names
+       for (i in tokenArray) {
+           tokenArray[i] = parser.symbolicNames[parseInt(tokenArray[i], 10)];
+       }
+       console.log(tokenArray);
+       // End conversion from integers to symbolic names
+
+       this.partialApplication = null;
+       var typeAssistTokens = parser.symbolicNames;
+       var tokens = parser.getTokenStream().tokens;
+
+      // last token is always "fake" EOF token
+      if (tokens.length > 1) {
+          var lastToken = tokens[tokens.length - 2],
+              tokenType = parser.symbolicNames[lastToken.type];
+
+          this.tokenType = tokenType;
+          if (typeAssistTokens.indexOf(tokenType) >= 0) {
+              this.partialApplication = lastToken.text;
+              console.log("partial application: " + this.partialApplication);
+          }
+     }
+
+  //    if (str.length==0) {
+  //        document.getElementById("autocomplete").innerHTML="";
+  //        document.getElementById("autocomplete").style.border="0px";
+  //        return;
+  //    } else {
+          if (window.XMLHttpRequest) {
+              // code for IE7+, Firefox, Chrome, Opera, Safari
+              xmlhttp=new XMLHttpRequest();
+          } else {  // code for IE6, IE5
+              xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+          }
+          xmlhttp.onreadystatechange=function() {
+              if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                document.getElementById("autocomplete").innerHTML=xmlhttp.responseText;
+                document.getElementById("autocomplete").style.border="1px solid #A5ACB2";
+                document.getElementById("autocomplete").style.fontSize="larger";
+  	    }
+          }
+          var qString = "lib/autocomplete.php?";
+          for (i in tokenArray) {
+              qString += "q[]=_" + tokenArray[i] + "&";
+          }
+          var text = "";
+          for (i in tokens) {
+              if (i < tokens.length - 1) {
+                 text += tokens[i].text + " ";
+              }
+          }
+          //text = document.getElementById("user_input").value;
+          qString += "text=" + text;
+          console.log(qString);
+          xmlhttp.open("GET",qString,true);
+          xmlhttp.send();
+   //   }
+  };
+
+
+  function submitMessage(msg) {
+      client.sendMessage({to: "test_room@conference.aubade", body: msg, type: 'groupchat'});
+  };
+
+  function clearSuggestions() {
+      console.log("made it");
+      document.getElementById("autocomplete").innerHTML="";
+      document.getElementById("autocomplete").style.border="0px solid #A5ACB2";
+  }
+
+  var antlr4 = require('antlr4/index');
+  var NearbyLexer = require('generated-parser/NearbyLexer');
+  var NearbyParser = require('generated-parser/NearbyParser');
+
+  document.getElementById("parse").addEventListener("click", function(){
+      submitMessage(document.getElementById("user_input").value);
+      var input = document.getElementById("user_input").value.toLowerCase();
+      var chars = new antlr4.InputStream(input);
+      var lexer = new NearbyLexer.NearbyLexer(chars);
+      var tokens  = new antlr4.CommonTokenStream(lexer);
+      var parser = new NearbyParser.NearbyParser(tokens);
+      var listener = new TestGrammarErrorListener();
+      parser.removeErrorListeners();
+      parser.addErrorListener(listener);
+      parser.buildParseTrees = true;
+      var tree = parser.application();
+      updateTree(tree, parser.ruleNames);
+      var translator = new TargetTranslator();
+      antlr4.tree.ParseTreeWalker.DEFAULT.walk(translator, tree);
+      console.log(translator.target_sentence);
+      var str_json = JSON.stringify(translator.target_sentence);
+      //var request = new XMLHttpRequest();
+      //request.open("POST", "lib/post-to-target.php", true);
+      //request.setRequestHeader("Content-type", "application/json");
+      //request.send(str_json);
+      document.getElementById("user_input").value = "";
+  });
+
+  //var BailErrorStrategy = require('antlr4/error/ErrorStrategy').BailErrorStrategy;
+
+  function showResult(str) {
+      var input = str;
+      var chars = new antlr4.InputStream(input);
+      var lexer = new NearbyLexer.NearbyLexer(chars);
+      var tokens  = new antlr4.CommonTokenStream(lexer);
+      var parser = new NearbyParser.NearbyParser(tokens);
+      var listener = new TestGrammarErrorListener();
+      parser.removeErrorListeners();
+      parser.addErrorListener(listener);
+      parser.buildParseTrees = true;
+      //parser._errHandler = new BailErrorStrategy();
+      console.log(parser._errHandler); //TEST
+      var tree = parser.application();
+      //updateTree(tree, parser.ruleNames);
+
+     document.getElementById("autocomplete").innerHTML="";
+     document.getElementById("autocomplete").style.border="0px";
+
+      var tokens = parser.getTokenStream().tokens;
+      tokens = tokens.slice(0,tokens.length-1);
+
+      var tokenString = "";
+      for (i in tokens) {
+          tokenString += parser.symbolicNames[tokens[i].type] + " ";
+      }
+      //document.getElementById("tokens").innerHTML=tokenString;
+  }
+
+  </script>
+
+</body>
+</html>
