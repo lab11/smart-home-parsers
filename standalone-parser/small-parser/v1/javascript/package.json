@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "stanza.io": "^9.0.1"
+  }
+}
