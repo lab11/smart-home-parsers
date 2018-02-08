@@ -6,8 +6,10 @@
     <title>Scarlett</title>
     <script type="text/javascript" src="lib/require.js"></script>
     <script type="text/javascript" src="lib/translator.js"></script>
+    <script type="text/javascript" src="node_modules/stanza.io/build/stanzaio.bundle.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/flat-index.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.conversejs.org/css/converse.min.css">
 </head>
 
 <body>
@@ -81,7 +83,7 @@ var ErrorListener = require('antlr4/error/ErrorListener').ErrorListener;
 function TestGrammarErrorListener() {
     ErrorListener.call(this);
     this.partialApplication = null;
-    this.errors = [];    
+    this.errors = [];
     return this;
 }
 
@@ -94,8 +96,8 @@ TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingS
     this.errors.push(arguments);
     console.log("PARSER ERROR");
     console.log(msg);
-    var parser = recognizer._ctx.parser; 
-    testParser = recognizer._ctx.parser; 
+    var parser = recognizer._ctx.parser;
+    testParser = recognizer._ctx.parser;
     testTokens = parser.getExpectedTokens(); //CRITICAL. This is an interval set with the numbers that correspond to the expected token types
     tokenString = testTokens.toString();
     tokenArray = tokenString.substring(1,tokenString.length-1).split(", ");
@@ -126,7 +128,7 @@ TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingS
         }
    }
 
-//    if (str.length==0) { 
+//    if (str.length==0) {
 //        document.getElementById("autocomplete").innerHTML="";
 //        document.getElementById("autocomplete").style.border="0px";
 //        return;
@@ -192,7 +194,7 @@ document.getElementById("parse").addEventListener("click", function(){
     var request = new XMLHttpRequest();
     request.open("POST", "lib/post-to-target.php", true);
     request.setRequestHeader("Content-type", "application/json");
-    request.send(str_json); 
+    request.send(str_json);
 });
 
 //var BailErrorStrategy = require('antlr4/error/ErrorStrategy').BailErrorStrategy;
@@ -211,10 +213,10 @@ function showResult(str) {
     console.log(parser._errHandler); //TEST
     var tree = parser.application();
     //updateTree(tree, parser.ruleNames);
-              
+
    document.getElementById("autocomplete").innerHTML="";
    document.getElementById("autocomplete").style.border="0px";
-    
+
     var tokens = parser.getTokenStream().tokens;
     tokens = tokens.slice(0,tokens.length-1);
 
