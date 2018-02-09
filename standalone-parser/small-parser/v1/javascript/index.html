@@ -7,6 +7,7 @@
     <script src="node_modules/stanza.io/build/stanzaio.bundle.js"></script>
     <script type="text/javascript" src="js/require.js"></script>
     <script type="text/javascript" src="js/translator.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/flat-index2.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.conversejs.org/css/converse.min.css">
@@ -22,10 +23,6 @@
       <label id="connection_status">Disconnected</label>
     </form>
   </div>
-
-<script>
-  var domain = "academic-ninja";
-</script>
 
 <script>
   var client = null;
@@ -49,7 +46,7 @@
       // domain, the connection transport config can be skipped.
 
       transport: 'websocket',
-      wsURL: 'ws://parser.connected.house:5281/websocket'//'ws://127.0.0.1:5280/websocket'
+      wsURL: wsURL
       // (or `boshURL` if using 'bosh' as the transport)
   });
 
@@ -57,7 +54,7 @@
     console.log("Started XMPP session")
     document.getElementById('connection_status').innerHTML = "Connected as " + user;
       document.getElementById("history_box").innerHTML = "";
-      client.joinRoom("test_room@conference." + domain, user, {joinMuc: {history: {maxstanzas: 20}}} );
+      client.joinRoom(chatroom + "@conference." + domain, user, {joinMuc: {history: {maxstanzas: 20}}} );
       client.getRoster();
       client.sendPresence();
       client.enableCarbons(function (err) {
@@ -65,12 +62,6 @@
                   console.log('Server does not support carbons');
               }
           });
-      //client.sendMessage({to: "test_room@conference.aubade", body: "Hello!", type: 'groupchat'});
-      //client.searchHistory({
-      //          jid: "test_room@conference.aubade",
-      //          rsm: {max: number || 20, before: user.firstTimestamp || true},
-      //          complete: false
-//})
   });
 
   client.on('message', function (msg) {
@@ -116,7 +107,6 @@
   </script>
 
   <div id="header">
-   <!-- <font color=#ffe07e>O</font><font color=#ffcfcf>K</font><font color=#b795c7>,</font> <font color=#ffd9be>S</font><font color=#8fe9da>c</font><font color=#ffe07e>a</font><font color=#ffcfcf>r</font><font color=#b795c7>l</font><font color=#ffd9be>e</font><font color=#8fe9da>t</font><font color=#ffe07e>t</font><font color=#ffcfcf>...</font> -->
    Ok, Scarlett...
   </div>
 
@@ -139,11 +129,6 @@
       </div>
       </div>
     </form>
-  <!--
-    <div class="container">
-       <div id="autocomplete" class="suggestions"></div>
-       <div style="width:60px;"></div>
-    </div>-->
   </div>
   <div align="center" style="margin-top:10px;">
      <div id="tokens" style="width:80%;text-align:left;"><br></div>
