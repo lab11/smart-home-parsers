@@ -24,14 +24,18 @@
   </div>
 
 <script>
+  var domain = "academic-ninja";
+</script>
+
+<script>
   var client = null;
   var loginInfo = document.getElementById('connect');
   loginInfo.onclick = function (e) {
-    console.log("yeee haw")
+    console.log("clicked connect")
     if (e.preventDefault) e.preventDefault();
 
     var user = document.getElementById('user').value;
-    var jid = user + "@aubade"
+    var jid = user + "@" + domain;
 
     if (client !== null) {
       client.disconnect();
@@ -45,7 +49,7 @@
       // domain, the connection transport config can be skipped.
 
       transport: 'websocket',
-      wsURL: 'ws://127.0.0.1:5280/websocket'//'ws://127.0.0.1:5280/websocket'
+      wsURL: 'ws://parser.connected.house:5281/websocket'//'ws://127.0.0.1:5280/websocket'
       // (or `boshURL` if using 'bosh' as the transport)
   });
 
@@ -53,7 +57,7 @@
     console.log("Started XMPP session")
     document.getElementById('connection_status').innerHTML = "Connected as " + user;
       document.getElementById("history_box").innerHTML = "";
-      client.joinRoom("test_room@conference.aubade", user, {joinMuc: {history: {maxstanzas: 20}}} );
+      client.joinRoom("test_room@conference." + domain, user, {joinMuc: {history: {maxstanzas: 20}}} );
       client.getRoster();
       client.sendPresence();
       client.enableCarbons(function (err) {
@@ -283,7 +287,7 @@
 
 
   function submitMessage(msg) {
-      client.sendMessage({to: "test_room@conference.aubade", body: msg, type: 'groupchat'});
+      client.sendMessage({to: "test_room@conference."+ domain, body: msg, type: 'groupchat'});
   };
 
   function clearSuggestions() {
