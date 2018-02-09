@@ -5,8 +5,8 @@
 <head>
     <title>Scarlett</title>
     <script src="node_modules/stanza.io/build/stanzaio.bundle.js"></script>
-    <script type="text/javascript" src="lib/require.js"></script>
-    <script type="text/javascript" src="lib/translator.js"></script>
+    <script type="text/javascript" src="js/require.js"></script>
+    <script type="text/javascript" src="js/translator.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/flat-index2.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.conversejs.org/css/converse.min.css">
@@ -267,7 +267,7 @@
                 document.getElementById("autocomplete").style.fontSize="larger";
   	    }
           }
-          var qString = "lib/autocomplete.php?";
+          var qString = "php/autocomplete.php?";
           for (i in tokenArray) {
               qString += "q[]=_" + tokenArray[i] + "&";
           }
@@ -318,7 +318,7 @@
       console.log(translator.target_sentence);
       var str_json = JSON.stringify(translator.target_sentence);
       //var request = new XMLHttpRequest();
-      //request.open("POST", "lib/post-to-target.php", true);
+      //request.open("POST", "php/post-to-target.php", true);
       //request.setRequestHeader("Content-type", "application/json");
       //request.send(str_json);
       document.getElementById("user_input").value = "";
