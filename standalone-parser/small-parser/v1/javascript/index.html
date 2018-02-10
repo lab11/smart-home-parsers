@@ -73,7 +73,7 @@
       timestring = d.toLocaleString();
       timecolumn = timestring + Array(24 - timestring.length).join(" ");
       fromstring = msg.from.resource;
-      fromcolumn = fromstring + ":" + Array(15 - fromstring.length).join(" ") + "\t";
+      fromcolumn = fromstring + ":" + Array(15 - fromstring.length).join(" ");
       var record = timecolumn + fromcolumn + msg.body;
       console.log(record);
       document.getElementById("history_box").innerHTML = document.getElementById("history_box").innerHTML + record + "\n";
@@ -83,7 +83,7 @@
       timestring = d.toLocaleString();
       timecolumn = timestring + Array(24 - timestring.length).join(" ");
       fromstring = msg.from.resource;
-      fromcolumn = fromstring + ":" + Array(15 - fromstring.length).join(" ") + "\t";
+      fromcolumn = fromstring + ":" + Array(15 - fromstring.length).join(" ");
       var record = timecolumn + fromcolumn + msg.body;
       console.log(record);
       document.getElementById("history_box").innerHTML = document.getElementById("history_box").innerHTML + record + "\n";
