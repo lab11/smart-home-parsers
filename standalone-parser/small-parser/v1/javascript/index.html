@@ -70,14 +70,22 @@
     //console.log("From: " + msg.from.resource + " Msg: " + msg.body);
     if ("delay" in msg) {
       var d = new Date(Date.parse(msg.delay.stamp));
-      var record = d.toLocaleString() + "\t" + msg.from.resource + ":\t" + msg.body;
+      timestring = d.toLocaleString();
+      timecolumn = timestring + Array(24 - timestring.length).join(" ");
+      fromstring = msg.from.resource;
+      fromcolumn = fromstring + ":" + Array(15 - fromstring.length).join(" ") + "\t";
+      var record = timecolumn + fromcolumn + msg.body;
       console.log(record);
       document.getElementById("history_box").innerHTML = document.getElementById("history_box").innerHTML + record + "\n";
       document.getElementById("history_box").scrollTop = document.getElementById("history_box").scrollHeight;
     } else if ("body" in msg){
       var d = new Date(); //"Wed Mar 25 2015 09:56:24 GMT+0100 (W. Europe Standard Time)"
-      var record = d.toLocaleString() + "\t" + msg.from.resource + ":\t" + msg.body;
-      console.log(msg);
+      timestring = d.toLocaleString();
+      timecolumn = timestring + Array(24 - timestring.length).join(" ");
+      fromstring = msg.from.resource;
+      fromcolumn = fromstring + ":" + Array(15 - fromstring.length).join(" ") + "\t";
+      var record = timecolumn + fromcolumn + msg.body;
+      console.log(record);
       document.getElementById("history_box").innerHTML = document.getElementById("history_box").innerHTML + record + "\n";
       document.getElementById("history_box").scrollTop = document.getElementById("history_box").scrollHeight;
     };
