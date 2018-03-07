@@ -263,15 +263,6 @@ NearbyListener.prototype.exitTurnables = function(ctx) {
 };
 
 
-// Enter a parse tree produced by NearbyParser#lockable.
-NearbyListener.prototype.enterLockable = function(ctx) {
-};
-
-// Exit a parse tree produced by NearbyParser#lockable.
-NearbyListener.prototype.exitLockable = function(ctx) {
-};
-
-
 // Enter a parse tree produced by NearbyParser#dimmable.
 NearbyListener.prototype.enterDimmable = function(ctx) {
 };
@@ -287,6 +278,15 @@ NearbyListener.prototype.enterDimmables = function(ctx) {
 
 // Exit a parse tree produced by NearbyParser#dimmables.
 NearbyListener.prototype.exitDimmables = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#lockable.
+NearbyListener.prototype.enterLockable = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#lockable.
+NearbyListener.prototype.exitLockable = function(ctx) {
 };
 
 

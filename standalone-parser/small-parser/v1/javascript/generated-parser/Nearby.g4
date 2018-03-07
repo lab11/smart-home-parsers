@@ -163,12 +163,11 @@ what: WHAT;
 
 
 
-turnable: TURNABLE;
-turnables: TURNABLES;
-lockable: LOCKABLE;
+//turnables: TURNABLES;
+//lockable: LOCKABLE;
 //lockables: LOCKABLES;
-dimmable: DIMMABLE;
-dimmables: DIMMABLES;
+//dimmable: DIMMABLE;
+//dimmables: DIMMABLES;
 
 
 
@@ -213,28 +212,39 @@ TO
 // DYNAMIC LEXER RULES
 //////////////////////////////////////////////
 
-TURNABLE
-    : 'the workbench light'
-    | 'the projector'
+N1
+    : 'the desk light'
     ;
 
-TURNABLES
+N2
+    : 'the projector'
+    ;
+
+N3
     : 'the lights'
-    | 'the floor lamps'
     ;
 
-DIMMABLE
-    : 'Pat"s hue light'
-    ;
-
-DIMMABLES
-    : 'the hue lights'
-    ;
-
-LOCKABLE
+N6
     : 'the door'
     ;
 
-//LOCKABLES
-//    : ''
-//    ;
+turnable
+    : N1
+    | N2
+    ;
+
+turnables
+    : N3
+    ;
+
+dimmable
+    : N1
+    ;
+
+dimmables
+    : N3
+    ;
+
+lockable
+    : N6
+    ;
