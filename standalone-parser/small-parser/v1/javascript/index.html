@@ -33,6 +33,7 @@
 
     var user = document.getElementById('user').value;
     var jid = user + "@" + domain;
+    console.log(jid);
 
     if (client !== null) {
       client.disconnect();
