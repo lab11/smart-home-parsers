@@ -259,6 +259,7 @@
                 document.getElementById("autocomplete").innerHTML=xmlhttp.responseText;
                 document.getElementById("autocomplete").style.border="1px solid #A5ACB2";
                 document.getElementById("autocomplete").style.fontSize="larger";
+                document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 1)";
   	    }
           }
 
@@ -297,6 +298,7 @@
       console.log("made it");
       document.getElementById("autocomplete").innerHTML="";
       document.getElementById("autocomplete").style.border="0px solid #A5ACB2";
+      document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 0)";
   }
 
   var antlr4 = require('antlr4/index');
@@ -346,6 +348,7 @@
 
      document.getElementById("autocomplete").innerHTML="";
      document.getElementById("autocomplete").style.border="0px";
+     document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 0)";
 
       var tokens = parser.getTokenStream().tokens;
       tokens = tokens.slice(0,tokens.length-1);
