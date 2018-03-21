@@ -86,6 +86,7 @@ input {
    background-color: #FFFFFF;
    text-align: left;
    padding: 4px 14px;
+   background-color: rgba(255,255,255,0);
 }
 
 button {
