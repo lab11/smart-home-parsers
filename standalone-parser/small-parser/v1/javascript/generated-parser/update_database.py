@@ -46,6 +46,7 @@ def build_tables_automatically(lexer_rules):
                 cursor.execute(sql)
                 # Create a new record for each literal
                 for token in tokens:
+                    print(token)
                     sql = "INSERT INTO " + tablename + " (literal) VALUES (%s)"
                     cursor.execute(sql, (token))
                 db.commit()
@@ -72,9 +73,11 @@ def get_lexer_rules(lines):
         tokens = []
         if rule_name not in special_rules:
             for line in lines[2:-1]:
-                matches = re.findall("'([^']*)'", line)
+                pat2 = re.compile(r"'(.*?)(?<!\\)'")
+                matches = pat2.findall(line)
                 if len(matches) > 0:
                     token = matches[0]
+                    token = token.replace("\\'", "'")
                     tokens.append(token)
         rules[rule_name] = tokens
     return rules
