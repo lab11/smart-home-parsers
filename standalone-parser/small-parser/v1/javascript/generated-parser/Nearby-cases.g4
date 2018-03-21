@@ -213,7 +213,7 @@ TO
 //////////////////////////////////////////////
 
 N1
-    : 'meghan\'s light'
+    : 'Meghan\'s light'
     ;
 
 N2
@@ -229,15 +229,15 @@ N6
     ;
 
 N7
-    : 'josh\'s light'
+    : 'Josh\'s light'
     ;
 
 N8
-    : 'neal\'s light'
+    : 'Neal\'s light'
     ;
 
 N9
-    : 'pat\'s light'
+    : 'Pat\'s light'
     ;
 
 

@@ -58,7 +58,7 @@ def build_tables_from_special_rules():
     #db = connect()
 
 def get_lines():
-    f = open("Nearby.g4")
+    f = open("Nearby-cases.g4")
     lines = f.read()
     return lines
 

@@ -136,9 +136,9 @@ var literalNames = [ null, "'turn on'", "'turn off'", "'lock'", "'unlock'",
                      "'dim'", "'brighten'", "'tell me'", "'is'", "'are'", 
                      "'on'", "'off'", "'locked'", "'unlocked'", "'the temperature'", 
                      "'the humidity'", "'the brightness'", "'what'", "'whether'", 
-                     null, "'%'", null, "'to'", "'Meghan's light'", "'the projector'", 
-                     "'the lights'", "'the door'", "'Josh's light'", "'Neal's light'", 
-                     "'Pat's light'" ];
+                     null, "'%'", null, "'to'", "'meghan's light'", "'the projector'", 
+                     "'the lights'", "'the door'", "'josh's light'", "'neal's light'", 
+                     "'pat's light'" ];
 
 var symbolicNames = [ null, "TURN_ON", "TURN_OFF", "LOCK", "UNLOCK", "DIM", 
                       "BRIGHTEN", "TELL_ME", "IS", "ARE", "ON", "OFF", "LOCKED", 
