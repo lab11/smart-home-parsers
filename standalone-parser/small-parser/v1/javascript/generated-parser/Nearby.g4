@@ -240,6 +240,10 @@ N9
     : 'pat\'s light'
     ;
 
+N9
+    : 'branden\'s light'
+    ;
+
 
 
 turnable
@@ -248,6 +252,7 @@ turnable
     | N7
     | N8
     | N9
+    | N10
     ;
 
 turnables
@@ -260,6 +265,7 @@ dimmable
     | N7
     | N8
     | N9
+    | N10
     ;
 
 dimmables
