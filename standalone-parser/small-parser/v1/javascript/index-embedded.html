@@ -16,39 +16,58 @@
 
 <body>
 
-
-
-
-<img id="phone" src="./img/smartphone1.png" />
-<div id="interface">
-  <div id="header">
-   Ok, Scarlett...
-  </div>
-
-  <div id="history" align="center">
-    <textarea id="history_box" style="width: 98%; height: 300px;" readonly="readonly" disabled="disabled"> </textarea>
-
-  </div>
-
-  <div id="inputs" align="center">
-    <form>
-      <div class = "container">
-        <input type="text" id="user_input" onkeyup="showResult(this.value.toLowerCase())" onfocusout="clearSuggestions()" onfocus="showResult(this.value.toLowerCase())">
-        <button id="parse" class="button" type="button">&#9655;</button><!-- filled in: &#9654; outline: &#9655;-->
+<div>
+  <!-- conference room simulation -->
+  <div style="background-image:url('./img/conf1.jpeg'); background-size: 100%; width: 60%; background-repeat: no-repeat; float:left; position:relative;">
+      <div style="position:relative; left:0; top:0;">
+          <img id="lights-image" src='./img/conf1-lights-on.png' style="width: 100%;"/>
       </div>
+    <div style="position:absolute; left:0; top:0;">
+          <img id="projector-image" src='./img/conf1-projector-off.png' style="width: 100%;"/>
+      </div>
+  </div>
 
-      <div style="width: 96%; display: table;">
-      <div style="display: table-row">
-          <div style="display: table-cell;"><div id="autocomplete" class="suggestions"></div></div>
-          <div style="display: table-cell;width:60px;"></div>
+  <div style="float:right; top: 0; width:40%; position:relative">
+    <div id="phone-interface" style="position:relative; margin-left:10%;">
+      <img id="phone" src="./img/smartphone2.png" style="position:absolute; top:0; left:0;width:70%;"/>
+      <div id="interface" style="position:absolute; top: 0; left:0; margin-top: 10%; margin-left:2.2%; width:66.1%;">
+        <div style="position:relative;">
+
+        <div id="header">
+         Ok, Scarlett...
+        </div>
+
+        <div id="history" align="center">
+          <textarea id="history_box" style="width: 98%; height: 300px;" readonly="readonly" disabled="disabled"> </textarea>
+
+        </div>
+
+        <div id="inputs" align="center" style="margin-bottom:46%;">
+          <form>
+            <div class = "container">
+              <input type="text" id="user_input" onkeyup="showResult(this.value.toLowerCase())" onfocusout="clearSuggestions()" onfocus="showResult(this.value.toLowerCase())">
+              <button id="parse" class="button" type="button">&#9655;</button><!-- filled in: &#9654; outline: &#9655;-->
+            </div>
+
+            <div style="width: 96%; display: table;">
+            <div style="display: table-row">
+                <div style="display: table-cell;"><div id="autocomplete" class="suggestions"></div></div>
+                <div style="display: table-cell;width:60px;"></div>
+            </div>
+            </div>
+          </form>
+        </div>
+        <div align="center" style="margin-top:10px;">
+           <div id="tokens" style="width:96%;text-align:left;"><br></div>
+           <div id="treediv" style="width:96%;text-align:left;"></div>
+        </div>
+        <div style:"top:50%"></div>
       </div>
       </div>
-    </form>
+    </div>
   </div>
-  <div align="center" style="margin-top:10px;">
-     <div id="tokens" style="width:96%;text-align:left;"><br></div>
-     <div id="treediv" style="width:96%;text-align:left;"></div>
-  </div>
+
+  <div style="clear: both;"></div>
 </div>
 
 <div id="settings">
@@ -59,7 +78,6 @@
     <label id="connection_status">Disconnected</label>
   </form>
 </div>
-
 
 <script>
   var client = null;
@@ -315,8 +333,23 @@
   var NearbyParser = require('generated-parser/NearbyParser');
 
   document.getElementById("parse").addEventListener("click", function(){
-      submitMessage(document.getElementById("user_input").value);
+      //submitMessage(document.getElementById("user_input").value);
       var input = document.getElementById("user_input").value.toLowerCase();
+
+      if (input == "turn on the lights") {
+        console.log("changing light image to on");
+        document.getElementById("lights-image").src="./img/conf1-lights-on.png";
+      } else if (input == "turn off the lights") {
+        console.log("changing light image to off");
+        document.getElementById("lights-image").src="./img/conf1-lights-off.png";
+      } else if (input == "turn on the projector") {
+        console.log("changing projector to on");
+        document.getElementById("projector-image").src="./img/conf1-projector-on.png";
+      } else if (input == "turn off the projector") {
+        console.log("changing projector to off");
+        document.getElementById("projector-image").src="./img/conf1-projector-off.png";
+      }
+
       var chars = new antlr4.InputStream(input);
       var lexer = new NearbyLexer.NearbyLexer(chars);
       var tokens  = new antlr4.CommonTokenStream(lexer);
@@ -335,6 +368,7 @@
       //request.open("POST", "php/post-to-target.php", true);
       //request.setRequestHeader("Content-type", "application/json");
       //request.send(str_json);
+
       document.getElementById("user_input").value = "";
   });
 

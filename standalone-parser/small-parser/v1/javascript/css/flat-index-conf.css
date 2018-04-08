@@ -1,10 +1,10 @@
 body {
    padding: 0;
     margin: 0px auto;
-    background-image: url("../img/conf1.jpeg");
+  /*  background-image: url("../img/conf1.jpeg");
     background-size: contain;
+    background-repeat: no-repeat;*/
     background-color: #ddd;/*#BDE2FE; #bcf2ff;  */
-    background-repeat: no-repeat;
     font-family: arial, verdana, sans-serif;
     font-style: normal;
 }
@@ -73,7 +73,7 @@ input {
 }
 
 #user {
-  width: 150px;
+  width: /150px;
 }
 
 #password {
@@ -122,17 +122,19 @@ button.active {
 }
 
 div#interface {
+  /*
     margin: auto;
-    margin-top: 20%;
+    margin-top: 10%;
     width: 415px;
     height: 730px;
     background: rgba(0,0,0,.4);
-    position: relative;
+    position: relative;*/
+    background: rgba(0,0,0,.4);
 }
 img#phone {
-    position: absolute;
+    /*position: absolute;
     margin-top: -145px;
     width: 708px;
     left: 50%;
-    margin-left: -356px;
+    margin-left: -356px; */
 }
