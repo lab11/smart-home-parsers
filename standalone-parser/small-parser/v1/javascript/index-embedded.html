@@ -9,16 +9,99 @@
     <script type="text/javascript" src="js/require.js"></script>
     <script type="text/javascript" src="js/translator.js"></script>
     <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src='js/state-machine.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/flat-index-conf.css" />
+    <link rel="stylesheet" type="text/css" href="css/flat-index-conf2.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.conversejs.org/css/converse.min.css">
 </head>
 
 <body>
 
-<div>
+
+<!-- Page Layout -->
+<style>
+#overlaytext{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 32px;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+#overlaybutton{
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    font-size: 20px;
+    width: 10%;
+    color: black;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+</style>
+<div id="overlay">
+  <div id="overlaytext">
+    Contact:
+    Meghan Clark (mclarkk@berkeley.edu)
+    PhD Student
+    Electrical Engineering and Computer Science
+    University of California, Berkeley
+
+    Research Study Purpose:
+    To study the impact of different natural language interfaces on the ability to complete tasks in a smart space.
+
+    Procedure:
+    You will have two different phases. Tasks, and a questionnaire. Should take X to complete.
+
+    Benefits:
+
+    There will be two phases, a task phase and then a questionnaire phase.
+
+    Your payment depends on completion of the questionnaire at the end.
+
+    Your anonymous data will be shared with other researchers and kept indefinitely.
+
+    If you want us to delete your data, please send a message via Mechanical Turk or email mclarkk@berkeley.edu with this user id: XXX
+
+    You WILL need to do this on a computer with a big enough screen.
+
+
+
+
+
+
+
+
+
+    Overlay Text</div>
+  <button id="overlaybutton">I have read this and consent</button>
+</div>
+<div id="questionnaire-overlay">
+  <div id="overlaytext">Congratulations! You have completed the last task! To get credit, please answer some questions about your experience: <a id="surveylink" href="https://google.com">Survey</a></div>
+</div>
+</div>
+<style>
+#scenario{
+  width: 100%;
+  height: 80px;
+  color: white;
+  background-color: rgba(0,0,0,0.6);
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+</style>
+<div style="font-color: blue; font-size: 50px; text-align: center;">
+  Smart Room Chatroom
+  <div style="font-size: 30px;">
+    User ID: XXX
+  </div>
+</div>
+<div id="scenario" style="margin-left: 50px; margin-right: 50px; width: 90%; padding: 10px; font-size: 24px;">
+</div>
+<div style="margin-left:50px;">
   <!-- conference room simulation -->
-  <div style="background-image:url('./img/conf1.jpeg'); background-size: 100%; width: 60%; background-repeat: no-repeat; float:left; position:relative;">
+  <div style="background-image:url('./img/conf1.jpeg'); background-size: 100%; width: 60%; background-repeat: no-repeat; float:left; position:relative; margin-top:20px;">
       <div style="position:relative; left:0; top:0;">
           <img id="lights-image" src='./img/conf1-lights-on.png' style="width: 100%;"/>
       </div>
@@ -27,21 +110,25 @@
       </div>
   </div>
 
+  <!-- phone interface-->
   <div style="float:right; top: 0; width:40%; position:relative">
     <div id="phone-interface" style="position:relative; margin-left:10%;">
       <img id="phone" src="./img/smartphone2.png" style="position:absolute; top:0; left:0;width:70%;"/>
       <div id="interface" style="position:absolute; top: 0; left:0; margin-top: 10%; margin-left:2.2%; width:66.1%;">
         <div style="position:relative;">
 
+        <!-- interface title -->
         <div id="header">
          Ok, Scarlett...
         </div>
 
+        <!-- chat history box -->
         <div id="history" align="center">
           <textarea id="history_box" style="width: 98%; height: 300px;" readonly="readonly" disabled="disabled"> </textarea>
 
         </div>
 
+        <!-- chat entry box-->
         <div id="inputs" align="center" style="margin-bottom:46%;">
           <form>
             <div class = "container">
@@ -70,6 +157,11 @@
   <div style="clear: both;"></div>
 </div>
 
+
+
+
+<!-- Login Info Layout -->
+
 <div id="settings">
   <form id="loginInfo">
     <label>User: <input id="user" type="text" name="user"/></label>
@@ -78,6 +170,11 @@
     <label id="connection_status">Disconnected</label>
   </form>
 </div>
+
+
+
+
+<!-- XMPP Client -->
 
 <script>
   var client = null;
@@ -174,23 +271,121 @@
   </script>
 
 
+<!-- Key Events -->
 
+<script>
+  // $(document).ready(function() {
+  //   $(window).keydown(function(event){
+  //     if(event.keyCode == 13) {
+  //       event.preventDefault();
+  //       document.getElementById("parse").click();
+  //       return false;
+  //     }
+  //   });
+  // });
 
+  var scenario1 = "<b>Scenario 1/3:</b> You are in an empty conference room and preparing for a presentation. You have hooked up your laptop to present slides, but as you look at the room, you can see that nothing is displayed to the audience yet. Use the phone's chat app to tell Scarlett, the building's friendly artificial intelligence, what to do next.";
+  var scenario2 = "<b>Scenario 2/3:</b> There is glare on the projector screen that makes it difficult to see the slides. Work with Scarlett to eliminate the glare.";
+  var scenario3 = "<b>Scenario 3/3:</b> The audience want to be able to see their stuff. Use the interface to make sure that there is no glare on the projector AND the audience can see their stuff.";
 
-
-
-
-  <script type="text/javascript">
-
-  $(document).ready(function() {
-    $(window).keydown(function(event){
-      if(event.keyCode == 13) {
-        event.preventDefault();
-        document.getElementById("parse").click();
-        return false;
+  var fsm = new StateMachine({
+    init: 'init',
+    transitions: [
+      { name: 'startOnboard',       from: 'init',  to: 'onboarding' },
+      { name: 'startScenario1',     from: 'onboarding', to: 'scenario1'},
+      { name: 'startTasks1',        from: 'scenario1', to: 'tasks1'},
+      { name: 'startScenario2',     from: 'tasks1', to: 'scenario2'},
+      { name: 'startTasks2',        from: 'scenario2', to: 'tasks2'},
+      { name: 'startScenario3',     from: 'tasks2', to: 'scenario3'},
+      { name: 'startTasks3',        from: 'scenario3', to: 'tasks3'},
+      { name: 'startQuestionnaire', from: 'tasks3', to: 'questionnaire'    }
+    ],
+    methods: {
+      onStartOnboard:       function() {
+        document.getElementById("overlay").style.display = "block";
+      },
+      onStartScenario1:     function() {
+        document.getElementById("overlaytext").innerHTML = scenario1;
+        document.getElementById("scenario").innerHTML = "";
+        document.getElementById("overlaybutton").innerHTML = "Let's do it";
+      },
+      onStartTasks1:        function() {
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("scenario").innerHTML = scenario1;
+      },
+      onStartScenario2:     function() {
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("overlaytext").innerHTML = scenario2;
+        document.getElementById("scenario").innerHTML = "";
+        document.getElementById("overlaybutton").innerHTML = "Let's do it";
+      },
+      onStartTasks2:        function() {
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("scenario").innerHTML = scenario2;
+      },
+      onStartScenario3:     function() {
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("overlaytext").innerHTML = scenario3;
+        document.getElementById("scenario").innerHTML = "";
+        document.getElementById("overlaybutton").innerHTML = "Let's do it";
+      },
+      onStartTasks3:        function() {
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("scenario").innerHTML = scenario3;
+      },
+      onStartQuestionnaire: function() {
+        document.getElementById("questionnaire-overlay").style.display = "block";
       }
-    });
+    }
   });
+
+  fsm.startOnboard();
+
+  document.getElementById("overlaybutton").addEventListener("click", function(){
+    if (fsm.state == 'onboarding') { fsm.startScenario1(); }
+    else if (fsm.state == 'scenario1') { fsm.startTasks1(); }
+    else if (fsm.state == 'scenario2') { fsm.startTasks2(); }
+    else if (fsm.state == 'scenario3') { fsm.startTasks3(); }
+  });
+
+  var PHASE = 0;
+
+  document.onkeydown = function (e) {
+  switch (e.keyCode) {
+    case 13:
+      console.log("Enter key");
+      e.preventDefault();
+      document.getElementById("parse").click();
+      break;
+    case 37:
+      console.log('Go to the previous page!');
+      break;
+    case 39:
+      console.log('Got to the next page');
+      break;
+
+    default:
+      console.log('DEFAULT KEYLOG');
+      console.log(e.keyCode);
+      return; // Do nothing for the rest
+  }
+};
+</script>
+
+
+
+
+<!-- Autocomplete -->
+
+<script type="text/javascript">
+  // select interface
+  var user_id = 0
+  //var interface_id = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+  var interface_id = user_id % 9;
+
+  var survey_link = "https://google.com?user=" + user_id.toString() + "&interface=" + interface_id.toString();
+
+  document.getElementById("surveylink").href = survey_link;
 
   //Thanks to http://tomassetti.me/antlr-and-the-web/
   var updateTree = function(tree, ruleNames) {
@@ -316,13 +511,13 @@
    //   }
   };
 
-
+  // Send message to chatroom
   function submitMessage(msg) {
       client.sendMessage({to: "test_room@conference."+ domain, body: msg, type: 'groupchat'});
   };
 
+  // Remove suggestions
   function clearSuggestions() {
-      console.log("made it");
       document.getElementById("autocomplete").innerHTML="";
       document.getElementById("autocomplete").style.border="0px solid #A5ACB2";
       document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 0)";
@@ -331,6 +526,22 @@
   var antlr4 = require('antlr4/index');
   var NearbyLexer = require('generated-parser/NearbyLexer');
   var NearbyParser = require('generated-parser/NearbyParser');
+
+  var sim_room = {
+    front_cans: null,
+    side_cans: null,
+    ambient: null,
+    overhead: null,
+    the_lights: null,
+    projector: null,
+    right_blinds: null,
+    left_blinds: null,
+    the_blinds: null,
+    temp: null,
+    humidity: null,
+    pressure: null,
+
+  };
 
   document.getElementById("parse").addEventListener("click", function(){
       //submitMessage(document.getElementById("user_input").value);
@@ -370,6 +581,9 @@
       //request.send(str_json);
 
       document.getElementById("user_input").value = "";
+      if (fsm.state == 'tasks1') { fsm.startScenario2(); }
+      else if (fsm.state == 'tasks2') { fsm.startScenario3(); }
+      if (fsm.state == 'tasks3') { fsm.startQuestionnaire(); }
   });
 
   //var BailErrorStrategy = require('antlr4/error/ErrorStrategy').BailErrorStrategy;

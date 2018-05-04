@@ -32,6 +32,35 @@ body {
     margin: 0px auto;
 }
 
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.7); /* Black background with opacity */
+    z-index: 10; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+#questionnaire-overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(1,1,1,1); /* Black background with opacity */
+    color: black;
+    z-index: 10; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
 #settings {
   position: fixed;
   bottom: 0px;
@@ -91,7 +120,7 @@ input {
    padding: 4px 14px;
 }
 
-button {
+#parse {
   display: inline-block;
   width: 60px;
   font-size: 20px;
@@ -106,17 +135,17 @@ button {
   border: solid 0px #6496c8;
 }
 
-button:focus {
+#parse:focus {
   outline: none
 }
 
-button:hover,
-button.hover {
+#parse:hover,
+#parse.hover {
   border-color: #346392;
   color: #346392;
 }
-button:active,
-button.active {
+#parse:active,
+#parse.active {
   border-color: #27496d;
   color: #27496d;
 }
