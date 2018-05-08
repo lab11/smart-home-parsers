@@ -15,19 +15,22 @@
     <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.conversejs.org/css/converse.min.css">
 </head>
 
-<body>
+<body style="height: 100%">
 
 
 <!-- Page Layout -->
 <style>
 #overlaytext{
     position: absolute;
-    top: 50%;
+    top: 30%;
     left: 50%;
-    font-size: 32px;
-    color: white;
+    font-size: 24px;
+    color: black;
     transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
+    background-color:#DDD;
+    padding:20px;
+    border-radius: 25px;
 }
 #overlaybutton{
     position: absolute;
@@ -42,39 +45,27 @@
 </style>
 <div id="overlay">
   <div id="overlaytext">
+    <div style="font-size:16px;">
     Contact:
-    Meghan Clark (mclarkk@berkeley.edu)
-    PhD Student
-    Electrical Engineering and Computer Science
-    University of California, Berkeley
-
-    Research Study Purpose:
-    To study the impact of different natural language interfaces on the ability to complete tasks in a smart space.
-
-    Procedure:
-    You will have two different phases. Tasks, and a questionnaire. Should take X to complete.
-
-    Benefits:
-
-    There will be two phases, a task phase and then a questionnaire phase.
-
-    Your payment depends on completion of the questionnaire at the end.
-
-    Your anonymous data will be shared with other researchers and kept indefinitely.
-
-    If you want us to delete your data, please send a message via Mechanical Turk or email mclarkk@berkeley.edu with this user id: XXX
-
-    You WILL need to do this on a computer with a big enough screen.
-
-
-
-
-
-
-
-
-
-    Overlay Text</div>
+    <br>Meghan Clark (mclarkk@berkeley.edu)
+    <br>PhD Student
+    <br>Electrical Engineering and Computer Science
+    <br>University of California, Berkeley
+    <br>
+    <br>Research Study Purpose:
+    <br>To study the impact of different natural language interfaces on the ability to complete tasks in a smart space.
+    <br>
+    <br>There will be two phases, a task phase and then a questionnaire phase. Should take X to complete.
+    <br>
+    <br>Your payment depends on completion of the questionnaire at the end.
+    <br>
+    <br>Your anonymous data will be shared with other researchers and kept indefinitely.
+    <br>
+    <br>If you want us to delete your data, please send a message via Mechanical Turk or email mclarkk@berkeley.edu with this user id: XXX
+    <br>
+    <br>You WILL need to do this on a computer with a big enough screen.
+    </div>
+  </div>
   <button id="overlaybutton">I have read this and consent</button>
 </div>
 <div id="questionnaire-overlay">
@@ -115,7 +106,7 @@
     <div id="phone-interface" style="position:relative; margin-left:10%;">
       <img id="phone" src="./img/smartphone2.png" style="position:absolute; top:0; left:0;width:70%;"/>
       <div id="interface" style="position:absolute; top: 0; left:0; margin-top: 10%; margin-left:2.2%; width:66.1%;">
-        <div style="position:relative;">
+        <div style="position:relative; height:37em;">
 
         <!-- interface title -->
         <div id="header">
