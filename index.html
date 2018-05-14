@@ -152,13 +152,13 @@
         <div id="inputs" align="center" style="margin-bottom:46%;">
           <form>
             <div class = "container">
-              <input type="text" id="user_input" onkeyup="showResult(this.value.toLowerCase())" onfocusout="clearSuggestions()" onfocus="showResult(this.value.toLowerCase())">
+              <input type="text" id="user_input" onkeyup="showResult(this.value.toLowerCase())" onfocusout="clearSuggestions()" onfocus="showResult(this.value.toLowerCase())" style="font-size: 14px;">
               <button id="parse" class="button" type="button">&#9655;</button><!-- filled in: &#9654; outline: &#9655;-->
             </div>
 
             <div style="width: 96%; display: table;">
             <div style="display: table-row">
-                <div style="display: table-cell;"><div id="autocomplete" class="suggestions"></div></div>
+                <div style="display: table-cell;"><div id="autocomplete" class="suggestions" style="font-size: 14px;"></div></div>
                 <div style="display: table-cell;width:60px;"></div>
             </div>
             </div>
@@ -509,7 +509,6 @@
               if (xmlhttp.readyState==4 && xmlhttp.status==200) {
                 document.getElementById("autocomplete").innerHTML=xmlhttp.responseText;
                 document.getElementById("autocomplete").style.border="1px solid #A5ACB2";
-                document.getElementById("autocomplete").style.fontSize="larger";
                 document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 1)";
   	    }
           }
@@ -675,9 +674,23 @@
       sim_room.accent_lights = sim_room.right_accent || sim_room.left_accent;
       sim_room.the_blinds = sim_room.right_blinds || sim_room.left_blinds;
 
-      if (sim_room.projector == true && fsm.state == 'tasks1') { fsm.startScenario2(); }
-      else if (sim_room.projector == true && sim_room.lights == false && fsm.state == 'tasks2') { fsm.startScenario3(); }
-      if (sim_room.projector == true && sim_room.front_cans == false && sim_room.overhead == true && fsm.state == 'tasks3') { fsm.startQuestionnaire(); }
+
+      var scenario2 = function() {
+        fsm.startScenario2();
+      }
+
+      var scenario3 = function() {
+        fsm.startScenario3();
+      }
+
+      var questionnaire = function() {
+        fsm.startQuestionnaire();
+      }
+
+
+      if (sim_room.projector == true && fsm.state == 'tasks1') {  setTimeout(scenario2, 1000); }
+      else if (sim_room.projector == true && sim_room.lights == false && fsm.state == 'tasks2') { setTimeout(scenario3, 1000); }
+      if (sim_room.projector == true && sim_room.front_cans == false && sim_room.overhead == true && fsm.state == 'tasks3') { setTimeout(questionnaire, 1000); }
 
       var chars = new antlr4.InputStream(input);
       var lexer = new NearbyLexer.NearbyLexer(chars);
