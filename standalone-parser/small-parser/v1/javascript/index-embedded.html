@@ -92,19 +92,48 @@
 </div>
 <div style="margin-left:50px;">
   <!-- conference room simulation -->
-  <div style="background-image:url('./img/conf1.jpeg'); background-size: 100%; width: 60%; background-repeat: no-repeat; float:left; position:relative; margin-top:20px;">
-      <div style="position:relative; left:0; top:0;">
-          <img id="lights-image" src='./img/conf1-lights-on.png' style="width: 100%;"/>
-      </div>
+  <div style="background-image:url('./img/final/base-conf.png'); background-size: 100%; width: 60%; background-repeat: no-repeat; float:left; position:absolute; margin-top:20px; z-index: 0;">
     <div style="position:absolute; left:0; top:0;">
-          <img id="projector-image" src='./img/conf1-projector-off.png' style="width: 100%;"/>
-      </div>
+        <img src='./img/final/base-conf.png' style="width: 100%; z-index: 0;"/>
+    </div> 
+   <div style="position:absolute; left:0; top:0;">
+        <img id="lights-image" src='./img/final/blank.png' style="width: 100%;"/>
+    </div> 
+    <div style="position:absolute; left:0; top:0;">
+        <img id="right-blind-image" src='./img/final/right-blind-up.png' style="width: 100%; z-index: 1;"/>
+    </div>
+
+    <div style="position:absolute; left:0; top:0;">
+        <img id="left-blind-image" src='./img/final/left-blind-up.png' style="width: 100%; z-index: 2;"/>
+    </div>
+
+    <div style="position:absolute; left:0; top:0;">
+        <img id="right-can-image" src='./img/final/blank.png' style="width: 100%; z-index: 1;"/>
+    </div>
+
+    <div style="position:absolute; left:0; top:0;">
+        <img id="left-can-image" src='./img/final/blank.png' style="width: 100%; z-index: 2;"/>
+    </div>
+    
+    <div style="position:absolute; left:0; top:0;">
+        <img id="ambient-image" src='./img/final/ambient-off.png' style="width: 100%; z-index: 3;"/>
+    </div>
+
+    <div style="position:absolute; left:0; top:0;">
+        <img id="projector-image" src='./img/final/blank.png' style="width: 100%; z-index: 4;"/>
+    </div>
+
+    <div style="position:absolute; left:0; top:0;">
+        <img id="front-cans-image" src='./img/final/front-cans-on.png' style="width: 100%; z-index: 5;"/>
+    </div>
+
+
   </div>
 
   <!-- phone interface-->
   <div style="float:right; top: 0; width:40%; position:relative">
     <div id="phone-interface" style="position:relative; margin-left:10%;">
-      <img id="phone" src="./img/smartphone2.png" style="position:absolute; top:0; left:0;width:70%;"/>
+      <img id="phone" src="./img/smartphone3.png" style="position:absolute; top:0; left:0;width:70%;"/>
       <div id="interface" style="position:absolute; top: 0; left:0; margin-top: 10%; margin-left:2.2%; width:66.1%;">
         <div style="position:relative; height:37em;">
 
@@ -519,38 +548,136 @@
   var NearbyParser = require('generated-parser/NearbyParser');
 
   var sim_room = {
-    front_cans: null,
-    side_cans: null,
-    ambient: null,
-    overhead: null,
-    the_lights: null,
-    projector: null,
-    right_blinds: null,
-    left_blinds: null,
-    the_blinds: null,
-    temp: null,
-    humidity: null,
-    pressure: null,
-
+    front_cans: true,
+    right_accent: false,
+    left_accent: false,
+    ambient: false,
+    overhead: true,
+    accent_lights: false,
+    lights: true,
+    projector: false,
+    right_blind: true,
+    left_blind: true,
+    the_blinds: true,
+    temp: 69,
+    humidity: 20,
+    pressure: 1
   };
 
   document.getElementById("parse").addEventListener("click", function(){
       //submitMessage(document.getElementById("user_input").value);
       var input = document.getElementById("user_input").value.toLowerCase();
 
-      if (input == "turn on the lights") {
-        console.log("changing light image to on");
-        document.getElementById("lights-image").src="./img/conf1-lights-on.png";
-      } else if (input == "turn off the lights") {
-        console.log("changing light image to off");
-        document.getElementById("lights-image").src="./img/conf1-lights-off.png";
+      if (input == "turn on the overhead lights") {
+        document.getElementById("lights-image").src="./img/final/blank.png";
+        sim_room.overhead = true;
+      } else if (input == "turn off the overhead lights") {
+        document.getElementById("lights-image").src="./img/final/lights-off.png";
+        sim_room.overhead = false;
+
       } else if (input == "turn on the projector") {
-        console.log("changing projector to on");
-        document.getElementById("projector-image").src="./img/conf1-projector-on.png";
+        document.getElementById("projector-image").src="./img/final/projector-on.png";
+        sim_room.projector = true;
       } else if (input == "turn off the projector") {
-        console.log("changing projector to off");
-        document.getElementById("projector-image").src="./img/conf1-projector-off.png";
+        document.getElementById("projector-image").src="./img/final/blank.png";
+        sim_room.projector = false;
+
+      } else if (input == "turn on the front can lights") {  ///// TO DOOOO
+        sim_room.front_cans = true;
+        document.getElementById("front-cans-image").src="./img/final/front-cans-on.png";
+      } else if (input == "turn off the front can lights") {  ///// TO DOOOO
+        sim_room.front_cans = false;
+        document.getElementById("front-cans-image").src="./img/final/blank.png";
+
+      } else if (input == "turn on the ambient light") {  ///// TO DOOOO
+        sim_room.ambient = true;
+        document.getElementById("ambient-image").src="./img/final/ambient-on.png";
+      } else if (input == "turn off the ambient light") {  ///// TO DOOOO
+        sim_room.ambient = false;
+        document.getElementById("ambient-image").src="./img/final/ambient-off.png";
+
+      } else if (input == "turn on the right accent light") {  ///// TO DOOOO
+        sim_room.right_accent = true;
+        document.getElementById("right-can-image").src="./img/final/right-can-on.png";
+      } else if (input == "turn off the right accent light") {  ///// TO DOOOO
+        sim_room.right_accent = false;
+        document.getElementById("right-can-image").src="./img/final/blank.png";
+
+      } else if (input == "turn on the left accent light") {  ///// TO DOOOO
+        sim_room.left_accent = true;
+        document.getElementById("left-can-image").src="./img/final/left-can-on.png";
+      } else if (input == "turn off the left accent light") {  ///// TO DOOOO
+        sim_room.left_accent = false;
+        document.getElementById("left-can-image").src="./img/final/blank.png";
+
+      } else if (input == "raise the left blind") {  ///// TO DOOOO
+        sim_room.left_blind = true;
+        document.getElementById("left-blind-image").src="./img/final/left-blind-up.png";
+      } else if (input == "lower the left blind") {  ///// TO DOOOO
+        sim_room.left_blind = false;
+        document.getElementById("left-blind-image").src="./img/final/left-blind-down.png";
+
+      } else if (input == "raise the right blind") {  ///// TO DOOOO
+        sim_room.right_blind = true;
+        document.getElementById("right-blind-image").src="./img/final/right-blind-up.png";
+      } else if (input == "lower the right blind") {  ///// TO DOOOO
+        sim_room.right_blind = false;
+        document.getElementById("right-blind-image").src="./img/final/right-blind-down.png";
+
+      } else if (input == "raise the blinds") {  ///// TO DOOOO
+        sim_room.right_blind = true;
+        sim_room.left_blind = true;
+        document.getElementById("right-blind-image").src="./img/final/right-blind-up.png";
+        document.getElementById("left-blind-image").src="./img/final/left-blind-up.png";
+      } else if (input == "lower the blinds") {  ///// TO DOOOO
+        sim_room.right_blind = false;
+        sim_room.left_blind = false;
+        document.getElementById("right-blind-image").src="./img/final/right-blind-down.png";
+        document.getElementById("left-blind-image").src="./img/final/left-blind-down.png";
+
+      } else if (input == "turn on the accent lights") {  ///// TO DOOOO
+        sim_room.right_accent = true;
+        sim_room.left_accent = true;
+        document.getElementById("right-can-image").src="./img/final/right-can-on.png";
+        document.getElementById("left-can-image").src="./img/final/left-can-on.png";
+      } else if (input == "turn off the accent lights") {  ///// TO DOOOO
+        sim_room.right_accent = false;
+        sim_room.left_accent = false;
+        document.getElementById("right-can-image").src="./img/final/blank.png";
+        document.getElementById("left-can-image").src="./img/final/blank.png";
+
+      } else if (input == "turn on the lights") {  ///// TO DOOOO
+        sim_room.overhead = true;
+        sim_room.front_cans = true;
+        sim_room.ambient = true;
+        sim_room.right_accent = true;
+        sim_room.left_accent = true;
+        document.getElementById("lights-image").src="./img/final/blank.png";
+        document.getElementById("front-cans-image").src="./img/final/front-cans-on.png";
+        document.getElementById("ambient-image").src="./img/final/ambient-on.png";
+        document.getElementById("right-can-image").src="./img/final/right-can-on.png";
+        document.getElementById("left-can-image").src="./img/final/left-can-on.png";
+      } else if (input == "turn off the lights") {  ///// TO DOOOO
+        sim_room.overhead = false;
+        sim_room.front_cans = false;
+        sim_room.ambient = false;
+        sim_room.right_accent = false;
+        sim_room.left_accent = false;
+        document.getElementById("lights-image").src="./img/final/lights-off.png";
+        document.getElementById("front-cans-image").src="./img/final/blank.png";
+        document.getElementById("ambient-image").src="./img/final/ambient-off.png";
+        document.getElementById("right-can-image").src="./img/final/blank.png";
+        document.getElementById("left-can-image").src="./img/final/blank.png";
+
       }
+
+      sim_room.lights = sim_room.front_cans || sim_room.right_accent || sim_room.left_accent || sim_room.ambient || sim_room.overhead;
+      sim_room.accent_lights = sim_room.right_accent || sim_room.left_accent;
+      sim_room.the_blinds = sim_room.right_blinds || sim_room.left_blinds;
+
+      if (sim_room.projector == true && fsm.state == 'tasks1') { fsm.startScenario2(); }
+      else if (sim_room.projector == true && sim_room.lights == false && fsm.state == 'tasks2') { fsm.startScenario3(); }
+      if (sim_room.projector == true && sim_room.front_cans == false && sim_room.overhead == true && fsm.state == 'tasks3') { fsm.startQuestionnaire(); }
 
       var chars = new antlr4.InputStream(input);
       var lexer = new NearbyLexer.NearbyLexer(chars);
@@ -572,9 +699,6 @@
       //request.send(str_json);
 
       document.getElementById("user_input").value = "";
-      if (fsm.state == 'tasks1') { fsm.startScenario2(); }
-      else if (fsm.state == 'tasks2') { fsm.startScenario3(); }
-      if (fsm.state == 'tasks3') { fsm.startQuestionnaire(); }
   });
 
   //var BailErrorStrategy = require('antlr4/error/ErrorStrategy').BailErrorStrategy;
