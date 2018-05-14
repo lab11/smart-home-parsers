@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "jshint": "^2.9.5",
     "mysql": "^2.15.0",
     "stanza.io": "^9.0.1"
   },
