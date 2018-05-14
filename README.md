@@ -1,17 +1,9 @@
-Repo for various natural language interface to smart home programs.
+The webpage for the smart room chat room.
 
-```
-antlr4 <grammar file>.g4
-javac <grammar name>*.java
-grun <grammar name> <root rule> -gui
-```
+* index.html is the good stuff
+* antlr4 is an important tool to have in here probably that is used to generate the javascript lexer/parser files from the ANTLR grammar file.
+* generated-parser has the generated files
+* css, js, and php are fairly explanatory
 
-Ex.:
-
-```
-antlr4 SmartHomeV1.g4
-javac SmartHomeV1*.java
-grun SmartHomeV1 application -gui
-```
-
-Type stuff to parse, hit newline, then ctrl+D for EOF will start parse.
+The PHP scripts require a file called `database-credentials.php`.
+The generated-parser update_database scripts need `database_credentials.py`.
