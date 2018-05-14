@@ -110,42 +110,6 @@ NearbyListener.prototype.exitTurn_off = function(ctx) {
 };
 
 
-// Enter a parse tree produced by NearbyParser#lock.
-NearbyListener.prototype.enterLock = function(ctx) {
-};
-
-// Exit a parse tree produced by NearbyParser#lock.
-NearbyListener.prototype.exitLock = function(ctx) {
-};
-
-
-// Enter a parse tree produced by NearbyParser#unlock.
-NearbyListener.prototype.enterUnlock = function(ctx) {
-};
-
-// Exit a parse tree produced by NearbyParser#unlock.
-NearbyListener.prototype.exitUnlock = function(ctx) {
-};
-
-
-// Enter a parse tree produced by NearbyParser#dim.
-NearbyListener.prototype.enterDim = function(ctx) {
-};
-
-// Exit a parse tree produced by NearbyParser#dim.
-NearbyListener.prototype.exitDim = function(ctx) {
-};
-
-
-// Enter a parse tree produced by NearbyParser#brighten.
-NearbyListener.prototype.enterBrighten = function(ctx) {
-};
-
-// Exit a parse tree produced by NearbyParser#brighten.
-NearbyListener.prototype.exitBrighten = function(ctx) {
-};
-
-
 // Enter a parse tree produced by NearbyParser#tell_me.
 NearbyListener.prototype.enterTell_me = function(ctx) {
 };
@@ -260,33 +224,6 @@ NearbyListener.prototype.enterTurnables = function(ctx) {
 
 // Exit a parse tree produced by NearbyParser#turnables.
 NearbyListener.prototype.exitTurnables = function(ctx) {
-};
-
-
-// Enter a parse tree produced by NearbyParser#dimmable.
-NearbyListener.prototype.enterDimmable = function(ctx) {
-};
-
-// Exit a parse tree produced by NearbyParser#dimmable.
-NearbyListener.prototype.exitDimmable = function(ctx) {
-};
-
-
-// Enter a parse tree produced by NearbyParser#dimmables.
-NearbyListener.prototype.enterDimmables = function(ctx) {
-};
-
-// Exit a parse tree produced by NearbyParser#dimmables.
-NearbyListener.prototype.exitDimmables = function(ctx) {
-};
-
-
-// Enter a parse tree produced by NearbyParser#lockable.
-NearbyListener.prototype.enterLockable = function(ctx) {
-};
-
-// Exit a parse tree produced by NearbyParser#lockable.
-NearbyListener.prototype.exitLockable = function(ctx) {
 };
 
 

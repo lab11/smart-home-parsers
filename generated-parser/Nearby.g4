@@ -37,12 +37,12 @@ command
 action
     : turn_on (turnable | turnables)
     | turn_off (turnable | turnables)
-    | unlock lockable
+//    | unlock lockable
 //    | lock lockable
 //    | unlock lockables
 //    | lock lockables
-      | dim (dimmable | dimmables) (TO percent)?
-      | brighten (dimmable | dimmables) (TO percent)?
+ //     | dim (dimmable | dimmables) (TO percent)?
+  //    | brighten (dimmable | dimmables) (TO percent)?
     ;
 
 info_request
@@ -57,9 +57,9 @@ metric
     ;
 
 fact
-    : lockable is locked
+ //   : lockable is locked
 //    | lockables are locked
-    | turnable is (on | off)
+    : turnable is (on | off)
     | turnables are (on | off)
     ;
 
@@ -86,25 +86,25 @@ TURN_OFF
     ;
 turn_off: TURN_OFF;
 
-LOCK
-    : 'lock'
-    ;
-lock: LOCK;
+//LOCK
+//    : 'lock'
+//    ;
+//lock: LOCK;
 
-UNLOCK
-    : 'unlock'
-    ;
-unlock: UNLOCK;
+//UNLOCK
+//    : 'unlock'
+//    ;
+//unlock: UNLOCK;
 
-DIM
-    : 'dim'
-    ;
-dim: DIM;
+//DIM
+//    : 'dim'
+//    ;
+//dim: DIM;
 
-BRIGHTEN
-    : 'brighten'
-    ;
-brighten: BRIGHTEN;
+//BRIGHTEN
+//    : 'brighten'
+//    ;
+//brighten: BRIGHTEN;
 
 TELL_ME
     : 'tell me'
@@ -213,65 +213,78 @@ TO
 //////////////////////////////////////////////
 
 N1
-    : 'meghan\'s light'
+    : 'the front can lights'
     ;
 
 N2
-    : 'the projector'
+    : 'the right accent light'
     ;
 
 N3
+    : 'the left accent light'
+    ;
+
+N4
     : 'the lights'
     ;
 
 N6
-    : 'the door'
+    : 'the accent lights'
     ;
 
 N7
-    : 'josh\'s light'
+    : 'the overhead lights'
     ;
 
 N8
-    : 'neal\'s light'
+    : 'the ambient light'
     ;
 
 N9
-    : 'pat\'s light'
+    : 'the right blind'
     ;
 
 N10
-    : 'branden\'s light'
+    : 'the left blind'
+    ;
+
+N11
+    : 'the blinds'
+    ;
+
+N12
+    : 'the projector'
     ;
 
 
 
 turnable
-    : N1
-    | N2
-    | N7
+    : N2
+    | N3
     | N8
-    | N9
-    | N10
+    | N12
     ;
 
 turnables
-    : N3
-    ;
-
-dimmable
     : N1
-    | N2
+    | N4
+    | N6
     | N7
-    | N8
-    | N9
-    | N10
     ;
 
-dimmables
-    : N3
-    ;
+//dimmable
+//    : N1
+//    | N2
+//    | N7
+//    | N8
+//    | N9
+//    | N10
+//    ;
 
-lockable
-    : N6
-    ;
+//dimmables
+//    : N3
+//    ;
+
+//lockable
+//    : N6
+//    ;
