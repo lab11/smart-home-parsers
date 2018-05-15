@@ -110,6 +110,24 @@ NearbyListener.prototype.exitTurn_off = function(ctx) {
 };
 
 
+// Enter a parse tree produced by NearbyParser#raise.
+NearbyListener.prototype.enterRaise = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#raise.
+NearbyListener.prototype.exitRaise = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#lower.
+NearbyListener.prototype.enterLower = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#lower.
+NearbyListener.prototype.exitLower = function(ctx) {
+};
+
+
 // Enter a parse tree produced by NearbyParser#tell_me.
 NearbyListener.prototype.enterTell_me = function(ctx) {
 };
@@ -152,6 +170,24 @@ NearbyListener.prototype.enterOff = function(ctx) {
 
 // Exit a parse tree produced by NearbyParser#off.
 NearbyListener.prototype.exitOff = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#lowered.
+NearbyListener.prototype.enterLowered = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#lowered.
+NearbyListener.prototype.exitLowered = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#raised.
+NearbyListener.prototype.enterRaised = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#raised.
+NearbyListener.prototype.exitRaised = function(ctx) {
 };
 
 
@@ -224,6 +260,24 @@ NearbyListener.prototype.enterTurnables = function(ctx) {
 
 // Exit a parse tree produced by NearbyParser#turnables.
 NearbyListener.prototype.exitTurnables = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#lowerable.
+NearbyListener.prototype.enterLowerable = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#lowerable.
+NearbyListener.prototype.exitLowerable = function(ctx) {
+};
+
+
+// Enter a parse tree produced by NearbyParser#lowerables.
+NearbyListener.prototype.enterLowerables = function(ctx) {
+};
+
+// Exit a parse tree produced by NearbyParser#lowerables.
+NearbyListener.prototype.exitLowerables = function(ctx) {
 };
 
 

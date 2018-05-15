@@ -37,6 +37,8 @@ command
 action
     : turn_on (turnable | turnables)
     | turn_off (turnable | turnables)
+    | lower (lowerable | lowerables)
+    | raise (lowerable | lowerables)
 //    | unlock lockable
 //    | lock lockable
 //    | unlock lockables
@@ -61,11 +63,15 @@ fact
 //    | lockables are locked
     : turnable is (on | off)
     | turnables are (on | off)
+    | lowerable is (lowered | raised)
+    | lowerables are (lowered | raised)
     ;
 
 question
     : is turnable (on | off)
     | are turnables (on | off)
+    | is lowerable (lowered | raised)
+    | are lowerables (lowered | raised)
     ;
 
 percent
@@ -85,6 +91,16 @@ TURN_OFF
     : 'turn off'
     ;
 turn_off: TURN_OFF;
+
+RAISE
+    : 'raise'
+    ;
+raise: RAISE;
+
+LOWER
+    : 'lower'
+    ;
+lower: LOWER;
 
 //LOCK
 //    : 'lock'
@@ -130,6 +146,16 @@ OFF
   : 'off'
   ;
 off: OFF;
+
+LOWERED
+  : 'lowered'
+  ;
+lowered: LOWERED;
+
+RAISED
+  : 'raised'
+  ;
+raised: RAISED;
 
 LOCKED
   : 'locked'
@@ -270,6 +296,15 @@ turnables
     | N4
     | N6
     | N7
+    ;
+
+lowerable
+    : N9
+    | N10
+    ;
+
+lowerables
+    : N11
     ;
 
 //dimmable
