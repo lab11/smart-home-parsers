@@ -44,29 +44,23 @@
 }
 </style>
 <div id="overlay">
-  <div id="overlaytext">
-    <div style="font-size:16px;">
+  <div id="overlaytext" style="font-size:16px;">
     Contact:
     <br>Meghan Clark (mclarkk@berkeley.edu)
     <br>PhD Student
     <br>Electrical Engineering and Computer Science
     <br>University of California, Berkeley
     <br>
-    <br>Research Study Purpose:
-    <br>To study the impact of different natural language interfaces on the ability to complete tasks in a smart space.
+    <br>Study Purpose: To study the impact of different natural language interfaces on the ability to complete tasks in a smart space.
     <br>
-    <br>There will be two phases, a task phase and then a questionnaire phase. Should take X to complete.
+    <br>There will be two phases, a task phase and then a questionnaire phase. Your payment depends on completion of the questionnaire at the end.
     <br>
-    <br>Your payment depends on completion of the questionnaire at the end.
+    <br>Your anonymous data will be shared with other researchers and kept indefinitely. If you want us to delete your data, please send a message via Mechanical Turk or email mclarkk@berkeley.edu with this user id: XXX
     <br>
-    <br>Your anonymous data will be shared with other researchers and kept indefinitely.
-    <br>
-    <br>If you want us to delete your data, please send a message via Mechanical Turk or email mclarkk@berkeley.edu with this user id: XXX
-    <br>
-    <br>You WILL need to do this on a computer with a big enough screen.
-    </div>
+    <br>You WILL need to do this on a computer with a big enough screen.  
   </div>
-  <button id="overlaybutton">I have read this and consent</button>
+  <button id="overlaybutton" style="margin-top:2em; width: 10em;">I have read this and consent</button>
+  
 </div>
 <div id="questionnaire-overlay">
   <div id="overlaytext">Congratulations! You have completed the last task! To get credit, please answer some questions about your experience: <a id="surveylink" href="https://google.com">Survey</a></div>
@@ -85,10 +79,10 @@
 <div style="font-color: blue; font-size: 50px; text-align: center;">
   Smart Room Chatroom
   <div style="font-size: 30px;">
-    User ID: XXX
+    User ID: demo
   </div>
 </div>
-<div id="scenario" style="margin-left: 50px; margin-right: 50px; width: 90%; padding: 10px; font-size: 24px;">
+<div id="scenario" style="margin-left: 50px; margin-right: 50px; width: 90%; padding: 10px; font-size: 18px;">
 </div>
 <div style="margin-left:50px;">
   <!-- conference room simulation -->
@@ -184,7 +178,7 @@
 
 <div id="settings">
   <form id="loginInfo">
-    <label>User: <input id="user" type="text" name="user"/></label>
+    <label>User: <input id="user" type="text" name="user" /></label>
     <label>Password: <input id="password" type="password" name="password" /></label>
     <input id="connect" type="button" value="Connect" />
     <label id="connection_status">Disconnected</label>
@@ -199,8 +193,8 @@
 <script>
   var client = null;
   var loginInfo = document.getElementById('connect');
-  loginInfo.onclick = function (e) {
-    console.log("clicked connect")
+   loginInfo.onclick = function (e) {
+     console.log("clicked connect")
     if (e.preventDefault) e.preventDefault();
 
     var user = document.getElementById('user').value;
@@ -288,6 +282,11 @@
   client.connect();
   return false;
 };
+
+document.getElementById('user').value = "demo";
+document.getElementById('password').value = "hunter2";
+loginInfo.click();
+
   </script>
 
 
@@ -306,7 +305,7 @@
 
   var scenario1 = "<b>Scenario 1/3:</b> You are in an empty conference room and preparing for a presentation. You have hooked up your laptop to present slides, but as you look at the room, you can see that nothing is displayed to the audience yet. Use the phone's chat app to tell Scarlett, the building's friendly artificial intelligence, what to do next.";
   var scenario2 = "<b>Scenario 2/3:</b> There is glare on the projector screen that makes it difficult to see the slides. Work with Scarlett to eliminate the glare.";
-  var scenario3 = "<b>Scenario 3/3:</b> The audience want to be able to see their stuff. Use the interface to make sure that there is no glare on the projector AND the audience can see their stuff.";
+  var scenario3 = "<b>Scenario 3/3:</b> The audience wants to be able to see their notes. Use the interface to make sure that there is no glare on the projector AND the audience can see their notes.";
 
   var fsm = new StateMachine({
     init: 'init',
@@ -327,7 +326,7 @@
       onStartScenario1:     function() {
         document.getElementById("overlaytext").innerHTML = scenario1;
         document.getElementById("scenario").innerHTML = "";
-        document.getElementById("overlaybutton").innerHTML = "Let's do it";
+        document.getElementById("overlaybutton").innerHTML = "Continue";
       },
       onStartTasks1:        function() {
         document.getElementById("overlay").style.display = "none";
@@ -335,9 +334,9 @@
       },
       onStartScenario2:     function() {
         document.getElementById("overlay").style.display = "block";
-        document.getElementById("overlaytext").innerHTML = scenario2;
+        document.getElementById("overlaytext").innerHTML = "<b>You have completed Scenario 1!</b><br><br>" + scenario2;
         document.getElementById("scenario").innerHTML = "";
-        document.getElementById("overlaybutton").innerHTML = "Let's do it";
+        document.getElementById("overlaybutton").innerHTML = "Continue";
       },
       onStartTasks2:        function() {
         document.getElementById("overlay").style.display = "none";
@@ -345,9 +344,9 @@
       },
       onStartScenario3:     function() {
         document.getElementById("overlay").style.display = "block";
-        document.getElementById("overlaytext").innerHTML = scenario3;
+        document.getElementById("overlaytext").innerHTML = "<b>You have completed Scenario 2!</b><br><br>" + scenario3;
         document.getElementById("scenario").innerHTML = "";
-        document.getElementById("overlaybutton").innerHTML = "Let's do it";
+        document.getElementById("overlaybutton").innerHTML = "Continue";
       },
       onStartTasks3:        function() {
         document.getElementById("overlay").style.display = "none";
