@@ -13,7 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/flat-index-conf2.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.conversejs.org/css/converse.min.css">
-</head>
+</head> 
 
 <body style="height: 100%">
 
@@ -531,7 +531,8 @@ loginInfo.click();
 
   // Send message to chatroom
   function submitMessage(msg) {
-      client.sendMessage({to: "test_room@conference."+ domain, body: msg, type: 'groupchat'});
+//    console.log({to: chatroom + "@conference."+ domain, body: msg, type: 'groupchat'});
+      client.sendMessage({to: chatroom + "@conference."+ domain, body: msg, type: 'groupchat'});
   };
 
   // Remove suggestions
@@ -563,7 +564,7 @@ loginInfo.click();
   };
 
   document.getElementById("parse").addEventListener("click", function(){
-      //submitMessage(document.getElementById("user_input").value);
+      submitMessage(document.getElementById("user_input").value);
       var input = document.getElementById("user_input").value.toLowerCase();
 
       if (input == "turn on the overhead lights") {
