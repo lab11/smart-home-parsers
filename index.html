@@ -78,7 +78,7 @@
 </style>
 <div style="font-color: blue; font-size: 50px; text-align: center;">
   Smart Room Chatroom
-  <div id="user_id" style="font-size: 30px;">
+  <div id="user_id" style="font-size: 18px;">
     User ID: demo
   </div>
 </div>
@@ -145,21 +145,23 @@
 
         <!-- chat history box -->
         <div id="history" align="center">
-          <textarea id="history_box" style="width: 98%; height: 300px;" readonly="readonly" disabled="disabled"> </textarea>
+          <textarea id="history_box" style="width: 98%; height: 200px;" readonly="readonly" disabled="disabled"> </textarea>
 
         </div>
 
-        <!-- chat entry box-->
+        <!-- chat entry box"-->
         <div id="inputs" align="center" style="margin-bottom:46%;">
           <form>
             <div class = "container">
-              <input type="text" id="user_input" onkeyup="showResult(this.value.toLowerCase())" onfocusout="clearSuggestions()" onfocus="showResult(this.value.toLowerCase())" style="font-size: 14px;">
+              <input type="text" id="user_input" onkeyup="showResult(event)"  onfocus="showResult(event)" data-lpignore="true" style="font-size: 14px;">
               <button id="parse" class="button" type="button">&#9655;</button><!-- filled in: &#9654; outline: &#9655;-->
             </div>
 
             <div style="width: 96%; display: table;">
             <div style="display: table-row">
-                <div style="display: table-cell;"><div id="autocomplete" class="suggestions" style="font-size: 14px;"></div></div>
+                <div style="display: table-cell;">
+                  <div id="autocomplete" class="suggestions" style="font-size: 14px; overflow-y: scroll; height: 140px;"></div>
+                </div>
                 <div style="display: table-cell;width:60px;"></div>
             </div>
             </div>
@@ -281,20 +283,31 @@
     else if (fsm.state == 'scenario3') { fsm.startTasks3(); }
   });
 
-  var PHASE = 0;
-
   document.onkeydown = function (e) {
   switch (e.keyCode) {
     case 13:
       console.log("Enter key");
       e.preventDefault();
-      document.getElementById("parse").click();
+      if (CURRENT_OPTION == null) {
+        document.getElementById("parse").click();
+      } else {
+        autofill_option(CURRENT_OPTION);
+      }
       break;
-    case 37:
-      console.log('Go to the previous page!');
+    case 37: //left arrow
+      e.preventDefault();
       break;
-    case 39:
-      console.log('Got to the next page');
+    case 39: //right arrow
+      e.preventDefault();
+      autofill_option(CURRENT_OPTION);
+      break;
+
+    case 38: //up arrow
+      decrement_option();
+      break;
+
+    case 40: //down arrow
+      increment_option();
       break;
 
     default:
@@ -333,15 +346,19 @@
   var full_phrase_suggestions = null;
 
 
-  if (interface_id == 0) {
+  if (interface_id == 8) {
     show_autocomplete = false;
   } else {
     show_autocomplete = true;
-    var autocomplete_interface_bits = interface_id - 1;
-    out_of_order = (autocomplete_interface_bits & 4) >> 2; // highest bit
-    manual_select = (autocomplete_interface_bits & 2) >> 1; // middle bit
-    full_phrase_suggestions = autocomplete_interface_bits & 1; // lowest bit
+    //var autocomplete_interface_bits = interface_id - 1;
+    out_of_order = (interface_id & 4) >> 2; // highest bit
+    manual_select = (interface_id & 2) >> 1; // middle bit
+    full_phrase_suggestions = interface_id & 1; // lowest bit
   }
+
+  console.log("Out-of-order: ", out_of_order);
+  console.log("Manual selection: ", manual_select);
+  console.log("Full phrase suggestions: ", full_phrase_suggestions);
 
   // set chatroom
   var chatroom = "user" + user_id.toString();
@@ -353,7 +370,7 @@
 
   document.getElementById("surveylink").href = survey_link;
 
-  document.getElementById("user_id").innerHTML = "User ID: " + username;
+  document.getElementById("user_id").innerHTML = "Problem? Email mclarkk@berkeley.edu with \"User ID: " + username +"\" in subject line.";
 
 
 
@@ -455,15 +472,6 @@ document.getElementById('password').value = password;
 loginInfo.click();
 
 
-
-
-
-
-
-
-
-
-
   //Thanks to http://tomassetti.me/antlr-and-the-web/
   var updateTree = function(tree, ruleNames) {
       var container = document.getElementById("treediv");
@@ -558,16 +566,19 @@ loginInfo.click();
   //    } else {
           if (window.XMLHttpRequest) {
               // code for IE7+, Firefox, Chrome, Opera, Safari
-              xmlhttp=new XMLHttpRequest();
+              xmlhttp = new XMLHttpRequest();
+              pre_xmlhttp = new XMLHttpRequest()
           } else {  // code for IE6, IE5
               xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+              pre_xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
           }
           xmlhttp.onreadystatechange=function() {
               if (xmlhttp.readyState==4 && xmlhttp.status==200) {
                 document.getElementById("autocomplete").innerHTML=xmlhttp.responseText;
+                console.log("xml response text: ", xmlhttp.responseText);
                 document.getElementById("autocomplete").style.border="1px solid #A5ACB2";
                 document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 1)";
-  	    }
+  	           }
           }
 
           if (show_autocomplete == true) {
@@ -575,9 +586,47 @@ loginInfo.click();
             var qString = null;
             var text = null;
 
+            var typing_in_order = false;
 
-            if (out_of_order == true) {
+
+
+            /*
+            if out-of-order == false OR if typing-in-order == true:
+              if complete_phrases == true:
+                search sentences for STARTING substring
+              else if complete_phrases == false:
+                token-based autocomplete
+            else if out-of-order == true AND typing-in-order == false:
+              search sentences for ANY substring
+            */
+
+            if (out_of_order == false || typing_in_order == true) {
+              if (full_phrase_suggestions == true) {
+                //match starting strings
+                qString = "php/start.php?";
+                text = document.getElementById("user_input").value;
+              } else if (full_phrase_suggestions == false) {
+                // token-based autocomplete
+                var qString = "php/autocomplete.php?";
+                for (i in tokenArray) {
+                    qString += "q[]=_" + tokenArray[i] + "&";
+                }
+                var text = "";
+                for (i in tokens) {
+                    if (i < tokens.length - 1) {
+                       text += tokens[i].text + " ";
+                    }
+                }
+              }
+            } else if (out_of_order == true && typing_in_order == false) {
               qString = "php/search.php?";
+              text = document.getElementById("user_input").value;
+            }
+
+/*
+            if (out_of_order == true) {
+              //qString = "php/search.php?";
+              qString = "php/start.php?";
               text = document.getElementById("user_input").value;
 
             } else {
@@ -593,7 +642,7 @@ loginInfo.click();
                   }
               }
 
-            }
+            }*/
 
             //text = document.getElementById("user_input").value;
             qString += "text=" + text;
@@ -760,8 +809,10 @@ loginInfo.click();
   });
 
   document.getElementById("parse").addEventListener("click", function(){
-      submitMessage(document.getElementById("user_input").value);
-      var input = document.getElementById("user_input").value.toLowerCase();
+      var submission = document.getElementById("user_input").value;
+      submission = submission.trim();
+      submitMessage(submission);
+      var input = submission.toLowerCase();
 
       if (input == "turn on the overhead lights") {
         sim_room.overhead = true;
@@ -895,10 +946,111 @@ loginInfo.click();
       document.getElementById("user_input").value = "";
   });
 
+  var CURRENT_OPTION = null;
+
+  function get_num_options() {
+    var suggestions = document.getElementById("autocomplete").innerHTML;
+    var count = (suggestions.match(/id=\"suggestion/g) || []).length;
+    return count;
+
+  }
+
+  function increment_option() {
+    var num_options = get_num_options();
+    //console.log("num_options", num_options);
+    if (CURRENT_OPTION == null) {
+      CURRENT_OPTION = 0
+      highlight_option(CURRENT_OPTION);
+    } else if (CURRENT_OPTION < num_options-1) {
+      unhighlight_option(CURRENT_OPTION);
+      CURRENT_OPTION = CURRENT_OPTION + 1;
+      highlight_option(CURRENT_OPTION);
+    }
+    //if CURRENT_OPTION >= num_options, do nothing
+  }
+
+  function decrement_option() {
+    if (CURRENT_OPTION == null) {
+      CURRENT_OPTION = null;
+    }
+    else if (CURRENT_OPTION == 0) {
+      unhighlight_option(CURRENT_OPTION);
+      CURRENT_OPTION = null;
+    } else {
+      unhighlight_option(CURRENT_OPTION);
+      CURRENT_OPTION = CURRENT_OPTION - 1;
+      highlight_option(CURRENT_OPTION);
+    }
+  }
+
+  function highlight_option(option_number) {
+    if (option_number != null) {
+      var id = "suggestion" + option_number;
+      suggestion = document.getElementById(id);
+      suggestion.style.backgroundColor = "blue";
+      suggestion.style.color = "white";
+      suggestion.style.paddingLeft = "12px";
+      suggestion.style.marginLeft = "-12px";
+      suggestion.style.paddingRight = "12px";
+      suggestion.style.marginRight = "-12px";
+      suggestion.style.zIndex = "1000";
+      autofill_option();
+    }
+  }
+
+  function unhighlight_option(option_number) {
+    if (option_number != null) {
+      //console.log(option_number);
+      var id = "suggestion" + option_number;
+      suggestion = document.getElementById(id);
+      suggestion.style.backgroundColor = "white";
+      suggestion.style.color = "black";
+      suggestion.style.padding = "0px";
+      suggestion.style.margin = "0px";
+      suggestion.style.zIndex = "1";
+    }
+  }
+
+  function highlight_suggestion(suggestion) {
+    unhighlight_option(CURRENT_OPTION);
+    CURRENT_OPTION = parseInt(suggestion.id.replace("suggestion", ""));
+    highlight_option(CURRENT_OPTION);
+  }
+
+  function unhighlight_suggestion(suggestion) {
+    unhighlight_option(parseInt(suggestion.id.replace("suggestion", "")));
+  }
+
+  function autofill(suggestion) {
+    if (suggestion != null) {
+      var autofilled_text = suggestion.textContent.replace("...", "");
+      document.getElementById("user_input").value = autofilled_text;
+      //clearSuggestions();
+      showResult({keyCode: -1});
+    }
+  }
+
+  function autofill_option(option_number) {
+    var id = "suggestion" + option_number;
+    suggestion = document.getElementById(id);
+    autofill(suggestion);
+  }
+
+  // function select_option(suggestion) {
+  //   var autofilled_text = suggestion.textContent.replace("...", "");
+  //   document.getElementById("user_input").value = autofilled_text;
+  //   //clearSuggestions();
+  //   showResult({keyCode: -1});
+  // }
+
+
   //var BailErrorStrategy = require('antlr4/error/ErrorStrategy').BailErrorStrategy;
 
-  function showResult(str) {
-      var input = str;
+  function showResult(event) {
+      if (event.keyCode == 37 || event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 40) {
+        return;
+      }
+      var input =   document.getElementById("user_input").value.toLowerCase();
       var chars = new antlr4.InputStream(input);
       var lexer = new NearbyLexer.NearbyLexer(chars);
       var tokens  = new antlr4.CommonTokenStream(lexer);
@@ -913,7 +1065,8 @@ loginInfo.click();
       //updateTree(tree, parser.ruleNames);
 
      document.getElementById("autocomplete").innerHTML="";
-     document.getElementById("autocomplete").style.border="0px";
+     document.getElementById("autocomplete").style.border="0px solid #A5ACB2";
+     document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 0)";
 
       var tokens = parser.getTokenStream().tokens;
       tokens = tokens.slice(0,tokens.length-1);
@@ -922,6 +1075,8 @@ loginInfo.click();
       for (i in tokens) {
           tokenString += parser.symbolicNames[tokens[i].type] + " ";
       }
+
+      CURRENT_OPTION = null;
       //document.getElementById("tokens").innerHTML=tokenString;
   }
 
