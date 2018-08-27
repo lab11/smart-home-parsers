@@ -6,28 +6,41 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-} 
+}
 
 $mytable = $_GET["q"];
 $partialtext = $_GET["text"];
 
-for($i=0; $i<count($mytable); $i++) {
-$sql = "SELECT literal FROM " . $mytable[$i];
-$result = $conn->query($sql);
+//echo ucfirst("<select>");
 
-if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        if ($partialtext != '') {
-        $suggestion = $partialtext . ' ' . $row["literal"] . "..." . "<br>";
-       	} else {
-        $suggestion = $row["literal"] . "..." . "<br>";
-        }
-        echo ucfirst($suggestion);
-    }
-} //else {
-//    echo "0 results";
+for($i=0; $i<count($mytable); $i++) {
+  $sql = "SELECT literal FROM " . $mytable[$i];
+  $result = $conn->query($sql);
+
+  if ($result->num_rows > 0) {
+      // output data of each row
+      while($row = $result->fetch_assoc()) {
+          if ($partialtext != '') {
+          //$suggestion = $partialtext . ' ' . $row["literal"] . "..." . "<br>";
+          $suggestion = "<div onmouseover=\"highlight_suggestion(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . ucfirst($partialtext) . ' ' . $row["literal"] . "..." . "</div>";
+          //$suggestion = "<div onmouseover=\"autofill(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . $partialtext . ' ' . $row["literal"] . "..." . "</div>";
+          //$suggestion = "<div class=\"suggestion\" id=\"suggestion" . $i . "\">" . $partialtext . ' ' . $row["literal"] . "..." . "</div>";
+
+         	} else {
+          //$suggestion = $row["literal"] . "..." . "<br>";
+          $suggestion = "<div onmouseover=\"highlight_suggestion(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . ucfirst($row["literal"]) . "..." . "</div>";
+          //$suggestion = "<div onmouseover=\"autofill(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . ucfirst($row["literal"]) . "..." . "</div>";
+          //$suggestion = "<div class=\"suggestion\" id=\"suggestion" . $i . "\">" . ucfirst($row["literal"]) . "..." . "</div>";
+
+          }
+
+          echo $suggestion;
+      }
+  } //else {
+  //    echo "0 results";
 }
+
+//echo ucfirst("</select>");
 
 $conn->close();
 
@@ -54,14 +67,14 @@ if (strlen($q)>0) {
       //if (stristr($y->item(0)->childNodes->item(0)->nodeValue,$q)) {
       if (strtolower(substr($y->item(0)->childNodes->item(0)->nodeValue,0,strlen($q))) === strtolower($q)) {
         if ($hint=="") {
-          $hint="<a href='" . 
-          $z->item(0)->childNodes->item(0)->nodeValue . 
-          "' target='_blank'>" . 
+          $hint="<a href='" .
+          $z->item(0)->childNodes->item(0)->nodeValue .
+          "' target='_blank'>" .
           $y->item(0)->childNodes->item(0)->nodeValue . "</a>";
         } else {
-          $hint=$hint . "<br /><a href='" . 
-          $z->item(0)->childNodes->item(0)->nodeValue . 
-          "' target='_blank'>" . 
+          $hint=$hint . "<br /><a href='" .
+          $z->item(0)->childNodes->item(0)->nodeValue .
+          "' target='_blank'>" .
           $y->item(0)->childNodes->item(0)->nodeValue . "</a>";
         }
       }
