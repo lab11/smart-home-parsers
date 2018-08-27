@@ -17,8 +17,11 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     // output data of each row
+    $i = 0;
     while($row = $result->fetch_assoc()) {
-        $suggestion = $row["sentence"] . "..." . "<br>";
+        //$suggestion = $row["sentence"] . "..." . "<br>";
+        $suggestion = "<div onmouseover=\"highlight_suggestion(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . ucfirst($row["sentence"]) . "</div>";
+        $i++;
         echo ucfirst($suggestion);
     }
 } //else {
