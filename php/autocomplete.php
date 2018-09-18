@@ -10,6 +10,7 @@ if ($conn->connect_error) {
 
 $mytable = $_GET["q"];
 $partialtext = $_GET["text"];
+$userinput = $_GET["input"];
 
 //echo ucfirst("<select>");
 
@@ -21,20 +22,17 @@ for($i=0; $i<count($mytable); $i++) {
       // output data of each row
       while($row = $result->fetch_assoc()) {
           if ($partialtext != '') {
-          //$suggestion = $partialtext . ' ' . $row["literal"] . "..." . "<br>";
-          $suggestion = "<div onmouseover=\"highlight_suggestion(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . ucfirst($partialtext) . ' ' . $row["literal"] . "..." . "</div>";
-          //$suggestion = "<div onmouseover=\"autofill(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . $partialtext . ' ' . $row["literal"] . "..." . "</div>";
-          //$suggestion = "<div class=\"suggestion\" id=\"suggestion" . $i . "\">" . $partialtext . ' ' . $row["literal"] . "..." . "</div>";
-
+            $suggestion_text = $partialtext . ' ' . $row["literal"];
+            if (strpos(strtolower($suggestion_text), strtolower($userinput)) === 0) {
+              $suggestion = "<div onmouseover=\"highlight_suggestion(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . ucfirst($partialtext) . ' ' . $row["literal"] . "..." . "</div>";
+              echo $suggestion;
+            }
          	} else {
-          //$suggestion = $row["literal"] . "..." . "<br>";
-          $suggestion = "<div onmouseover=\"highlight_suggestion(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . ucfirst($row["literal"]) . "..." . "</div>";
-          //$suggestion = "<div onmouseover=\"autofill(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . ucfirst($row["literal"]) . "..." . "</div>";
-          //$suggestion = "<div class=\"suggestion\" id=\"suggestion" . $i . "\">" . ucfirst($row["literal"]) . "..." . "</div>";
-
+            $suggestion = "<div onmouseover=\"highlight_suggestion(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . ucfirst($row["literal"]) . "..." . "</div>";
+            echo $suggestion;
           }
 
-          echo $suggestion;
+
       }
   } //else {
   //    echo "0 results";
