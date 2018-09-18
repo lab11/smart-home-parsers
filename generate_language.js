@@ -67,7 +67,7 @@ TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingS
         this.tokenType = tokenType;
         if (typeAssistTokens.indexOf(tokenType) >= 0) {
             this.partialApplication = lastToken.text;
-            //console.log("partial application: " + this.partialApplication);
+            console.log("partial application: " + this.partialApplication);
         }
    }
 
@@ -174,7 +174,7 @@ function processPartialStrs() {
           var next_sentence = next_sentences[i];
           partial_strs.push(next_sentence);
         }
-        //console.log(partial_strs);
+        console.log(partial_strs);
         //console.log(partial_strs.length);
         processPartialStrs();
       }, 100);
