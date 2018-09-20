@@ -34,7 +34,7 @@ if ($tablename === "keystrokes") {
   $keycode . ", '" .
   $is_printable . "', '" .
   $user_input . "')";
-  echo $sql;
+  //echo $sql;
   if ($conn->query($sql) === TRUE) {
      echo "New keystroke record created successfully";
   } else {
@@ -217,7 +217,7 @@ if ($tablename === "keystrokes") {
   $wall_light . "', '" .
   $left_light . "', '" .
   $right_light . "')";
-  echo $sql;
+  //echo $sql;
   if ($conn->query($sql) === TRUE) {
      echo "New final_scenario_state record created successfully";
   } else {
