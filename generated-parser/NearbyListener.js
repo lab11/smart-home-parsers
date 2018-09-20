@@ -263,15 +263,6 @@ NearbyListener.prototype.exitTurnables = function(ctx) {
 };
 
 
-// Enter a parse tree produced by NearbyParser#lowerable.
-NearbyListener.prototype.enterLowerable = function(ctx) {
-};
-
-// Exit a parse tree produced by NearbyParser#lowerable.
-NearbyListener.prototype.exitLowerable = function(ctx) {
-};
-
-
 // Enter a parse tree produced by NearbyParser#lowerables.
 NearbyListener.prototype.enterLowerables = function(ctx) {
 };
