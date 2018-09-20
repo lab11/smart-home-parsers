@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>Scarlett</title>
+    <script src="node_modules/stanza.io/build/stanzaio.bundle.js"></script>
+    <script type="text/javascript" src="js/require.js"></script>
+    <script type="text/javascript" src="js/translator.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/flat-index2.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.conversejs.org/css/converse.min.css">
+</head>
+
+<body>
+
+  <div id="settings">
+    <form id="loginInfo">
+      <label>User: <input id="user" type="text" name="user"/></label>
+      <label>Password: <input id="password" type="password" name="password" /></label>
+      <input id="connect" type="button" value="Connect" />
+      <label id="connection_status">Disconnected</label>
+    </form>
+  </div>
+
+<script>
+  var client = null;
+  var loginInfo = document.getElementById('connect');
+  var domain = "academic-ninja";
+  var user = "scarlett";
+  var jid = user + "@" + domain;
+  var chatroom = "test_room";
+  var password = "imalittlerobotshortandstout";
+  document.getElementById('user').value = user;
+  document.getElementById('password').value = password;
+  loginInfo.onclick = function (e) {
+    console.log("clicked connect")
+    if (e.preventDefault) e.preventDefault();
+
+    console.log(jid);
+
+    if (client !== null) {
+      client.disconnect();
+    }
+
+    client = XMPP.createClient({
+      jid: jid,
+      password: password,
+
+      // If you have a .well-known/host-meta.json file for your
+      // domain, the connection transport config can be skipped.
+
+      transport: 'websocket',
+      wsURL: wsURL
+      // (or `boshURL` if using 'bosh' as the transport)
+  });
+
+  client.on('session:started', function () {
+    console.log("Started XMPP session")
+    document.getElementById('connection_status').innerHTML = "Connected as " + user;
+      document.getElementById("history_box").innerHTML = "";
+      client.joinRoom(chatroom + "@conference." + domain, user, {joinMuc: {history: {maxstanzas: 20}}} );
+      client.getRoster();
+      client.sendPresence();
+      client.enableCarbons(function (err) {
+              if (err) {
+                  console.log('Server does not support carbons');
+              }
+          });
+  });
+
+  client.on('message', function (msg) {
+    console.log("hit on 'message'");
+    console.log(msg);
+    //console.log("From: " + msg.from.resource + " Msg: " + msg.body);
+    if ("delay" in msg) {
+      var d = new Date(Date.parse(msg.delay.stamp));
+      timestring = d.toLocaleString();
+      timecolumn = timestring + Array(24 - timestring.length).join(" ");
+      fromstring = msg.from.resource;
+      fromcolumn = fromstring + ":" + Array(15 - fromstring.length).join(" ");
+      var record = timecolumn + fromcolumn + msg.body;
+      console.log(record);
+      document.getElementById("history_box").innerHTML = document.getElementById("history_box").innerHTML + record + "\n";
+      document.getElementById("history_box").scrollTop = document.getElementById("history_box").scrollHeight;
+    } else if ("body" in msg){
+      var d = new Date(); //"Wed Mar 25 2015 09:56:24 GMT+0100 (W. Europe Standard Time)"
+      timestring = d.toLocaleString();
+      timecolumn = timestring + Array(24 - timestring.length).join(" ");
+      fromstring = msg.from.resource;
+      fromcolumn = fromstring + ":" + Array(15 - fromstring.length).join(" ");
+      var record = timecolumn + fromcolumn + msg.body;
+      console.log(record);
+      document.getElementById("history_box").innerHTML = document.getElementById("history_box").innerHTML + record + "\n";
+      document.getElementById("history_box").scrollTop = document.getElementById("history_box").scrollHeight;
+    };
+    //console.log(msg.body);
+  });
+
+  client.on('chat', function (msg) {
+    console.log("hit on 'chat'");
+    //  client.sendMessage({
+    //    to: msg.from,
+    //    body: 'You sent: ' + msg.body
+    //  });
+  });
+
+  client.on('raw:incoming', function (msg) {
+  //  console.log("hit on 'raw:incoming'");
+  //  console.log(msg);
+    //  client.sendMessage({
+    //    to: msg.from,
+    //    body: 'You sent: ' + msg.body
+    //  });
+  });
+
+  client.connect();
+  return false;
+};
+document.getElementById("connect").click()
+
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      document.getElementById("parse").click();
+      return false;
+    }
+  });
+});
+
+function submitMessage() {
+    var msg = document.getElementById("user_input").value;
+    client.sendMessage({to: "test_room@conference."+ domain, body: msg, type: 'groupchat'});
+};
+
+</script>
+
+  <div id="header">
+   Ok, Scarlett...
+  </div>
+
+  <div id="history" align="center">
+    <textarea id="history_box" style="width: 80%; height: 300px;" readonly="readonly" disabled="disabled"> </textarea>
+
+  </div>
+
+  <div id="inputs" align="center">
+    <form>
+      <div class = "container">
+        <input type="text" id="user_input">
+        <button id="parse" class="button" type="button" onclick="submitMessage();">&#9655;</button><!-- filled in: &#9654; outline: &#9655;-->
+      </div>
+    </form>
+  </div>
+</body>
+</html>
