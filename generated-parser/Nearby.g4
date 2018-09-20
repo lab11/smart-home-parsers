@@ -44,7 +44,7 @@ fact
 
 question
     : is turnable (on | off)
-    | are lowerables (lowered | raised)
+    | are (lowerables (lowered | raised) | turnables (on | off))
     ;
 
 percent

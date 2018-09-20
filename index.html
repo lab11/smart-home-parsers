@@ -25,7 +25,7 @@
     margin: 5% 20%;
     top: 30%;
     left: 50%;
-    font-size: 24px;
+    font-size: 22px;
     color: black;
     /*transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);*/
@@ -264,7 +264,7 @@ input {
 </div>
 
 <!-- Scenario description -->
-<div id="scenario" style="margin-left: 50px; margin-right: 50px; width: 90%; padding: 10px; font-size: 18px;">
+<div id="scenario" style="margin-left: 50px; margin-right: 50px; width: 90%; padding-top: 7px; padding-left: 10px; padding-right: 10px; padding-bottom: 13px; font-size: 16px;">
 </div>
 
 <div style="margin-left:50px; margin-right:50px; width: 90%;">
@@ -375,7 +375,7 @@ input {
       document.getElementById("user_input").style.fontSize = "9px";
       document.getElementById("history_box").style.fontSize = "12px";
       document.getElementById("autocomplete").style.fontSize = "10px";
-      document.getElementById("scenario").style.fontSize = "15px";
+      document.getElementById("scenario").style.fontSize = "14px";
     //} else if (window.innerWidth < 990) {
     } else if (Math.min(window.innerWidth, max_width) < 990) {
       document.getElementById("user_input").style.fontSize = "10px";
@@ -387,13 +387,13 @@ input {
       document.getElementById("user_input").style.fontSize = "12px";
       document.getElementById("history_box").style.fontSize = "12px";
       document.getElementById("autocomplete").style.fontSize = "12px";
-      document.getElementById("scenario").style.fontSize = "16px";
+      document.getElementById("scenario").style.fontSize = "15px";
     //} else if (window.innerWidth >= 1100) {
     } else if (Math.min(window.innerWidth, max_width) >= 1100) {
       document.getElementById("user_input").style.fontSize = "14px";
       document.getElementById("history_box").style.fontSize = "15px";
       document.getElementById("autocomplete").style.fontSize = "14px";
-      document.getElementById("scenario").style.fontSize = "18px";
+      document.getElementById("scenario").style.fontSize = "16px";
     }
   }
 
@@ -414,7 +414,7 @@ input {
   //var scenario2 = "<b>Scenario 2/3:</b> There is glare on the projector screen that makes it difficult to see the slides. Work with Scarlett to eliminate the glare.";
   //var scenario3 = "<b>Scenario 3/3:</b> The audience wants to be able to see their notes. Use the interface to make sure that there is no glare on the projector AND the audience can see their notes.";
 
-  var instructions = "<div>Use the chat app on the right to work with Scarlett, the friendly smart room AI, to put the conference room into the goal state. Once the room is in the goal state, press the \"Done with Scenario ";
+  var instructions = "<div>Use the chat app to work with Scarlett, the friendly smart room AI, to put the conference room into the goal state. The goal state may be impossible to reach. Once the room is in the goal state, or you have decided that it is impossible to reach the goal state, press the \"Done with Scenario ";
 
   var scenario1 = "<div style='font-size:25px;' align=center><b>Scenario 1/3</b></div>" + instructions + "1\" button. Spelling matters!</div>";
   var scenario2 = "<div style='font-size:25px;' align=center><b>Scenario 2/3</b></div>" + instructions + "2\" button. Spelling matters!</div>";
@@ -438,7 +438,7 @@ input {
         document.getElementById("overlay").style.display = "block";
       },
       onStartScenario1:     function() {
-        document.getElementById("overlaytext").innerHTML = scenario1 + '<center><img src="./img/scenario1.png" style="margin-top:24px; width:90%;"></center>';
+        document.getElementById("overlaytext").innerHTML = scenario1 + '<center><br>Here is the Scenario 1 goal state (you will be able to see it later as well): <img src="./img/scenario1.png" style="margin-top:24px; width:90%;"></center>';
         document.getElementById("scenario").innerHTML = "";
         document.getElementById("overlaybutton").innerHTML = "Continue";
       },
@@ -448,7 +448,7 @@ input {
       },
       onStartScenario2:     function() {
         document.getElementById("overlay").style.display = "block";
-        document.getElementById("overlaytext").innerHTML = "<b>You have completed Scenario 1!</b><br><br>" + scenario2 + '<center><img src="./img/scenario2.png" style="margin-top:24px; width:90%;"></center>';
+        document.getElementById("overlaytext").innerHTML = "<b><center>You have completed Scenario 1!</center></b><br>" + scenario2 + '<center><br>Here is the Scenario 2 goal state:<img src="./img/scenario2.png" style="margin-top:24px; width:90%;"></center>';
         document.getElementById("scenario").innerHTML = "";
         document.getElementById("overlaybutton").innerHTML = "Continue";
         document.getElementById("done").innerHTML = "Done with Scenario 2 &#8594";
@@ -459,7 +459,7 @@ input {
       },
       onStartScenario3:     function() {
         document.getElementById("overlay").style.display = "block";
-        document.getElementById("overlaytext").innerHTML = "<b>You have completed Scenario 2!</b><br><br>" + scenario3 + '<center><img src="./img/scenario3.png" style="margin-top:24px; width:90%;"></center>';
+        document.getElementById("overlaytext").innerHTML = "<b><center>You have completed Scenario 2!</center></b><br>" + scenario3 + '<center><br>Here is the Scenario 3 goal state:<img src="./img/scenario3.png" style="margin-top:24px; width:90%;"></center>';
         document.getElementById("scenario").innerHTML = "";
         document.getElementById("overlaybutton").innerHTML = "Continue";
         document.getElementById("done").innerHTML = "Done with Scenario 3 &#8594";
@@ -656,7 +656,7 @@ input {
       qString += "&keycode=" + e.keyCode;
       qString += "&is_printable=" + keycode_is_printable; // true/false
       qString += "&user_input=" + document.getElementById("user_input").value;
-      console.log(qString);
+      //console.log(qString);
       keylogger_xmlhttp.open("GET", qString,true);
       keylogger_xmlhttp.send();
       ///////////////// END LOGGING
@@ -780,7 +780,7 @@ input {
   var password = "2IQNLiEY39OgUser" + user_id.toString();
 
   // set survey link
-  var survey_link = "https://google.com" + "?user_id=" + user_id.toString() + "&deployment_id=" + deployment_name.toString() + "&interface_id=" + interface_id.toString();
+  var survey_link = "https://berkeley.qualtrics.com/jfe/form/SV_1TgTLPrY9a3FBSl" + "?user_id=" + user_id.toString() + "&deployment_id=" + deployment_name.toString() + "&interface_id=" + interface_id.toString();
 
   document.getElementById("surveylink").href = survey_link;
 
@@ -792,7 +792,7 @@ input {
   var client = null;
   var loginInfo = document.getElementById('connect');
    loginInfo.onclick = function (e) {
-     //console.log("clicked connect")
+     console.log("clicked connect")
     if (e.preventDefault) e.preventDefault();
 
     var user = document.getElementById('user').value;
@@ -932,16 +932,16 @@ loginInfo.click();
   var testParser;
   TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingSymbol, line, column, msg, e) {
       this.errors.push(arguments);
-      console.log("PARSER ERROR");
-      console.log(msg);
+      //console.log("PARSER ERROR");
+      //console.log(msg);
       var parser = recognizer._ctx.parser;
       testParser = recognizer._ctx.parser;
       testTokens = parser.getExpectedTokens(); //CRITICAL. This is an interval set with the numbers that correspond to the expected token types
       tokenString = testTokens.toString(); //String like '{1..2, 4..9}' or '8..9'
-       console.log(tokenString);
+       //console.log(tokenString);
        var tokenStrArray = tokenString.replace('{', '').replace('}', '').split(", "); //Array of strings like ['1..2', '4..9']
        var tokenArray = [];
-       console.log(tokenStrArray);
+       //console.log(tokenStrArray);
        for (i = 0; i < tokenStrArray.length; i++) {
            intInterval = tokenStrArray[i];
            if (intInterval.indexOf('..') !== -1) {
@@ -976,7 +976,7 @@ loginInfo.click();
           this.tokenType = tokenType;
           if (typeAssistTokens.indexOf(tokenType) >= 0) {
               this.partialApplication = lastToken.text;
-              console.log("partial application: " + this.partialApplication);
+              //console.log("partial application: " + this.partialApplication);
           }
      }
 
@@ -991,7 +991,7 @@ loginInfo.click();
           xmlhttp.onreadystatechange=function() {
               if (xmlhttp.readyState==4 && xmlhttp.status==200) {
                 document.getElementById("autocomplete").innerHTML=xmlhttp.responseText;
-                console.log("xml response text: ", xmlhttp.responseText);
+                //console.log("xml response text: ", xmlhttp.responseText);
                 if (xmlhttp.responseText != "") {
                   document.getElementById("autocomplete").style.border="1px solid #A5ACB2";
                   document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 1)";
@@ -1009,17 +1009,17 @@ loginInfo.click();
             var pre_qString = "php/in_order.php?";
             pre_text = document.getElementById("user_input").value
             pre_qString += "text=" + pre_text;
-            console.log("pre_qstring: ", pre_qString);
+            //console.log("pre_qstring: ", pre_qString);
             pre_xmlhttp.open("GET", pre_qString, false);
             pre_xmlhttp.send();
             if (pre_xmlhttp.status == 200) {
-              console.log("returned", pre_xmlhttp.responseText);
+              //console.log("returned", pre_xmlhttp.responseText);
               if (pre_xmlhttp.responseText == "true") {
                 typing_in_order = true;
               }
             }
 
-            console.log("typing in order: ", typing_in_order);
+            //console.log("typing in order: ", typing_in_order);
 
             if (out_of_order == false || typing_in_order == true) {
               if (full_phrase_suggestions == true) {
@@ -1048,7 +1048,7 @@ loginInfo.click();
             }
             //text = document.getElementById("user_input").value;
             qString += "text=" + text;
-            console.log(qString);
+            //console.log(qString);
             xmlhttp.open("GET",qString,true);
             xmlhttp.send();
         }
@@ -1115,9 +1115,9 @@ loginInfo.click();
     right_accent: false,
     left_accent: false,
     ambient: false,
-    overhead: false,
+    overhead: true,
     accent_lights: false,
-    lights: false,
+    lights: true,
     projector: true,
     right_blind: true,
     left_blind: true,
@@ -1130,11 +1130,11 @@ loginInfo.click();
 
   var scenario3_goal = {
     front_cans: false,
-    right_accent: true,
-    left_accent: true,
+    right_accent: false,
+    left_accent: false,
     ambient: true,
     overhead: true,
-    accent_lights: true,
+    accent_lights: false,
     lights: true,
     projector: true,
     right_blind: true,
