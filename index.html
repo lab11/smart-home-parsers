@@ -236,19 +236,13 @@ input {
 <div id="overlay">
   <div id="overlaytextbox" style="font-size:16px;">
     <div id="overlaytext">
-      Contact:
-      <br>Meghan Clark (mclarkk@berkeley.edu)
-      <br>PhD Student
-      <br>Electrical Engineering and Computer Science
-      <br>University of California, Berkeley
+      Contact: Meghan Clark (mclarkk@berkeley.edu). Meghan is a PhD Student in Electrical Engineering and Computer Science at University of California, Berkeley.
       <br>
       <br>Study Purpose: To study the impact of different natural language interfaces on the ability to complete tasks in a smart space.
       <br>
-      <br>There will be two phases, a task phase and then a questionnaire phase. Your payment depends on completion of the questionnaire at the end.
+      <br>There will be two phases, a task phase and then a survey phase. Your payment depends on completion of the survey at the end.
       <br>
-      <br>Your anonymous data will be shared with other researchers and kept indefinitely. If you want us to delete your data, please send a message via Mechanical Turk or email mclarkk@berkeley.edu with this user id: XXX
-      <br>
-      <br>You WILL need to do this on a computer with a big enough screen.
+      <br>Your anonymous data will be shared with other researchers and kept indefinitely. If you want us to delete your data, or have questions about what we collect, please send a message via Mechanical Turk or email mclarkk@berkeley.edu with this user ID:
     </div>
     <center>
       <button id="overlaybutton">I have read this and consent</button>
@@ -329,7 +323,7 @@ input {
           <textarea id="history_box" style="width: 100%; height: 200px; resize: none;" readonly="readonly" disabled="disabled"></textarea>
           <!-- chat entry box"-->
           <div id="inputs" align="center" style="margin-bottom:46%; width:100%;" onfocusout="if (CURRENT_OPTION == null) {clearSuggestions();}">
-            <form>
+            <form autocomplete="off">
               <div class = "container">
                 <input type="text" id="user_input" onkeyup="showResult(event)"  onfocus="showResult(event)" data-lpignore="true" style="font-size: 14px;">
                 <button id="parse" class="button" type="button">&#9655;</button>
@@ -371,7 +365,7 @@ input {
   function resize_view() {
     //console.log(window.innerHeight);
     var max_width = Math.round(window.innerHeight * 1.2);
-    console.log(window.innerWidth, max_width);
+    //console.log(window.innerWidth, max_width);
     //console.log(max_width);
     document.body.style.maxWidth = max_width.toString() + "px";
     //console.log(Math.round(max_width/1.538).toString() + "px");
@@ -390,7 +384,6 @@ input {
       document.getElementById("scenario").style.fontSize = "15px";
     //} else if (window.innerWidth < 1100) {
     } else if (Math.min(window.innerWidth, max_width) < 1100) {
-      console.log("too small");
       document.getElementById("user_input").style.fontSize = "12px";
       document.getElementById("history_box").style.fontSize = "12px";
       document.getElementById("autocomplete").style.fontSize = "12px";
@@ -423,9 +416,9 @@ input {
 
   var instructions = "<div>Use the chat app on the right to work with Scarlett, the friendly smart room AI, to put the conference room into the goal state. Once the room is in the goal state, press the \"Done with Scenario ";
 
-  var scenario1 = "<div style='font-size:25px;' align=center><b>Scenario 1/3</b></div>" + instructions + "1\" button.</div>";
-  var scenario2 = "<div style='font-size:25px;' align=center><b>Scenario 2/3</b></div>" + instructions + "2\" button.</div>";
-  var scenario3 = "<div style='font-size:25px;' align=center><b>Scenario 3/3</b></div>" + instructions + "3\" button.</div>";
+  var scenario1 = "<div style='font-size:25px;' align=center><b>Scenario 1/3</b></div>" + instructions + "1\" button. Spelling matters!</div>";
+  var scenario2 = "<div style='font-size:25px;' align=center><b>Scenario 2/3</b></div>" + instructions + "2\" button. Spelling matters!</div>";
+  var scenario3 = "<div style='font-size:25px;' align=center><b>Scenario 3/3</b></div>" + instructions + "3\" button. Spelling matters!</div>";
 
 
   var fsm = new StateMachine({
@@ -758,6 +751,7 @@ input {
     console.log("UID:", user_id);
   }
 
+  document.getElementById("overlaytext").innerHTML = document.getElementById("overlaytext").innerHTML + "user" + user_id;
   var interface_id = user_id % 9;
 
   var show_autocomplete = true;
@@ -938,16 +932,16 @@ loginInfo.click();
   var testParser;
   TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingSymbol, line, column, msg, e) {
       this.errors.push(arguments);
-      //console.log("PARSER ERROR");
-      //console.log(msg);
+      console.log("PARSER ERROR");
+      console.log(msg);
       var parser = recognizer._ctx.parser;
       testParser = recognizer._ctx.parser;
       testTokens = parser.getExpectedTokens(); //CRITICAL. This is an interval set with the numbers that correspond to the expected token types
       tokenString = testTokens.toString(); //String like '{1..2, 4..9}' or '8..9'
-       //console.log(tokenString);
+       console.log(tokenString);
        var tokenStrArray = tokenString.replace('{', '').replace('}', '').split(", "); //Array of strings like ['1..2', '4..9']
        var tokenArray = [];
-       //console.log(tokenStrArray);
+       console.log(tokenStrArray);
        for (i = 0; i < tokenStrArray.length; i++) {
            intInterval = tokenStrArray[i];
            if (intInterval.indexOf('..') !== -1) {
@@ -982,7 +976,7 @@ loginInfo.click();
           this.tokenType = tokenType;
           if (typeAssistTokens.indexOf(tokenType) >= 0) {
               this.partialApplication = lastToken.text;
-              //console.log("partial application: " + this.partialApplication);
+              console.log("partial application: " + this.partialApplication);
           }
      }
 
@@ -997,7 +991,7 @@ loginInfo.click();
           xmlhttp.onreadystatechange=function() {
               if (xmlhttp.readyState==4 && xmlhttp.status==200) {
                 document.getElementById("autocomplete").innerHTML=xmlhttp.responseText;
-                //console.log("xml response text: ", xmlhttp.responseText);
+                console.log("xml response text: ", xmlhttp.responseText);
                 if (xmlhttp.responseText != "") {
                   document.getElementById("autocomplete").style.border="1px solid #A5ACB2";
                   document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 1)";
@@ -1015,16 +1009,17 @@ loginInfo.click();
             var pre_qString = "php/in_order.php?";
             pre_text = document.getElementById("user_input").value
             pre_qString += "text=" + pre_text;
+            console.log("pre_qstring: ", pre_qString);
             pre_xmlhttp.open("GET", pre_qString, false);
             pre_xmlhttp.send();
             if (pre_xmlhttp.status == 200) {
-              //console.log("returned", pre_xmlhttp.responseText);
+              console.log("returned", pre_xmlhttp.responseText);
               if (pre_xmlhttp.responseText == "true") {
                 typing_in_order = true;
               }
             }
 
-            //console.log("typing in order: ", typing_in_order);
+            console.log("typing in order: ", typing_in_order);
 
             if (out_of_order == false || typing_in_order == true) {
               if (full_phrase_suggestions == true) {
@@ -1053,7 +1048,7 @@ loginInfo.click();
             }
             //text = document.getElementById("user_input").value;
             qString += "text=" + text;
-            //console.log(qString);
+            console.log(qString);
             xmlhttp.open("GET",qString,true);
             xmlhttp.send();
         }
@@ -1241,9 +1236,9 @@ loginInfo.click();
       submitMessage(submission);
       var input = submission.toLowerCase();
 
-      if (input == "turn on the overhead lights") {
+      if (input == "turn on the fluorescent lights") {
         sim_room.overhead = true;
-      } else if (input == "turn off the overhead lights") {
+      } else if (input == "turn off the fluorescent lights") {
         sim_room.overhead = false;
 
       } else if (input == "turn on the projector") {
@@ -1251,35 +1246,35 @@ loginInfo.click();
       } else if (input == "turn off the projector") {
         sim_room.projector = false;
 
-      } else if (input == "turn on the front can lights") {
+      } else if (input == "turn on the front lights") {
         sim_room.front_cans = true;
-      } else if (input == "turn off the front can lights") {
+      } else if (input == "turn off the front lights") {
         sim_room.front_cans = false;
 
-      } else if (input == "turn on the ambient light") {
-        sim_room.ambient = true;
-      } else if (input == "turn off the ambient light") {
-        sim_room.ambient = false;
+      // } else if (input == "turn on the wall light") {
+      //   sim_room.ambient = true;
+      // } else if (input == "turn off the wall light") {
+      //   sim_room.ambient = false;
 
-      } else if (input == "turn on the right accent light") {
+      } else if (input == "turn on the right light") {
         sim_room.right_accent = true;
-      } else if (input == "turn off the right accent light") {
+      } else if (input == "turn off the right light") {
         sim_room.right_accent = false;
 
-      } else if (input == "turn on the left accent light") {
+      } else if (input == "turn on the left light") {
         sim_room.left_accent = true;
-      } else if (input == "turn off the left accent light") {
+      } else if (input == "turn off the left light") {
         sim_room.left_accent = false;
 
-      } else if (input == "raise the left blind") {
-        sim_room.left_blind = true;
-      } else if (input == "lower the left blind") {
-        sim_room.left_blind = false;
-
-      } else if (input == "raise the right blind") {
-        sim_room.right_blind = true;
-      } else if (input == "lower the right blind") {
-        sim_room.right_blind = false;
+      // } else if (input == "raise the left blind") {
+      //   sim_room.left_blind = true;
+      // } else if (input == "lower the left blind") {
+      //   sim_room.left_blind = false;
+      //
+      // } else if (input == "raise the right blind") {
+      //   sim_room.right_blind = true;
+      // } else if (input == "lower the right blind") {
+      //   sim_room.right_blind = false;
 
       } else if (input == "raise the blinds") {
         sim_room.right_blind = true;
@@ -1288,24 +1283,24 @@ loginInfo.click();
         sim_room.right_blind = false;
         sim_room.left_blind = false;
 
-      } else if (input == "turn on the accent lights") {
+      } else if (input == "turn on the spot lights") {
         sim_room.right_accent = true;
         sim_room.left_accent = true;
 
-      } else if (input == "turn off the accent lights") {
+      } else if (input == "turn off the spot lights") {
         sim_room.right_accent = false;
         sim_room.left_accent = false;
 
       } else if (input == "turn on the lights") {
         sim_room.overhead = true;
         sim_room.front_cans = true;
-        sim_room.ambient = true;
+        //sim_room.ambient = true;
         sim_room.right_accent = true;
         sim_room.left_accent = true;
       } else if (input == "turn off the lights") {
         sim_room.overhead = false;
         sim_room.front_cans = false;
-        sim_room.ambient = false;
+        //sim_room.ambient = false;
         sim_room.right_accent = false;
         sim_room.left_accent = false;
       }
@@ -1541,7 +1536,7 @@ loginInfo.click();
     qString += "&left_light=" + bool_to_on_off(sim_room.left_accent);
     qString += "&right_light=" + bool_to_on_off(sim_room.right_accent);
 
-    console.log(qString);
+    //console.log(qString);
     final_state_xmlhttp.open("GET", qString, true);
     final_state_xmlhttp.send();
   }
