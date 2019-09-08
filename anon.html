@@ -1,0 +1,1696 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>Scarlett</title>
+    <script src="node_modules/stanza.io/build/stanzaio.bundle.js"></script>
+    <script type="text/javascript" src="js/require.js"></script>
+    <script type="text/javascript" src="js/translator.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src='js/state-machine.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="css/flat-index-conf2.css" /> -->
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.conversejs.org/css/converse.min.css">
+</head>
+
+<body style="height: 100%">
+
+
+<!-- Page Layout -->
+<style>
+#overlaytextbox{
+    /*position: absolute;*/
+    margin: 5% 20%;
+    top: 30%;
+    left: 50%;
+    font-size: 22px;
+    color: black;
+    /*transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);*/
+    background-color:#DDD;
+    padding:20px;
+    border-radius: 25px;
+}
+#overlaybutton{
+    /*position: absolute;*/
+    top: 45%;
+    left: 50%;
+    font-size: 20px;
+    width: 14em;
+    margin-top: 20px;
+    color: black;
+    /* transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%); */
+}
+
+.container {
+    display: flex;
+    height: 48px;
+    margin-top: 20px;
+}
+
+body {
+   padding: 0;
+    margin: 0px auto;
+  /*  background-image: url("../img/conf1.jpeg");
+    background-size: contain;
+    background-repeat: no-repeat;*/
+    background-color: #ddd;/*#BDE2FE; #bcf2ff;  */
+    font-family: arial, verdana, sans-serif;
+    font-style: normal;
+}
+
+#header {
+  width: 100%;
+  padding-top: 10px;
+  margin-top: 5%;
+  margin-bottom: 0.5em;
+  text-align: center;
+  font-size: 24px;
+  color: #FFF;
+  font-weight: bold;
+  font-family: "Arial", sans-serif;
+  /*text-shadow: -1px 0 #d7f7ff, 0 1px #d7f7ff, 1px 0 #d7f7ff, 0 -1px #d7f7ff;*/
+  /*text-shadow: -2px 0 #b795c7, 0 2px #b795c7, 2px 0 #b795c7, 0 -2px #b795c7;*/
+}
+
+#wrapper {
+   border-radius: 15px;
+    background-color: rgba(170, 170, 170, 0.4);
+    padding: 20px;
+    width: 800px;
+    height: 545px;
+    margin: 0px auto;
+}
+
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.7); /* Black background with opacity */
+    z-index: 10; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+#questionnaire-overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(1,1,1,1); /* Black background with opacity */
+    color: black;
+    z-index: 10; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+#settings {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  margin: 0px;
+  padding: 10px;
+  padding-left: 30px;
+  background-color: #efefef;
+  border-top: 1px solid #dedede;
+  font-size: 18px;
+}
+#settings label {
+  width: 100px;
+  margin-right: 20px;
+}
+
+textarea{
+    width: 95%;
+    height: 300px;
+    font-size: 16px;
+    font-family: "Courier New";
+}
+
+input {
+   border-radius: 0px;
+   font-size: 20px;
+   padding: 12px;
+   flex-grow: 1;
+}
+
+#user {
+  width: 150px;
+}
+
+#password {
+  width: 150px;
+}
+
+#connection_status {
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+.suggestions{
+   background-color: rgba(255, 255, 255, 0);
+   text-align: left;
+   padding: 4px 14px;
+}
+
+.button {
+  display: inline-block;
+  font-size: 16px;
+  font-family: "Arial",sans-serif;
+  line-height: 1.8;
+  appearance: none;
+  box-shadow: 2px 2px #888888;
+  border: 1px solid;
+  color: #000;
+  padding: 5px;
+  /* background: #b795c7; */
+  border: solid 0px #6496c8;
+}
+
+.button:focus {
+  outline: none
+}
+
+/* .button:hover,
+.button.hover {
+  border-color: #346392;
+  color: red;
+} */
+.button:active,
+.button.active {
+  box-shadow: -2px -2px #888888;
+  border-color: #27496d;
+  color: #000;
+  background-color: #aaa;
+}
+
+#parse {
+  display: inline-block;
+  font-size: 1.5em;
+  font-weight: bold;
+  font-family: "Arial",sans-serif;
+  line-height: 1.8;
+  appearance: none;
+  box-shadow: none;
+  border-radius: 0;
+  color: #FFF;
+  background: #b795c7;
+  border: solid 0px #6496c8;
+}
+
+#parse:focus {
+  outline: none
+}
+
+#parse:hover,
+#parse.hover {
+  border-color: #346392;
+  color: #346392;
+}
+#parse:active,
+#parse.active {
+  border-color: #27496d;
+  color: #27496d;
+}
+
+#scenario{
+  width: 100%;
+  height: 80px;
+  color: white;
+  background-color: rgba(0,0,0,0.6);
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+</style>
+<div id="overlay">
+  <div id="overlaytextbox" style="font-size:16px;">
+    <div id="overlaytext">
+      Contact: X X (X@X.X). X is a XXX at XXX.
+      <br>
+      <br>Study Purpose: To study the impact of different natural language interfaces on the ability to complete tasks in a smart space.
+      <br>
+      <br>There will be two phases, a task phase and then a survey phase. Your payment depends on completion of the survey at the end.
+      <br>
+      <br>Your anonymous data will be shared with other researchers and kept indefinitely. If you want us to delete your data, or have questions about what we collect, please send a message via Mechanical Turk or email X@X.X with this user ID:
+    </div>
+    <center>
+      <button id="overlaybutton">I have read this and consent</button>
+    </center>
+  </div>
+</div>
+
+<div id="questionnaire-overlay">
+  <div id="overlaytextbox">Congratulations! You have completed the last task! To get credit, please answer some questions about your experience: <a id="surveylink" href="https://google.com">Survey</a></div>
+</div>
+</div>
+
+<!-- Title and header material -->
+<div style="font-size: 50px; text-align: center;">
+  Smart Room Chatroom
+  <div id="user_id" style="font-size: 18px;">
+    User ID: demo
+  </div>
+</div>
+
+<!-- Scenario description -->
+<div id="scenario" style="margin-left: 50px; margin-right: 50px; width: 90%; padding-top: 7px; padding-left: 10px; padding-right: 10px; padding-bottom: 13px; font-size: 16px;">
+</div>
+
+<div style="margin-left:50px; margin-right:50px; width: 90%;">
+  <!-- Simulation column -->
+  <div id="sim-column" style="float:left; width:65.5%;">
+    <!-- conference room simulation -->
+    <div id="sim" style="background-image:url('./img/final/base-conf.png'); background-size: 100%; width: 65.5%; background-repeat: no-repeat; float:left; position:absolute; z-index: 0;">
+      <div style="position:absolute; left:0; top:0;">
+          <img src='./img/final/base-conf.png' style="width: 100%; z-index: 0;"/>
+          <center><button id="show_goal" class="button" style="margin-top:20px;">Press and hold to see the goal state</button></center>
+      </div>
+      <div style="position:absolute; left:0; top:0;">
+          <img id="lights-image" src='./img/final/blank.png' style="width: 100%;"/>
+      </div>
+      <div style="position:absolute; left:0; top:0;">
+          <img id="right-blind-image" src='./img/final/right-blind-up.png' style="width: 100%; z-index: 1;"/>
+      </div>
+
+      <div style="position:absolute; left:0; top:0;">
+          <img id="left-blind-image" src='./img/final/left-blind-up.png' style="width: 100%; z-index: 2;"/>
+      </div>
+
+      <div style="position:absolute; left:0; top:0;">
+          <img id="right-can-image" src='./img/final/blank.png' style="width: 100%; z-index: 1;"/>
+      </div>
+
+      <div style="position:absolute; left:0; top:0;">
+          <img id="left-can-image" src='./img/final/blank.png' style="width: 100%; z-index: 2;"/>
+      </div>
+
+      <div style="position:absolute; left:0; top:0;">
+          <img id="ambient-image" src='./img/final/ambient-off.png' style="width: 100%; z-index: 3;"/>
+      </div>
+
+      <div style="position:absolute; left:0; top:0;">
+          <img id="projector-image" src='./img/final/blank.png' style="width: 100%; z-index: 4;"/>
+      </div>
+
+      <div style="position:absolute; left:0; top:0;">
+          <img id="front-cans-image" src='./img/final/front-cans-on.png' style="width: 100%; z-index: 5;"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- phone interface-->
+  <div id="phone-column" style="float:right; width:27%;">
+    <div id="phone-interface" style="position:relative;">
+      <img id="phone" src="./img/smartphone3.png" style="position:absolute; width:100%;"/>
+      <div id="interface" style="position:absolute; margin-top: 14%; margin-left:3.4%; margin-right:3.4%; width:93.2%;">
+        <div style="position:relative;">
+          <!-- interface title -->
+          <div id="header">
+            Ok, Scarlett...
+          </div>
+          <!-- chat history box -->
+          <textarea id="history_box" style="width: 100%; height: 200px; resize: none;" readonly="readonly" disabled="disabled"></textarea>
+          <!-- chat entry box"-->
+          <div id="inputs" align="center" style="margin-bottom:46%; width:100%;" onfocusout="if (CURRENT_OPTION == null) {clearSuggestions();}">
+            <form autocomplete="off">
+              <div class = "container">
+                <input type="text" id="user_input" onkeyup="showResult(event)"  onfocus="showResult(event)" data-lpignore="true" style="font-size: 14px;">
+                <button id="parse" class="button" type="button">&#9655;</button>
+              </div>
+              <div style="display: flex;">
+                <div id="autocomplete" class="suggestions" style="font-size:14px; overflow-y: scroll; max-height: 140px; flex-grow:1; z-index:1;"></div>
+                <button class="button" type="button" style="visibility:hidden;" disabled=true>&#9655;</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- the done button -->
+      <div align="center" style="position:absolute; margin-top:210%; width:100%;">
+        <button class="button" type="button" id="done" style="z-index:-1;" onclick="advanceState()">Done with Scenario 1 &#8594</button>
+      </div>
+    </div>
+  </div>s
+</div>
+
+
+
+<!-- Login Info Layout -->
+
+<div id="settings" style="display:none;">
+  <form id="loginInfo">
+    <label>User: <input id="user" type="text" name="user" data-lpignore="true"/></label>
+    <label>Password: <input id="password" type="password" name="password"data-lpignore="true"/></label>
+    <input id="connect" type="button" value="Connect"/>
+    <label id="connection_status">Disconnected</label>
+  </form>
+</div>
+
+
+
+<!-- Key Events -->
+
+<script>
+  function resize_view() {
+    //console.log(window.innerHeight);
+    var max_width = Math.round(window.innerHeight * 1.2);
+    //console.log(window.innerWidth, max_width);
+    //console.log(max_width);
+    document.body.style.maxWidth = max_width.toString() + "px";
+    //console.log(Math.round(max_width/1.538).toString() + "px");
+    document.getElementById("sim").style.maxWidth = Math.round(max_width/1.538).toString() + "px";
+    //if (window.innerWidth < 860) {
+    if (Math.min(window.innerWidth, max_width) < 860) {
+      document.getElementById("user_input").style.fontSize = "9px";
+      document.getElementById("history_box").style.fontSize = "12px";
+      document.getElementById("autocomplete").style.fontSize = "10px";
+      document.getElementById("scenario").style.fontSize = "14px";
+    //} else if (window.innerWidth < 990) {
+    } else if (Math.min(window.innerWidth, max_width) < 990) {
+      document.getElementById("user_input").style.fontSize = "10px";
+      document.getElementById("history_box").style.fontSize = "12px";
+      document.getElementById("autocomplete").style.fontSize = "11px";
+      document.getElementById("scenario").style.fontSize = "15px";
+    //} else if (window.innerWidth < 1100) {
+    } else if (Math.min(window.innerWidth, max_width) < 1100) {
+      document.getElementById("user_input").style.fontSize = "12px";
+      document.getElementById("history_box").style.fontSize = "12px";
+      document.getElementById("autocomplete").style.fontSize = "12px";
+      document.getElementById("scenario").style.fontSize = "15px";
+    //} else if (window.innerWidth >= 1100) {
+    } else if (Math.min(window.innerWidth, max_width) >= 1100) {
+      document.getElementById("user_input").style.fontSize = "14px";
+      document.getElementById("history_box").style.fontSize = "15px";
+      document.getElementById("autocomplete").style.fontSize = "14px";
+      document.getElementById("scenario").style.fontSize = "16px";
+    }
+  }
+
+  resize_view();
+
+  document.body.onresize = resize_view;
+  // $(document).ready(function() {
+  //   $(window).keydown(function(event){
+  //     if(event.keyCode == 13) {
+  //       event.preventDefault();
+  //       document.getElementById("parse").click();
+  //       return false;
+  //     }
+  //   });
+  // });
+
+  //var scenario1 = "<b>Scenario 1/3:</b> You are in an empty conference room and preparing for a presentation. You have hooked up your laptop to present slides, but as you look at the room, you can see that nothing is displayed to the audience yet. Use the phone's chat app to tell Scarlett, the building's friendly artificial intelligence, what to do next.";
+  //var scenario2 = "<b>Scenario 2/3:</b> There is glare on the projector screen that makes it difficult to see the slides. Work with Scarlett to eliminate the glare.";
+  //var scenario3 = "<b>Scenario 3/3:</b> The audience wants to be able to see their notes. Use the interface to make sure that there is no glare on the projector AND the audience can see their notes.";
+
+  var instructions = "<div>Use the chat app to work with Scarlett, the friendly smart room AI, to put the conference room into the goal state. The goal state may be impossible to reach. Once the room is in the goal state, or you have decided that it is impossible to reach the goal state, press the \"Done with Scenario ";
+
+  var scenario1 = "<div style='font-size:25px;' align=center><b>Scenario 1/3</b></div>" + instructions + "1\" button. Spelling matters!</div>";
+  var scenario2 = "<div style='font-size:25px;' align=center><b>Scenario 2/3</b></div>" + instructions + "2\" button. Spelling matters!</div>";
+  var scenario3 = "<div style='font-size:25px;' align=center><b>Scenario 3/3</b></div>" + instructions + "3\" button. Spelling matters!</div>";
+
+
+  var fsm = new StateMachine({
+    init: 'init',
+    transitions: [
+      { name: 'startOnboard',       from: 'init',  to: 'onboarding' },
+      { name: 'startScenario1',     from: 'onboarding', to: 'scenario1'},
+      { name: 'startTasks1',        from: 'scenario1', to: 'tasks1'},
+      { name: 'startScenario2',     from: 'tasks1', to: 'scenario2'},
+      { name: 'startTasks2',        from: 'scenario2', to: 'tasks2'},
+      { name: 'startScenario3',     from: 'tasks2', to: 'scenario3'},
+      { name: 'startTasks3',        from: 'scenario3', to: 'tasks3'},
+      { name: 'startQuestionnaire', from: 'tasks3', to: 'questionnaire'    }
+    ],
+    methods: {
+      onStartOnboard:       function() {
+        document.getElementById("overlay").style.display = "block";
+      },
+      onStartScenario1:     function() {
+        document.getElementById("overlaytext").innerHTML = scenario1 + '<center><br>Here is the Scenario 1 goal state (you will be able to see it later as well): <img src="./img/scenario1.png" style="margin-top:24px; width:90%;"></center>';
+        document.getElementById("scenario").innerHTML = "";
+        document.getElementById("overlaybutton").innerHTML = "Continue";
+      },
+      onStartTasks1:        function() {
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("scenario").innerHTML = scenario1;
+      },
+      onStartScenario2:     function() {
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("overlaytext").innerHTML = "<b><center>You have completed Scenario 1!</center></b><br>" + scenario2 + '<center><br>Here is the Scenario 2 goal state:<img src="./img/scenario2.png" style="margin-top:24px; width:90%;"></center>';
+        document.getElementById("scenario").innerHTML = "";
+        document.getElementById("overlaybutton").innerHTML = "Continue";
+        document.getElementById("done").innerHTML = "Done with Scenario 2 &#8594";
+      },
+      onStartTasks2:        function() {
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("scenario").innerHTML = scenario2;
+      },
+      onStartScenario3:     function() {
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("overlaytext").innerHTML = "<b><center>You have completed Scenario 2!</center></b><br>" + scenario3 + '<center><br>Here is the Scenario 3 goal state:<img src="./img/scenario3.png" style="margin-top:24px; width:90%;"></center>';
+        document.getElementById("scenario").innerHTML = "";
+        document.getElementById("overlaybutton").innerHTML = "Continue";
+        document.getElementById("done").innerHTML = "Done with Scenario 3 &#8594";
+      },
+      onStartTasks3:        function() {
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("scenario").innerHTML = scenario3;
+      },
+      onStartQuestionnaire: function() {
+        document.getElementById("questionnaire-overlay").style.display = "block";
+      }
+    }
+  });
+
+  fsm.startOnboard();
+
+  document.getElementById("overlaybutton").addEventListener("click", function(){
+    if (fsm.state == 'onboarding') {
+      fsm.startScenario1();
+      var start_time = new Date().getTime();
+      log_timestamp("scenario_start_times", start_time);
+      overall_start_time_ms = start_time;
+      scenario1_start_time_ms = start_time;
+    }
+    else if (fsm.state == 'scenario1') {
+      fsm.startTasks1();
+      var start_time = new Date().getTime();
+      log_timestamp("interface_start_times", start_time);
+      scenario1_interface_start_time_ms = start_time;
+    }
+    else if (fsm.state == 'scenario2') {
+      fsm.startTasks2();
+      var start_time = new Date().getTime();
+      log_timestamp("interface_start_times", start_time);
+      scenario2_interface_start_time_ms = start_time;
+    }
+    else if (fsm.state == 'scenario3') {
+      fsm.startTasks3();
+      var start_time = new Date().getTime();
+      log_timestamp("interface_start_times", start_time);
+      scenario3_interface_start_time_ms = start_time;
+    }
+  });
+
+  function is_printable(keycode) {
+    var printable =
+        (keycode > 47 && keycode < 58)   || // number keys
+        keycode == 32                    || // spacebar
+        (keycode > 64 && keycode < 91)   || // letter keys
+        (keycode > 95 && keycode < 112)  || // numpad keys
+        (keycode > 185 && keycode < 193) || // ;=,-./` (in order)
+        (keycode > 218 && keycode < 223);   // [\]' (in order)
+
+    return printable;
+  }
+
+
+
+
+  //////////////// SUMMARY LOGGING
+  var num_correct_final_states = 0;
+
+  var overall_elapsed_time_ms = 0;
+
+  var scenario1_elapsed_time_ms = 0;
+  var scenario1_interface_elapsed_time_ms = 0;
+
+  var overall_num_submissions = 0;
+  var overall_num_keystrokes = 0;
+  var overall_num_printable_keystrokes = 0;
+
+  var scenario1_num_submissions = 0;
+  var scenario1_num_keystrokes = 0;
+  var scenario1_num_printable_keystrokes = 0;
+
+  var scenario2_num_submissions = 0;
+  var scenario2_num_keystrokes = 0;
+  var scenario2_num_printable_keystrokes = 0;
+
+  var scenario3_num_submissions = 0;
+  var scenario3_num_keystrokes = 0;
+  var scenario3_num_printable_keystrokes = 0;
+
+  // BOOKKEEPING VARIABLES
+  var overall_start_time_ms = 0;
+  var overall_end_time_ms = 0;
+
+  var scenario1_start_time_ms = 0;
+  var scenario1_interface_start_time_ms = 0;
+  var scenario1_end_time_ms = 0;
+
+  var scenario2_start_time_ms = 0;
+  var scenario2_interface_start_time_ms = 0;
+  var scenario2_end_time_ms = 0;
+
+  var scenario3_start_time_ms = 0;
+  var scenario3_interface_start_time_ms = 0;
+  var scenario3_end_time_ms = 0;
+
+  function log_summary() {
+    // update variables
+    overall_elapsed_time_ms = overall_end_time_ms - overall_start_time_ms;
+
+    scenario1_elapsed_time_ms = scenario1_end_time_ms - scenario1_start_time_ms;
+    scenario1_interface_elapsed_time_ms = scenario1_end_time_ms - scenario1_interface_start_time_ms;
+
+    scenario2_elapsed_time_ms = scenario2_end_time_ms - scenario2_start_time_ms;
+    scenario2_interface_elapsed_time_ms = scenario2_end_time_ms - scenario2_interface_start_time_ms;
+
+    scenario3_elapsed_time_ms = scenario3_end_time_ms - scenario3_start_time_ms;
+    scenario3_interface_elapsed_time_ms = scenario3_end_time_ms - scenario3_interface_start_time_ms;
+
+    overall_num_submissions = overall_submission_count;
+    overall_num_keystrokes = keylogger_overall_counter;
+    overall_num_printable_keystrokes = printable_keylogger_overall_counter;
+
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        var summary_xmlhttp = new XMLHttpRequest();
+    } else {  // code for IE6, IE5
+        var summary_xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    summary_xmlhttp.onreadystatechange=function() {
+        if (summary_xmlhttp.readyState==4 && summary_xmlhttp.status==200) {
+          console.log("xml response text: ", summary_xmlhttp.responseText);
+        }
+    }
+    var qString = "php/logger.php?";
+    qString += "tablename=summary";
+    qString += "&deployment_id=" + deployment_name;
+    qString += "&user_id=" + user_id;
+    qString += "&interface_id=" + interface_id;
+    qString += "&num_correct_final_states=" + num_correct_final_states;
+    qString += "&overall_elapsed_time_ms=" + overall_elapsed_time_ms;
+    qString += "&scenario1_elapsed_time_ms=" + scenario1_elapsed_time_ms;
+    qString += "&scenario1_interface_elapsed_time_ms=" + scenario1_interface_elapsed_time_ms;
+    qString += "&scenario2_elapsed_time_ms=" + scenario2_elapsed_time_ms;
+    qString += "&scenario2_interface_elapsed_time_ms=" + scenario2_interface_elapsed_time_ms;
+    qString += "&scenario3_elapsed_time_ms=" + scenario3_elapsed_time_ms;
+    qString += "&scenario3_interface_elapsed_time_ms=" + scenario3_interface_elapsed_time_ms;
+    qString += "&overall_num_submissions=" + overall_num_submissions;
+    qString += "&overall_num_keystrokes=" + overall_num_keystrokes;
+    qString += "&overall_num_printable_keystrokes=" + overall_num_printable_keystrokes;
+    qString += "&scenario1_num_submissions=" + scenario1_num_submissions;
+    qString += "&scenario1_num_keystrokes=" + scenario1_num_keystrokes;
+    qString += "&scenario1_num_printable_keystrokes=" + scenario1_num_printable_keystrokes;
+    qString += "&scenario2_num_submissions=" + scenario2_num_submissions;
+    qString += "&scenario2_num_keystrokes=" + scenario2_num_keystrokes;
+    qString += "&scenario2_num_printable_keystrokes=" + scenario2_num_printable_keystrokes;
+    qString += "&scenario3_num_submissions=" + scenario3_num_submissions;
+    qString += "&scenario3_num_keystrokes=" + scenario3_num_keystrokes;
+    qString += "&scenario3_num_printable_keystrokes=" + scenario3_num_printable_keystrokes;
+    //console.log(qString);
+    summary_xmlhttp.open("GET", qString, true);
+    summary_xmlhttp.send();
+  }
+  //////////////// END LOGGING
+
+
+  var keylogger_overall_counter = 0;
+  var keylogger_scenario_counter = 0;
+  var printable_keylogger_overall_counter = 0;
+  var printable_keylogger_scenario_counter = 0;
+  document.onkeyup = function (e) {
+    if (['tasks1', 'tasks2', 'tasks3'].includes(fsm.state)) {
+      keylogger_overall_counter += 1;
+      keylogger_scenario_counter += 1;
+      var keycode_is_printable = is_printable(e.keyCode);
+      if (keycode_is_printable) {
+        printable_keylogger_overall_counter += 1;
+        printable_keylogger_scenario_counter += 1;
+      }
+      ///////////////// START LOGGING
+      if (window.XMLHttpRequest) {
+          // code for IE7+, Firefox, Chrome, Opera, Safari
+          var keylogger_xmlhttp = new XMLHttpRequest();
+      } else {  // code for IE6, IE5
+          var keylogger_xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      keylogger_xmlhttp.onreadystatechange=function() {
+          if (keylogger_xmlhttp.readyState==4 && keylogger_xmlhttp.status==200) {
+            console.log("xml response text: ", keylogger_xmlhttp.responseText);
+          }
+      }
+      var qString = "php/logger.php?";
+      qString += "tablename=keystrokes";
+      qString += "&deployment_id=" + deployment_name;
+      qString += "&user_id=" + user_id;
+      qString += "&interface_id=" + interface_id;
+      qString += "&scenario_id=" + fsm.state.replace("tasks", "");
+      qString += "&overall_keystroke_count=" + keylogger_overall_counter;
+      qString += "&scenario_keystroke_count=" + keylogger_scenario_counter;
+      qString += "&timestamp_ms=" + new Date().getTime(); // In GMT
+      qString += "&keycode=" + e.keyCode;
+      qString += "&is_printable=" + keycode_is_printable; // true/false
+      qString += "&user_input=" + document.getElementById("user_input").value;
+      //console.log(qString);
+      keylogger_xmlhttp.open("GET", qString,true);
+      keylogger_xmlhttp.send();
+      ///////////////// END LOGGING
+    }
+  }
+
+
+  document.onkeydown = function (e) {
+  switch (e.keyCode) {
+    case 13:
+      //console.log("Enter key");
+      e.preventDefault();
+      if (CURRENT_OPTION == null) {
+        document.getElementById("parse").click();
+      } else {
+        autofill_option(CURRENT_OPTION);
+        CURRENT_OPTION = null;
+      }
+      break;
+    case 37: //left arrow
+      //e.preventDefault();
+      break;
+    case 39: //right arrow
+      //e.preventDefault();
+      autofill_option(CURRENT_OPTION);
+      CURRENT_OPTION = null;
+      break;
+
+    case 38: //up arrow
+      decrement_option();
+      break;
+
+    case 40: //down arrow
+      increment_option();
+      break;
+
+    default:
+      //console.log('DEFAULT KEYLOG');
+      //console.log(e.keyCode);
+      return; // Do nothing for the rest
+  }
+};
+</script>
+
+
+
+
+<!-- Autocomplete -->
+
+<script type="text/javascript">
+  function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  };
+
+  // get deployment name
+  var deployment_name = "default";
+  if (window.XMLHttpRequest) {
+      // code for IE7+, Firefox, Chrome, Opera, Safari
+      var xmlhttp_dep = new XMLHttpRequest();
+  } else {  // code for IE6, IE5
+      var xmlhttp_dep=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp_dep.open("GET", "php/get_deployment.php", false);
+  xmlhttp_dep.send();
+  if (xmlhttp_dep.status == 200) {
+    //console.log("returned", xmlhttp_dep.responseText);
+    deployment_name = xmlhttp_dep.responseText;
+  }
+  console.log("Deployment:", deployment_name);
+
+  // select interface
+  var user_id = getUrlParameter('uid');
+  //console.log("UID:", user_id);
+  // if not provided in URL, get uid from server
+  if (user_id == "") {
+    //user_id = 9001;
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        var xmlhttp_uid = new XMLHttpRequest();
+    } else {  // code for IE6, IE5
+        var xmlhttp_uid=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp_uid.open("GET", "php/get_uid.php", false);
+    xmlhttp_uid.send();
+    if (xmlhttp_uid.status == 200) {
+      //console.log("returned", xmlhttp_uid.responseText);
+      user_id = xmlhttp_uid.responseText;
+    }
+    console.log("UID:", user_id);
+  }
+
+  document.getElementById("overlaytext").innerHTML = document.getElementById("overlaytext").innerHTML + "user" + user_id;
+  var interface_id = user_id % 9;
+
+  var show_autocomplete = true;
+  var out_of_order = null;
+  var manual_select = null;
+  var full_phrase_suggestions = null;
+
+
+  if (interface_id == 8) {
+    show_autocomplete = false;
+  } else {
+    show_autocomplete = true;
+    //var autocomplete_interface_bits = interface_id - 1;
+    out_of_order = (interface_id & 4) >> 2; // highest bit
+    manual_select = (interface_id & 2) >> 1; // middle bit
+    full_phrase_suggestions = interface_id & 1; // lowest bit
+  }
+
+  console.log("Out-of-order:", out_of_order);
+  console.log("Manual selection:", manual_select);
+  console.log("Full phrase suggestions:", full_phrase_suggestions);
+
+  // set chatroom
+  var chatroom = "user" + user_id.toString();
+  var username = "user" + user_id.toString();
+  var password = "2IQNLiEY39OgUser" + user_id.toString();
+
+  // set survey link
+  var survey_link = "https://anonymized-link-to-questionnai.re/" + "?user_id=" + user_id.toString() + "&deployment_id=" + deployment_name.toString() + "&interface_id=" + interface_id.toString();
+
+  document.getElementById("surveylink").href = survey_link;
+
+  document.getElementById("user_id").innerHTML = "Problem? Email [anonymized] with \"User ID: " + username +"\" in subject line.";
+
+
+
+  // XMPP
+  var client = null;
+  var loginInfo = document.getElementById('connect');
+   loginInfo.onclick = function (e) {
+     console.log("clicked connect")
+    if (e.preventDefault) e.preventDefault();
+
+    var user = document.getElementById('user').value;
+    var jid = user + "@" + domain;
+    console.log(jid);
+
+    if (client !== null) {
+      client.disconnect();
+    }
+
+    client = XMPP.createClient({
+      jid: jid,
+      password: document.getElementById('password').value,
+
+      // If you have a .well-known/host-meta.json file for your
+      // domain, the connection transport config can be skipped.
+
+      transport: 'websocket',
+      wsURL: wsURL
+      // (or `boshURL` if using 'bosh' as the transport)
+  });
+
+  client.on('session:started', function () {
+    console.log("Started XMPP session")
+    document.getElementById('connection_status').innerHTML = "Connected as " + user;
+      document.getElementById("history_box").innerHTML = "";
+      client.joinRoom(chatroom + "@conference." + domain, user, {joinMuc: {history: {maxstanzas: 20}}} );
+      client.getRoster();
+      client.sendPresence();
+      client.enableCarbons(function (err) {
+        if (err) {
+          console.log('Server does not support carbons');
+        }
+      });
+      client.enableKeepAlive({
+        interval: 30
+      });
+  });
+
+  client.on('message', function (msg) {
+    //console.log("hit on 'message'");
+    //console.log(msg);
+    //console.log("From: " + msg.from.resource + " Msg: " + msg.body);
+    if ("delay" in msg) {
+      var d = new Date(Date.parse(msg.delay.stamp));
+      timestring = d.toLocaleString();
+      timecolumn = timestring + Array(24 - timestring.length).join(" ");
+      fromstring = msg.from.resource;
+      fromcolumn = fromstring + ":" + Array(15 - fromstring.length).join(" ");
+      var record = timecolumn + "\n" + fromstring + ": "  + msg.body + "\n";
+      //var record = fromstring + ": "  + msg.body;
+      console.log(record);
+      document.getElementById("history_box").innerHTML = document.getElementById("history_box").innerHTML + record + "\n";
+      document.getElementById("history_box").scrollTop = document.getElementById("history_box").scrollHeight;
+    } else if ("body" in msg){
+      var d = new Date(); //"Wed Mar 25 2015 09:56:24 GMT+0100 (W. Europe Standard Time)"
+      timestring = d.toLocaleString();
+      timecolumn = timestring + Array(24 - timestring.length).join(" ");
+      fromstring = msg.from.resource;
+      fromcolumn = fromstring + ":" + Array(15 - fromstring.length).join(" ");
+      //var record = timecolumn + fromcolumn + msg.body;
+      var record = timecolumn + "\n" + fromstring + ": "  + msg.body + "\n";
+      //var record = fromstring + ": "  + msg.body;
+      console.log(record);
+      document.getElementById("history_box").innerHTML = document.getElementById("history_box").innerHTML + record + "\n";
+      document.getElementById("history_box").scrollTop = document.getElementById("history_box").scrollHeight;
+    };
+    //console.log(msg.body);
+  });
+
+  client.on('chat', function (msg) {
+    //console.log("hit on 'chat'");
+    //  client.sendMessage({
+    //    to: msg.from,
+    //    body: 'You sent: ' + msg.body
+    //  });
+  });
+
+  client.on('raw:incoming', function (msg) {
+  //  console.log("hit on 'raw:incoming'");
+  //  console.log(msg);
+    //  client.sendMessage({
+    //    to: msg.from,
+    //    body: 'You sent: ' + msg.body
+    //  });
+  });
+
+  client.connect();
+  return false;
+};
+
+
+setInterval(function(){
+    client.sendPresence(); console.log('sent presence');}, 30000);
+
+document.getElementById('user').value = username;
+document.getElementById('password').value = password;
+loginInfo.click();
+
+
+  //Thanks to http://tomassetti.me/antlr-and-the-web/
+  var updateTree = function(tree, ruleNames) {
+      var container = document.getElementById("treediv");
+      while (container.hasChildNodes()) {
+          container.removeChild(container.lastChild);
+      }
+      recurseTree(container, tree, ruleNames)
+  };
+
+  var recurseTree = function(container, tree, ruleNames) {
+      if (tree.children !== undefined && tree.children != null) {
+          for (var i = 0; i < tree.children.length; i++) {
+              var child = tree.children[i];
+              recurseTree(container, child, ruleNames);
+          }
+          var nodeType = ruleNames[tree.ruleIndex];
+          var newElement = document.createElement("div");
+          newElement.className = "NearbyApplication";
+          var newElementText = document.createTextNode(nodeType);//child.children[2].getText());
+          newElement.appendChild(newElementText);
+          container.appendChild(newElement);
+      }
+  };
+
+  var ErrorListener = require('antlr4/error/ErrorListener').ErrorListener;
+  function TestGrammarErrorListener() {
+      ErrorListener.call(this);
+      this.partialApplication = null;
+      this.errors = [];
+      return this;
+  }
+
+  TestGrammarErrorListener.prototype = Object.create(ErrorListener.prototype);
+  TestGrammarErrorListener.prototype.constructor = TestGrammarErrorListener;
+
+  var testTokens; //TEST global for console stuff
+  var testParser;
+  TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingSymbol, line, column, msg, e) {
+      this.errors.push(arguments);
+      //console.log("PARSER ERROR");
+      //console.log(msg);
+      var parser = recognizer._ctx.parser;
+      testParser = recognizer._ctx.parser;
+      testTokens = parser.getExpectedTokens(); //CRITICAL. This is an interval set with the numbers that correspond to the expected token types
+      tokenString = testTokens.toString(); //String like '{1..2, 4..9}' or '8..9'
+       //console.log(tokenString);
+       var tokenStrArray = tokenString.replace('{', '').replace('}', '').split(", "); //Array of strings like ['1..2', '4..9']
+       var tokenArray = [];
+       //console.log(tokenStrArray);
+       for (i = 0; i < tokenStrArray.length; i++) {
+           intInterval = tokenStrArray[i];
+           if (intInterval.indexOf('..') !== -1) {
+               var endpoints = intInterval.split('..');
+               var start = parseInt(endpoints[0], 10);
+               var end = parseInt(endpoints[1], 10);
+               for (j = start; j < end+1; j++) {
+                   tokenArray.push(j);
+               }
+           } else {
+               tokenArray.push(parseInt(intInterval, 10));
+           }
+       }
+      //console.log(tokenArray);
+       // End interval set to array of integers conversion
+       // Begin convert from array of integers to array of symbolic names
+       for (i in tokenArray) {
+           tokenArray[i] = parser.symbolicNames[parseInt(tokenArray[i], 10)];
+       }
+       //console.log(tokenArray);
+       // End conversion from integers to symbolic names
+
+       this.partialApplication = null;
+       var typeAssistTokens = parser.symbolicNames;
+       var tokens = parser.getTokenStream().tokens;
+
+      // last token is always "fake" EOF token
+      if (tokens.length > 1) {
+          var lastToken = tokens[tokens.length - 2],
+              tokenType = parser.symbolicNames[lastToken.type];
+
+          this.tokenType = tokenType;
+          if (typeAssistTokens.indexOf(tokenType) >= 0) {
+              this.partialApplication = lastToken.text;
+              //console.log("partial application: " + this.partialApplication);
+          }
+     }
+
+          if (window.XMLHttpRequest) {
+              // code for IE7+, Firefox, Chrome, Opera, Safari
+              var xmlhttp = new XMLHttpRequest();
+              var pre_xmlhttp = new XMLHttpRequest()
+          } else {  // code for IE6, IE5
+              var xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+              var pre_xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+          }
+          xmlhttp.onreadystatechange=function() {
+              if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                document.getElementById("autocomplete").innerHTML=xmlhttp.responseText;
+                //console.log("xml response text: ", xmlhttp.responseText);
+                if (xmlhttp.responseText != "") {
+                  document.getElementById("autocomplete").style.border="1px solid #A5ACB2";
+                  document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 1)";
+                }
+  	          }
+          }
+
+          if (show_autocomplete == true) {
+            // switch between interfaces
+            var qString = null;
+            var text = null;
+
+            var typing_in_order = false;
+
+            var pre_qString = "php/in_order.php?";
+            pre_text = document.getElementById("user_input").value
+            pre_qString += "text=" + pre_text;
+            //console.log("pre_qstring: ", pre_qString);
+            pre_xmlhttp.open("GET", pre_qString, false);
+            pre_xmlhttp.send();
+            if (pre_xmlhttp.status == 200) {
+              //console.log("returned", pre_xmlhttp.responseText);
+              if (pre_xmlhttp.responseText == "true") {
+                typing_in_order = true;
+              }
+            }
+
+            //console.log("typing in order: ", typing_in_order);
+
+            if (out_of_order == false || typing_in_order == true) {
+              if (full_phrase_suggestions == true) {
+                //match starting strings
+                qString = "php/start.php?";
+                text = document.getElementById("user_input").value;
+              } else if (full_phrase_suggestions == false) {
+                if (typing_in_order) {
+                  // token-based autocomplete
+                  qString = "php/autocomplete.php?";
+                  for (i in tokenArray) {
+                      qString += "q[]=_" + tokenArray[i] + "&";
+                  }
+                  qString += "input=" + document.getElementById("user_input").value + "&";
+                  var text = "";
+                  for (i in tokens) {
+                      if (i < tokens.length - 1) {
+                         text += tokens[i].text + " ";
+                      }
+                  }
+                }
+              }
+            } else if (out_of_order == true && typing_in_order == false) {
+              qString = "php/search.php?";
+              text = document.getElementById("user_input").value;
+            }
+            //text = document.getElementById("user_input").value;
+            qString += "text=" + text;
+            //console.log(qString);
+            xmlhttp.open("GET",qString,true);
+            xmlhttp.send();
+        }
+   //   }
+  };
+
+  // Send message to chatroom
+  function submitMessage(msg) {
+//    console.log({to: chatroom + "@conference."+ domain, body: msg, type: 'groupchat'});
+      client.sendMessage({to: chatroom + "@conference."+ domain, body: msg, type: 'groupchat'});
+  };
+
+  // Remove suggestions
+  function clearSuggestions() {
+      document.getElementById("autocomplete").innerHTML="";
+      document.getElementById("autocomplete").style.border="0px solid #A5ACB2";
+      document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 0)";
+  }
+
+  var antlr4 = require('antlr4/index');
+  var NearbyLexer = require('generated-parser/NearbyLexer');
+  var NearbyParser = require('generated-parser/NearbyParser');
+
+  var sim_room = {
+    front_cans: true,
+    right_accent: false,
+    left_accent: false,
+    ambient: false,
+    overhead: true,
+    accent_lights: false,
+    lights: true,
+    projector: false,
+    right_blind: true,
+    left_blind: true,
+    the_blinds: true,
+    temp: 69,
+    humidity: 20,
+    pressure: 1,
+    goal: false
+  };
+
+  var saved_sim_state = sim_room;
+
+  var scenario1_goal = {
+    front_cans: true,
+    right_accent: false,
+    left_accent: false,
+    ambient: false,
+    overhead: true,
+    accent_lights: false,
+    lights: true,
+    projector: true,
+    right_blind: true,
+    left_blind: true,
+    the_blinds: true,
+    temp: 69,
+    humidity: 20,
+    pressure: 1,
+    goal: true
+  };
+
+  var scenario2_goal = {
+    front_cans: false,
+    right_accent: false,
+    left_accent: false,
+    ambient: false,
+    overhead: true,
+    accent_lights: false,
+    lights: true,
+    projector: true,
+    right_blind: true,
+    left_blind: true,
+    the_blinds: true,
+    temp: 69,
+    humidity: 20,
+    pressure: 1,
+    goal: true
+  };
+
+  var scenario3_goal = {
+    front_cans: false,
+    right_accent: false,
+    left_accent: false,
+    ambient: true,
+    overhead: true,
+    accent_lights: false,
+    lights: true,
+    projector: true,
+    right_blind: true,
+    left_blind: true,
+    the_blinds: true,
+    temp: 69,
+    humidity: 20,
+    pressure: 1,
+    goal: true
+  };
+
+  function renderState(state) {
+    if (state.front_cans) {
+      document.getElementById("front-cans-image").src="./img/final/front-cans-on.png";
+    } else {
+      document.getElementById("front-cans-image").src="./img/final/blank.png";
+    }
+
+    if (state.right_accent) {
+      document.getElementById("right-can-image").src="./img/final/right-can-on.png";
+    } else {
+      document.getElementById("right-can-image").src="./img/final/blank.png";
+    }
+
+    if (state.left_accent) {
+      document.getElementById("left-can-image").src="./img/final/left-can-on.png";
+    } else {
+      document.getElementById("left-can-image").src="./img/final/blank.png"
+    }
+
+    if (state.ambient) {
+      document.getElementById("ambient-image").src="./img/final/ambient-on.png";
+    } else {
+      document.getElementById("ambient-image").src="./img/final/ambient-off.png";
+    }
+
+    if (state.overhead) {
+      document.getElementById("lights-image").src="./img/final/blank.png";
+    } else {
+      document.getElementById("lights-image").src="./img/final/lights-off.png";
+    }
+
+    if (state.projector) {
+      document.getElementById("projector-image").src="./img/final/projector-on.png";
+    } else {
+      document.getElementById("projector-image").src="./img/final/blank.png";
+    }
+
+    if (state.right_blind) {
+      document.getElementById("right-blind-image").src="./img/final/right-blind-up.png";
+    } else {
+      document.getElementById("right-blind-image").src="./img/final/right-blind-down.png";
+    }
+
+    if (state.left_blind) {
+      document.getElementById("left-blind-image").src="./img/final/left-blind-up.png";
+    } else {
+      document.getElementById("left-blind-image").src="./img/final/left-blind-down.png";
+    }
+  }
+
+  function bool_to_on_off(bool) {
+    if (bool) {
+      return "on";
+    } else {
+      return "off";
+    }
+  }
+
+  function bool_to_up_down(bool) {
+    if (bool) {
+      return "up";
+    } else {
+      return "down";
+    }
+  }
+
+  document.getElementById("show_goal").addEventListener("mousedown", function() {
+    if (fsm.state == 'tasks1') {
+      renderState(scenario1_goal);
+    } else if (fsm.state == 'tasks2') {
+      renderState(scenario2_goal);
+    } else if (fsm.state == 'tasks3') {
+      renderState(scenario3_goal);
+    }
+  });
+
+  document.getElementById("show_goal").addEventListener("mouseup", function() {
+    renderState(sim_room);
+  });
+
+  var overall_submission_count = 0;
+  var scenario_submission_count = 0;
+  document.getElementById("parse").addEventListener("click", function(){
+      overall_submission_count += 1;
+      scenario_submission_count += 1;
+      var submission = document.getElementById("user_input").value;
+      submission = submission.trim();
+      submitMessage(submission);
+      var input = submission.toLowerCase();
+
+      if (input == "turn on the fluorescent lights") {
+        sim_room.overhead = true;
+      } else if (input == "turn off the fluorescent lights") {
+        sim_room.overhead = false;
+
+      } else if (input == "turn on the projector") {
+        sim_room.projector = true;
+      } else if (input == "turn off the projector") {
+        sim_room.projector = false;
+
+      } else if (input == "turn on the front lights") {
+        sim_room.front_cans = true;
+      } else if (input == "turn off the front lights") {
+        sim_room.front_cans = false;
+
+      // } else if (input == "turn on the wall light") {
+      //   sim_room.ambient = true;
+      // } else if (input == "turn off the wall light") {
+      //   sim_room.ambient = false;
+
+      } else if (input == "turn on the right light") {
+        sim_room.right_accent = true;
+      } else if (input == "turn off the right light") {
+        sim_room.right_accent = false;
+
+      } else if (input == "turn on the left light") {
+        sim_room.left_accent = true;
+      } else if (input == "turn off the left light") {
+        sim_room.left_accent = false;
+
+      // } else if (input == "raise the left blind") {
+      //   sim_room.left_blind = true;
+      // } else if (input == "lower the left blind") {
+      //   sim_room.left_blind = false;
+      //
+      // } else if (input == "raise the right blind") {
+      //   sim_room.right_blind = true;
+      // } else if (input == "lower the right blind") {
+      //   sim_room.right_blind = false;
+
+      } else if (input == "raise the blinds") {
+        sim_room.right_blind = true;
+        sim_room.left_blind = true;
+      } else if (input == "lower the blinds") {
+        sim_room.right_blind = false;
+        sim_room.left_blind = false;
+
+      } else if (input == "turn on the spot lights") {
+        sim_room.right_accent = true;
+        sim_room.left_accent = true;
+
+      } else if (input == "turn off the spot lights") {
+        sim_room.right_accent = false;
+        sim_room.left_accent = false;
+
+      } else if (input == "turn on the lights") {
+        sim_room.overhead = true;
+        sim_room.front_cans = true;
+        //sim_room.ambient = true;
+        sim_room.right_accent = true;
+        sim_room.left_accent = true;
+      } else if (input == "turn off the lights") {
+        sim_room.overhead = false;
+        sim_room.front_cans = false;
+        //sim_room.ambient = false;
+        sim_room.right_accent = false;
+        sim_room.left_accent = false;
+      }
+
+      sim_room.lights = sim_room.front_cans || sim_room.right_accent || sim_room.left_accent || sim_room.ambient || sim_room.overhead;
+      sim_room.accent_lights = sim_room.right_accent || sim_room.left_accent;
+      sim_room.the_blinds = sim_room.right_blinds || sim_room.left_blinds;
+
+      renderState(sim_room);
+
+      ///////////////// START SUBMISSION LOGGING
+      if (window.XMLHttpRequest) {
+          // code for IE7+, Firefox, Chrome, Opera, Safari
+          var interactions_xmlhttp = new XMLHttpRequest();
+      } else {  // code for IE6, IE5
+          var interactions_xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      interactions_xmlhttp.onreadystatechange=function() {
+          if (interactions_xmlhttp.readyState==4 && interactions_xmlhttp.status==200) {
+            console.log("xml response text: ", interactions_xmlhttp.responseText);
+          }
+      }
+      var qString = "php/logger.php?";
+      qString += "tablename=interactions";
+      qString += "&deployment_id=" + deployment_name;
+      qString += "&user_id=" + user_id;
+      qString += "&interface_id=" + interface_id;
+      qString += "&scenario_id=" + fsm.state.replace("tasks", "");
+      qString += "&overall_submission_count=" + overall_submission_count;
+      qString += "&scenario_submission_count=" + scenario_submission_count;
+      qString += "&submission=" + submission;
+      qString += "&timestamp_ms=" + new Date().getTime(); // In GMT
+      qString += "&projector=" + bool_to_on_off(sim_room.projector);
+      qString += "&left_blind=" + bool_to_up_down(sim_room.left_blind);
+      qString += "&right_blind=" + bool_to_up_down(sim_room.right_blind);
+      qString += "&fluorescent_lights=" + bool_to_on_off(sim_room.overhead);
+      qString += "&front_lights=" + bool_to_on_off(sim_room.front_cans);
+      qString += "&wall_light=" + bool_to_on_off(sim_room.ambient);
+      qString += "&left_light=" + bool_to_on_off(sim_room.left_accent);
+      qString += "&right_light=" + bool_to_on_off(sim_room.right_accent);
+      //console.log(qString);
+      interactions_xmlhttp.open("GET", qString, true);
+      interactions_xmlhttp.send();
+      ///////////////// END SUBMISSION LOGGING
+
+
+      // if (sim_room.projector == true && fsm.state == 'tasks1') {  setTimeout(scenario2, 1000); }
+      // else if (sim_room.projector == true && sim_room.lights == false && fsm.state == 'tasks2') { setTimeout(scenario3, 1000); }
+      // if (sim_room.projector == true && sim_room.front_cans == false && sim_room.overhead == true && fsm.state == 'tasks3') { setTimeout(questionnaire, 1000); }
+
+      // https://stackoverflow.com/questions/201183/how-to-determine-equality-for-two-javascript-objects
+      // function deepEqual(x, y) {
+      //   var equal = true;
+      //   equal = equal && (x.front_cans == y.front_cans);
+      //   equal = equal && (x.right_accent == y.right_accent);
+      //   equal = equal && (x.left_accent == y.left_accent);
+      //   equal = equal && (x.ambient == y.ambient);
+      //   equal = equal && (x.overhead == y.overhead);
+      //   equal = equal && (x.projector == y.projector);
+      //   equal = equal && (x.right_blind == y.right_blind);
+      //   equal = equal && (x.left_blind == y.left_blind);
+      //   return equal;
+      // }
+      //
+      // if (deepEqual(sim_room, scenario1_goal) && fsm.state == 'tasks1') { setTimeout(scenario2, 1000); }
+      // else if (deepEqual(sim_room, scenario2_goal) && fsm.state == 'tasks2') { setTimeout(scenario3, 1000); }
+      // if (deepEqual(sim_room, scenario3_goal) && fsm.state == 'tasks3') { setTimeout(questionnaire, 1000); }
+
+      var chars = new antlr4.InputStream(input);
+      var lexer = new NearbyLexer.NearbyLexer(chars);
+      var tokens  = new antlr4.CommonTokenStream(lexer);
+      var parser = new NearbyParser.NearbyParser(tokens);
+      var listener = new TestGrammarErrorListener();
+      parser.removeErrorListeners();
+      parser.addErrorListener(listener);
+      parser.buildParseTrees = true;
+      var tree = parser.application();
+      //updateTree(tree, parser.ruleNames);
+      var translator = new TargetTranslator();
+      antlr4.tree.ParseTreeWalker.DEFAULT.walk(translator, tree);
+      //console.log(translator.target_sentence);
+      var str_json = JSON.stringify(translator.target_sentence);
+      //var request = new XMLHttpRequest();
+      //request.open("POST", "php/post-to-target.php", true);
+      //request.setRequestHeader("Content-type", "application/json");
+      //request.send(str_json);
+
+      document.getElementById("user_input").value = "";
+  });
+
+  function get_num_options() {
+    var suggestions = document.getElementById("autocomplete").innerHTML;
+    var count = (suggestions.match(/id=\"suggestion/g) || []).length;
+    return count;
+
+  }
+
+  var confirmation_txt = "Last chance! Are you finished putting the room into the goal state?\nClick OK to move on to the next scenario, or click cancel to keep working.";
+
+  function advanceState() {
+    //console.log("made it: ", fsm.state);
+    if (fsm.state == 'tasks1') {
+      if (confirm(confirmation_txt)) {
+        var end_time = new Date().getTime();
+        scenario1_end_time_ms = end_time;
+        log_timestamp("scenario_end_times", end_time);
+        log_final_state();
+        scenario1_num_keystrokes = keylogger_scenario_counter;
+        scenario1_num_printable_keystrokes = printable_keylogger_scenario_counter;
+        scenario1_num_submissions = scenario_submission_count;
+        keylogger_scenario_counter = 0;
+        printable_keylogger_scenario_counter = 0;
+        scenario_submission_count = 0;
+        fsm.startScenario2();
+        var start_time = new Date().getTime();
+        scenario2_start_time_ms = start_time;
+        log_timestamp("scenario_start_times", start_time);
+      }
+    }
+    else if (fsm.state == 'tasks2') {
+      if (confirm(confirmation_txt)) {
+        var end_time = new Date().getTime();
+        scenario2_end_time_ms = end_time;
+        log_timestamp("scenario_end_times", end_time);
+        log_final_state();
+        scenario2_num_keystrokes = keylogger_scenario_counter;
+        scenario2_num_printable_keystrokes = printable_keylogger_scenario_counter;
+        scenario2_num_submissions = scenario_submission_count;
+        keylogger_scenario_counter = 0;
+        printable_keylogger_scenario_counter = 0;
+        scenario_submission_count = 0;
+        fsm.startScenario3();
+        var start_time = new Date().getTime();
+        scenario3_start_time_ms = start_time;
+        log_timestamp("scenario_start_times", start_time);
+      }
+    }
+    else if (fsm.state == 'tasks3') {
+      if (confirm(confirmation_txt)) {
+        var end_time = new Date().getTime();
+        scenario3_end_time_ms = end_time;
+        overall_end_time_ms = end_time;
+        log_timestamp("scenario_end_times", end_time);
+        log_final_state();
+        scenario3_num_keystrokes = keylogger_scenario_counter;
+        scenario3_num_printable_keystrokes = printable_keylogger_scenario_counter;
+        scenario3_num_submissions = scenario_submission_count;
+        log_summary();
+        fsm.startQuestionnaire();
+        //keylogger_scenario_counter = 0;
+        //printable_keylogger_scenario_counter = 0;
+        //scenario_submission_count = 0;
+      }
+    }
+  }
+
+  function log_timestamp(tablename, timestamp_ms) {
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        var timestamp_xmlhttp = new XMLHttpRequest();
+    } else {  // code for IE6, IE5
+        var timestamp_xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    timestamp_xmlhttp.onreadystatechange=function() {
+        if (timestamp_xmlhttp.readyState==4 && timestamp_xmlhttp.status==200) {
+          console.log("xml response text: ", timestamp_xmlhttp.responseText);
+        }
+    }
+    var qString = "php/logger.php?";
+    qString += "tablename=" + tablename;
+    qString += "&deployment_id=" + deployment_name;
+    qString += "&user_id=" + user_id;
+    qString += "&interface_id=" + interface_id;
+    qString += "&scenario_id=" + fsm.state.replace("tasks", "").replace("scenario", "");
+    qString += "&timestamp_ms=" + timestamp_ms; // In GMT
+    //console.log(qString);
+    timestamp_xmlhttp.open("GET", qString, true);
+    timestamp_xmlhttp.send();
+  }
+
+  function is_in_goal_state(sim_room, goal_state) {
+    var matches = true;
+    matches = matches && (sim_room.projector == goal_state.projector);
+    matches = matches && (sim_room.left_blind == goal_state.left_blind);
+    matches = matches && (sim_room.right_blind == goal_state.right_blind);
+    matches = matches && (sim_room.overhead == goal_state.overhead);
+    matches = matches && (sim_room.front_cans == goal_state.front_cans);
+    matches = matches && (sim_room.ambient == goal_state.ambient);
+    matches = matches && (sim_room.left_accent == goal_state.left_accent);
+    matches = matches && (sim_room.right_accent == goal_state.right_accent);
+    return matches;
+  }
+
+  function log_final_state() {
+    if (fsm.state == 'tasks1') {
+      var goal_state = scenario1_goal;
+    } else if (fsm.state == 'tasks2') {
+      var goal_state = scenario2_goal;
+    } else if (fsm.state == 'tasks3') {
+      var goal_state = scenario3_goal;
+    }
+
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        var final_state_xmlhttp = new XMLHttpRequest();
+    } else {  // code for IE6, IE5
+        var final_state_xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    final_state_xmlhttp.onreadystatechange=function() {
+        if (final_state_xmlhttp.readyState==4 && final_state_xmlhttp.status==200) {
+          console.log("xml response text: ", final_state_xmlhttp.responseText);
+        }
+    }
+    var qString = "php/logger.php?";
+    qString += "tablename=final_scenario_states";
+    qString += "&deployment_id=" + deployment_name;
+    qString += "&user_id=" + user_id;
+    qString += "&interface_id=" + interface_id;
+    qString += "&scenario_id=" + fsm.state.replace("tasks", "").replace("scenario", "");
+
+    qString += "&matches_goal_state=" + is_in_goal_state(sim_room, goal_state);
+
+    if (is_in_goal_state(sim_room, goal_state)) {
+      num_correct_final_states += 1;
+    }
+
+    qString += "&projector=" + bool_to_on_off(sim_room.projector);
+    qString += "&left_blind=" + bool_to_up_down(sim_room.left_blind);
+    qString += "&right_blind=" + bool_to_up_down(sim_room.right_blind);
+    qString += "&fluorescent_lights=" + bool_to_on_off(sim_room.overhead);
+    qString += "&front_lights=" + bool_to_on_off(sim_room.front_cans);
+    qString += "&wall_light=" + bool_to_on_off(sim_room.ambient);
+    qString += "&left_light=" + bool_to_on_off(sim_room.left_accent);
+    qString += "&right_light=" + bool_to_on_off(sim_room.right_accent);
+
+    //console.log(qString);
+    final_state_xmlhttp.open("GET", qString, true);
+    final_state_xmlhttp.send();
+  }
+
+
+  // MANUAL SELECT FUNCTIONS
+
+  var CURRENT_OPTION = null;
+
+  function increment_option() {
+    if (manual_select) {
+      var num_options = get_num_options();
+      //console.log("num_options", num_options);
+      if (CURRENT_OPTION == null) {
+        CURRENT_OPTION = 0
+        highlight_option(CURRENT_OPTION);
+      } else if (CURRENT_OPTION < num_options-1) {
+        unhighlight_option(CURRENT_OPTION);
+        CURRENT_OPTION = CURRENT_OPTION + 1;
+        highlight_option(CURRENT_OPTION);
+      }
+      //if CURRENT_OPTION >= num_options, do nothing
+    }
+  }
+
+  function decrement_option() {
+    if (manual_select) {
+      if (CURRENT_OPTION == null) {
+        CURRENT_OPTION = null;
+      }
+      else if (CURRENT_OPTION == 0) {
+        unhighlight_option(CURRENT_OPTION);
+        CURRENT_OPTION = null;
+      } else {
+        unhighlight_option(CURRENT_OPTION);
+        CURRENT_OPTION = CURRENT_OPTION - 1;
+        highlight_option(CURRENT_OPTION);
+      }
+    }
+  }
+
+  function highlight_option(option_number) {
+    if (manual_select) {
+      if (option_number != null) {
+        var id = "suggestion" + option_number;
+        suggestion = document.getElementById(id);
+        suggestion.style.backgroundColor = "blue";
+        suggestion.style.color = "white";
+        suggestion.style.paddingLeft = "12px";
+        suggestion.style.marginLeft = "-12px";
+        suggestion.style.paddingRight = "12px";
+        suggestion.style.marginRight = "-12px";
+        suggestion.style.zIndex = "1000";
+        autofill_option();
+      }
+    }
+  }
+
+  function unhighlight_option(option_number) {
+    if (manual_select) {
+      if (option_number != null) {
+        //console.log(option_number);
+        var id = "suggestion" + option_number;
+        suggestion = document.getElementById(id);
+        suggestion.style.backgroundColor = "white";
+        suggestion.style.color = "black";
+        suggestion.style.padding = "0px";
+        suggestion.style.margin = "0px";
+        suggestion.style.zIndex = "1";
+      }
+    }
+  }
+
+  function highlight_suggestion(suggestion) {
+    if (manual_select) {
+      unhighlight_option(CURRENT_OPTION);
+      CURRENT_OPTION = parseInt(suggestion.id.replace("suggestion", ""));
+      highlight_option(CURRENT_OPTION);
+    }
+  }
+
+  function unhighlight_suggestion(suggestion) {
+    if (manual_select) {
+      unhighlight_option(parseInt(suggestion.id.replace("suggestion", "")));
+      CURRENT_OPTION = null;
+    }
+  }
+
+  function autofill(suggestion) {
+    if (manual_select) {
+      if (suggestion != null) {
+        var autofilled_text = suggestion.textContent.replace("...", "");
+        document.getElementById("user_input").value = autofilled_text;
+        //clearSuggestions();
+        showResult({keyCode: -1});
+      }
+    }
+  }
+
+  function autofill_option(option_number) {
+    if (manual_select) {
+      var id = "suggestion" + option_number;
+      suggestion = document.getElementById(id);
+      autofill(suggestion);
+    }
+  }
+
+  // END OF MANUAL SELECT FUNCTIONS
+
+  // function select_option(suggestion) {
+  //   var autofilled_text = suggestion.textContent.replace("...", "");
+  //   document.getElementById("user_input").value = autofilled_text;
+  //   //clearSuggestions();
+  //   showResult({keyCode: -1});
+  // }
+
+
+  //var BailErrorStrategy = require('antlr4/error/ErrorStrategy').BailErrorStrategy;
+
+  function showResult(event) {
+      if (event.keyCode == 37 || event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 40) {
+        return;
+      }
+      var input =   document.getElementById("user_input").value.toLowerCase();
+      var chars = new antlr4.InputStream(input);
+      var lexer = new NearbyLexer.NearbyLexer(chars);
+      var tokens  = new antlr4.CommonTokenStream(lexer);
+      var parser = new NearbyParser.NearbyParser(tokens);
+      var listener = new TestGrammarErrorListener();
+      parser.removeErrorListeners();
+      parser.addErrorListener(listener);
+      parser.buildParseTrees = true;
+      //parser._errHandler = new BailErrorStrategy();
+      //console.log(parser._errHandler); //TEST
+      var tree = parser.application();
+      //updateTree(tree, parser.ruleNames);
+
+     document.getElementById("autocomplete").innerHTML="";
+     document.getElementById("autocomplete").style.border="0px solid #A5ACB2";
+     document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 0)";
+
+      var tokens = parser.getTokenStream().tokens;
+      tokens = tokens.slice(0,tokens.length-1);
+
+      var tokenString = "";
+      for (i in tokens) {
+          tokenString += parser.symbolicNames[tokens[i].type] + " ";
+      }
+
+      CURRENT_OPTION = null;
+      //document.getElementById("tokens").innerHTML=tokenString;
+  }
+
+  </script>
+
+</body>
+</html>
