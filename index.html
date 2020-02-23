@@ -1002,8 +1002,6 @@ input {
     logical_forms = get_logical_forms(msg.toLowerCase());
     if (logical_forms.length == 1) {
       lf = logical_forms[0]
-
-
       if (lf["intent"] == "set_state") {
         response = get_response_SET_STATE(lf);
         doAction(lf);
@@ -1020,9 +1018,26 @@ input {
         setTimeout(function(){
           displayMessage("Scarlett", response);
         }, 1000);
+      } else if (lf["intent"] == "greeting") {
+        response = get_response_GREETING(lf);
+        setTimeout(function(){
+          displayMessage("Scarlett", response);
+        }, 1000);
+      } else {
+        response = get_response_NO_UNDERSTAND(lf);
+        setTimeout(function(){
+          displayMessage("Scarlett", response);
+        }, 1000);
       }
+    } else {
+      response = get_response_NO_UNDERSTAND(lf);
+      setTimeout(function(){
+        displayMessage("Scarlett", response);
+      }, 1000);
     }
   }
+
+  displayMessage("Scarlett", "hi!");
 
   function get_response_SET_STATE(logical_form) {
     console.log(logical_form)
@@ -1065,6 +1080,15 @@ input {
     response = "the " + attribute + " is " + sim_room[attribute];
     console.log(response);
     return response
+  }
+
+  function get_response_GREETING(logical_form) {
+    response = ":)"
+    return response
+  }
+
+  function get_response_NO_UNDERSTAND(logical_form) {
+    return "I don't understand";
   }
 
   // Remove suggestions
@@ -1290,6 +1314,9 @@ input {
     //console.log(logical_forms);
     var reduced_logical_forms = reduce_logical_forms(logical_forms);
     //console.log(reduced_logical_forms);
+    if (reduced_logical_forms.length == 0) {
+      reduced_logical_forms = reduce_logical_forms([recognize_GREETING(utt)]);
+    }
     return reduced_logical_forms
   }
 
@@ -1438,6 +1465,27 @@ input {
 
     result["success"] = success
     result["attribute"] = recognized_attributes
+    result["token_matches"] = matches
+    return result
+  }
+
+  function recognize_GREETING(utt) {
+    var words = tokenize_str(utt);
+    var matches = new Array(words.length).fill(0);
+    result = {
+      "intent": "greeting",
+      "success": false,
+      "token_matches": matches
+    }
+    var recognized_tokens = [];
+    ["hi", "hello", "good morning", "good day", "sup", "wassup", "how are you"].forEach(function(t) {
+        var result = update_token_match_vector(matches, words, t.split(' '));
+        if (result["is_match"]) {
+            recognized_tokens.push(t);
+        }
+    })
+    var success = (recognized_tokens.length > 0)
+    result["success"] = success;
     result["token_matches"] = matches
     return result
   }
