@@ -320,7 +320,7 @@ input {
             Ok, Scarlett...
           </div>
           <!-- chat history box -->
-          <textarea id="history_box" style="width: 100%; height: 200px; resize: none;" readonly="readonly" disabled="disabled"></textarea>
+          <textarea id="history_box" style="width: 100%; height: 200px; resize: none;" readonly="readonly"></textarea>
           <!-- chat entry box"-->
           <div id="inputs" align="center" style="margin-bottom:46%; width:100%;" onfocusout="if (CURRENT_OPTION == null) {clearSuggestions();}">
             <form autocomplete="off">
@@ -329,7 +329,7 @@ input {
                 <button id="parse" class="button" type="button">&#9655;</button>
               </div>
               <div style="display: flex;">
-                <div id="autocomplete" class="suggestions" style="font-size:14px; overflow-y: scroll; max-height: 140px; flex-grow:1; z-index:1;"></div>
+                <div id="autocomplete" class="suggestions" style="font-size:14px; overflow-y: scroll; max-height: 140px; width:100%; z-index:1;"></div>
                 <button class="button" type="button" style="visibility:hidden;" disabled=true>&#9655;</button>
               </div>
             </form>
@@ -774,123 +774,13 @@ input {
   console.log("Manual selection:", manual_select);
   console.log("Full phrase suggestions:", full_phrase_suggestions);
 
-  // set chatroom
-  var chatroom = "user" + user_id.toString();
-  var username = "user" + user_id.toString();
-  var password = "2IQNLiEY39OgUser" + user_id.toString();
-
   // set survey link
   var survey_link = "https://berkeley.qualtrics.com/jfe/form/SV_1TgTLPrY9a3FBSl" + "?user_id=" + user_id.toString() + "&deployment_id=" + deployment_name.toString() + "&interface_id=" + interface_id.toString();
 
   document.getElementById("surveylink").href = survey_link;
 
-  document.getElementById("user_id").innerHTML = "Problem? Email mclarkk@berkeley.edu with \"User ID: " + username +"\" in subject line.";
+  document.getElementById("user_id").innerHTML = "Problem? Email mclarkk@berkeley.edu with \"User ID: " + "user" + user_id +"\" in subject line.";
 
-
-
-  // XMPP
-  var client = null;
-  var loginInfo = document.getElementById('connect');
-   loginInfo.onclick = function (e) {
-     console.log("clicked connect")
-    if (e.preventDefault) e.preventDefault();
-
-    var user = document.getElementById('user').value;
-    var jid = user + "@" + domain;
-    console.log(jid);
-
-    if (client !== null) {
-      client.disconnect();
-    }
-
-    client = XMPP.createClient({
-      jid: jid,
-      password: document.getElementById('password').value,
-
-      // If you have a .well-known/host-meta.json file for your
-      // domain, the connection transport config can be skipped.
-
-      transport: 'websocket',
-      wsURL: wsURL
-      // (or `boshURL` if using 'bosh' as the transport)
-  });
-
-  client.on('session:started', function () {
-    console.log("Started XMPP session")
-    document.getElementById('connection_status').innerHTML = "Connected as " + user;
-      document.getElementById("history_box").innerHTML = "";
-      client.joinRoom(chatroom + "@conference." + domain, user, {joinMuc: {history: {maxstanzas: 20}}} );
-      client.getRoster();
-      client.sendPresence();
-      client.enableCarbons(function (err) {
-        if (err) {
-          console.log('Server does not support carbons');
-        }
-      });
-      client.enableKeepAlive({
-        interval: 30
-      });
-  });
-
-  client.on('message', function (msg) {
-    //console.log("hit on 'message'");
-    //console.log(msg);
-    //console.log("From: " + msg.from.resource + " Msg: " + msg.body);
-    if ("delay" in msg) {
-      var d = new Date(Date.parse(msg.delay.stamp));
-      timestring = d.toLocaleString();
-      timecolumn = timestring + Array(24 - timestring.length).join(" ");
-      fromstring = msg.from.resource;
-      fromcolumn = fromstring + ":" + Array(15 - fromstring.length).join(" ");
-      var record = timecolumn + "\n" + fromstring + ": "  + msg.body + "\n";
-      //var record = fromstring + ": "  + msg.body;
-      console.log(record);
-      document.getElementById("history_box").innerHTML = document.getElementById("history_box").innerHTML + record + "\n";
-      document.getElementById("history_box").scrollTop = document.getElementById("history_box").scrollHeight;
-    } else if ("body" in msg){
-      var d = new Date(); //"Wed Mar 25 2015 09:56:24 GMT+0100 (W. Europe Standard Time)"
-      timestring = d.toLocaleString();
-      timecolumn = timestring + Array(24 - timestring.length).join(" ");
-      fromstring = msg.from.resource;
-      fromcolumn = fromstring + ":" + Array(15 - fromstring.length).join(" ");
-      //var record = timecolumn + fromcolumn + msg.body;
-      var record = timecolumn + "\n" + fromstring + ": "  + msg.body + "\n";
-      //var record = fromstring + ": "  + msg.body;
-      console.log(record);
-      document.getElementById("history_box").innerHTML = document.getElementById("history_box").innerHTML + record + "\n";
-      document.getElementById("history_box").scrollTop = document.getElementById("history_box").scrollHeight;
-    };
-    //console.log(msg.body);
-  });
-
-  client.on('chat', function (msg) {
-    //console.log("hit on 'chat'");
-    //  client.sendMessage({
-    //    to: msg.from,
-    //    body: 'You sent: ' + msg.body
-    //  });
-  });
-
-  client.on('raw:incoming', function (msg) {
-  //  console.log("hit on 'raw:incoming'");
-  //  console.log(msg);
-    //  client.sendMessage({
-    //    to: msg.from,
-    //    body: 'You sent: ' + msg.body
-    //  });
-  });
-
-  client.connect();
-  return false;
-};
-
-
-setInterval(function(){
-    client.sendPresence(); console.log('sent presence');}, 30000);
-
-document.getElementById('user').value = username;
-document.getElementById('password').value = password;
-loginInfo.click();
 
 
   //Thanks to http://tomassetti.me/antlr-and-the-web/
@@ -1055,11 +945,127 @@ loginInfo.click();
    //   }
   };
 
+
+  function displayMessage(sender, msg) {
+    var d = new Date(); //"Wed Mar 25 2015 09:56:24 GMT+0100 (W. Europe Standard Time)"
+    timestring = d.toLocaleString();
+    timecolumn = timestring + Array(24 - timestring.length).join(" ");
+    fromstring = sender;
+    fromcolumn = fromstring + ":" + Array(15 - fromstring.length).join(" ");
+    var record = timecolumn + "\n" + fromstring + ": "  + msg + "\n";
+    console.log(record);
+    document.getElementById("history_box").innerHTML = document.getElementById("history_box").innerHTML + record + "\n";
+    document.getElementById("history_box").scrollTop = document.getElementById("history_box").scrollHeight;
+  }
+
+
+  function doAction(logical_form) {
+    var groups = {
+      "right light": ["right_accent"],
+      "left light": ["left_accent"],
+      "projector": ["projector"],
+      "front lights": ["front_cans"],
+      "spot lights": ["right_accent", "left_accent"],
+      "fluorescent lights": ["overhead"],
+      "the lights": ["overhead", "front_cans", "right_accent", "left_accent"],
+      "blinds": ["right_blind", "left_blind"]
+    }
+
+    // parse submission to affect simulation state
+    //var logical_forms = get_logical_forms(input);
+    //var logical_form = logical_forms[0];
+    if (logical_form['intent'] == 'set_state') {
+      //do stuff
+      var entity_str = logical_form['entity'][0];
+      var sim_entities = groups[entity_str];
+      var state_str = logical_form['state'][0];
+      var state_bool = states_to_bool[state_str];
+      var i;
+      for (i = 0; i < sim_entities.length; i++) {
+        entity = sim_entities[i];
+        sim_room[entity] = state_bool;
+      }
+    }
+
+    sim_room.lights = sim_room.front_cans || sim_room.right_accent || sim_room.left_accent || sim_room.overhead;
+    sim_room.accent_lights = sim_room.right_accent || sim_room.left_accent;
+    sim_room.blinds = sim_room.right_blind || sim_room.left_blind;
+
+    console.log(sim_room);
+
+    renderState(sim_room);
+  }
+
   // Send message to chatroom
   function submitMessage(msg) {
-//    console.log({to: chatroom + "@conference."+ domain, body: msg, type: 'groupchat'});
-      client.sendMessage({to: chatroom + "@conference."+ domain, body: msg, type: 'groupchat'});
-  };
+    displayMessage("User" + user_id, msg);
+    logical_forms = get_logical_forms(msg.toLowerCase());
+    if (logical_forms.length == 1) {
+      lf = logical_forms[0]
+
+
+      if (lf["intent"] == "set_state") {
+        response = get_response_SET_STATE(lf);
+        doAction(lf);
+        setTimeout(function(){
+          displayMessage("Scarlett", response);
+        }, 1000);
+      } else if (lf["intent"] == "truth_eval") {
+        response = get_response_TRUTH_EVAL(lf);
+        setTimeout(function(){
+          displayMessage("Scarlett", response);
+        }, 1000);
+      } else if (lf["intent"] == "measurement") {
+        response = get_response_MEASUREMENT(lf);
+        setTimeout(function(){
+          displayMessage("Scarlett", response);
+        }, 1000);
+      }
+    }
+  }
+
+  function get_response_SET_STATE(logical_form) {
+    console.log(logical_form)
+    response = "okay"
+    entity = logical_form["entity"][0];
+    be = "is"
+    if (plural_entities.includes(entity)) {
+      be = "are";
+    }
+    if (sim_room[entity] == states_to_bool[logical_form.state[0]]) {
+      state = logical_form.state[0];
+      if (raise_lower.includes(state)) {
+        state = bool_to_up_down(states_to_bool[state]);
+      }
+      response = "the " + entity + " " + be + " already " + state;
+    }
+    return response
+  }
+
+  function get_response_TRUTH_EVAL(logical_form) {
+    console.log(logical_form)
+    response = "";
+    entity = logical_form["entity"][0]
+    state = states_to_bool[logical_form.state[0]]
+    be = "is"
+    if (plural_entities.includes(entity)) {
+      be = "are";
+    }
+    if (sim_room[entity] == state) {
+      response = "yes, the " + entity + " " + be + " " + logical_form.state[0];
+    } else {
+      response = "no, the " + entity + " " + be + " not " + logical_form.state[0];
+    }
+    return response
+  }
+
+  function get_response_MEASUREMENT(logical_form) {
+    console.log(logical_form)
+    attribute = logical_form["attribute"][0];
+    response = "the " + attribute + " is " + sim_room[attribute];
+    console.log(response);
+    return response
+  }
 
   // Remove suggestions
   function clearSuggestions() {
@@ -1083,10 +1089,10 @@ loginInfo.click();
     projector: false,
     right_blind: true,
     left_blind: true,
-    the_blinds: true,
-    temp: 69,
-    humidity: 20,
-    pressure: 1,
+    blinds: true,
+    temperature: "69 F",
+    humidity: "20%",
+    brightness: "100 lumens",
     goal: false
   };
 
@@ -1103,7 +1109,7 @@ loginInfo.click();
     projector: true,
     right_blind: true,
     left_blind: true,
-    the_blinds: true,
+    blinds: true,
     temp: 69,
     humidity: 20,
     pressure: 1,
@@ -1121,7 +1127,7 @@ loginInfo.click();
     projector: true,
     right_blind: true,
     left_blind: true,
-    the_blinds: true,
+    blinds: true,
     temp: 69,
     humidity: 20,
     pressure: 1,
@@ -1139,7 +1145,7 @@ loginInfo.click();
     projector: true,
     right_blind: true,
     left_blind: true,
-    the_blinds: true,
+    blinds: true,
     temp: 69,
     humidity: 20,
     pressure: 1,
@@ -1212,6 +1218,56 @@ loginInfo.click();
     }
   }
 
+  var states_to_bool = {
+    "raised": true,
+    "lowered": false,
+    "down": false,
+    "up": true,
+    "raise": true,
+    "lower": false,
+    "on": true,
+    "off": false
+  }
+
+
+  var punct='\\['+ '\\!'+ '\\"'+ '\\#'+ '\\$'+   // since javascript does not
+          '\\%'+ '\\&'+ '\\\''+ '\\('+ '\\)'+  // support POSIX character
+          '\\*'+ '\\+'+ '\\,'+ '\\\\'+ '\\-'+  // classes, we'll need our
+          '\\.'+ '\\/'+ '\\:'+ '\\;'+ '\\<'+   // own version of [:punct:]
+          '\\='+ '\\>'+ '\\?'+ '\\@'+ '\\['+
+          '\\]'+ '\\^'+ '\\_'+ '\\`'+ '\\{'+
+          '\\|'+ '\\}'+ '\\~'+ '\\]';
+
+  var re=new RegExp(     // tokenizer
+       '\\s*'+            // discard possible leading whitespace
+       '('+               // start capture group
+         '\\.{3}'+            // ellipsis (must appear before punct)
+       '|'+               // alternator
+         '\\w+\\-\\w+'+       // hyphenated words (must appear before punct)
+       '|'+               // alternator
+         '\\w+\'(?:\\w+)?'+   // compound words (must appear before punct)
+       '|'+               // alternator
+         '\\w+'+              // other words
+       '|'+               // alternator
+         '['+punct+']'+        // punct
+       ')'                // end capture group
+     );
+
+  function grep(ary,filt) {
+     var result=[];
+     for(var i=0,len=ary.length;i++<len;) {
+       var member=ary[i]||'';
+       if(filt && (typeof filt === 'Function') ? filt(member) : member) {
+         result.push(member);
+       }
+     }
+     return result;
+   }
+
+  function tokenize_str(utt) {
+    return grep( utt.split(re) );
+  }
+
   document.getElementById("show_goal").addEventListener("mousedown", function() {
     if (fsm.state == 'tasks1') {
       renderState(scenario1_goal);
@@ -1226,6 +1282,225 @@ loginInfo.click();
     renderState(sim_room);
   });
 
+  function get_logical_forms(utt) {
+    //console.log("GET 'EM!!!'");
+    var logical_forms =  [recognize_SET_STATE(utt),
+                          recognize_TRUTH_EVAL(utt),
+                          recognize_MEASUREMENT(utt)];
+    //console.log(logical_forms);
+    var reduced_logical_forms = reduce_logical_forms(logical_forms);
+    //console.log(reduced_logical_forms);
+    return reduced_logical_forms
+  }
+
+  var on_off_single = ["right light", "left light", "projector"];
+  var on_off_plural = ["front lights", "spot lights", "fluorescent lights", "the lights",];
+  var raise_lower_single = [];
+  var raise_lower_plural = ["blinds"];
+  var measurement = ["temperature", "humidity", "brightness"];
+
+  var known_entities = on_off_single.concat(on_off_plural).concat(raise_lower_plural);
+  var on_off_entities = on_off_single.concat(on_off_plural);
+  var raise_lower_entities = raise_lower_single.concat(raise_lower_plural);
+  var plural_entities = on_off_plural.concat(raise_lower_plural);
+
+  var on_off = ["on", "off"];
+  var raise_lower = ["raise", "lower", "raised", "lowered", "up", "down"];
+  var raised_lowered = ["raised", "lowered", "up", "down"];
+  var is_are = ["is", "are"];
+
+  function recognize_SET_STATE(utt) {
+    var words = tokenize_str(utt);
+    var matches = new Array(words.length).fill(0);
+    result = {
+        "intent": "set_state",
+        "success": false,
+        "entity": null,
+        "state": null,
+        "token_matches": matches
+    }
+
+    var recognized_entities = [];
+    var recognized_states = [];
+    //for (verb in ["turn", "make", "set", "cut"]) {
+    ["turn", "make", "set", "cut"].forEach(function(verb) {
+        var result = update_token_match_vector(matches, words, verb.split(' '))
+        //matches = result["matches"] //IS THIS NECESSARY?
+    })
+    //for (entity in known_entities) {
+    known_entities.forEach(function(entity) {
+        var result = update_token_match_vector(matches, words, entity.split(' '))
+        if (result["is_match"]) {
+            recognized_entities.push(entity)
+        }
+    })
+    //for (state in on_off.concat(raise_lower)) {
+    on_off.concat(raise_lower).forEach(function(state) {
+        var result = update_token_match_vector(matches, words, state.split(' '))
+        if (result["is_match"]) {
+            recognized_states.push(state);
+        }
+    })
+
+    // valid only if one entity and one state
+    var success = (recognized_entities.length == 1 && recognized_states.length == 1)
+    // valid only if new entity state matches the type of the entity
+    if (success) {
+        success = (on_off.includes(recognized_states[0])) && (on_off_entities.includes(recognized_entities[0]))
+        success = success || (raise_lower.includes(recognized_states[0])) && (raise_lower_entities.includes(recognized_entities[0]))
+    }
+
+    result["success"] = success
+    result["entity"] = recognized_entities
+    result["state"] = recognized_states
+    result["token_matches"] = matches
+    return result
+  }
+
+  function recognize_TRUTH_EVAL(utt) {
+    var words = tokenize_str(utt);
+    console.log(words);
+    var matches = new Array(words.length).fill(0);
+    result = {
+        "intent": "truth_eval",
+        "success": false,
+        "entity": null,
+        "state": null,
+        "token_matches": matches
+    }
+    var recognized_entities = [];
+    var recognized_states = [];
+    var recognized_be = [];
+    var recognized_questions = [];
+    ["tell me", "whether", "?"].forEach(function(q) {
+        var result = update_token_match_vector(matches, words, q.split(' '))
+        if (result["is_match"]) {
+            recognized_questions.push(q)
+        }
+    })
+    known_entities.forEach(function(entity) {
+        var result = update_token_match_vector(matches, words, entity.split(' '))
+        if (result["is_match"]) {
+            recognized_entities.push(entity)
+        }
+    })
+    is_are.forEach(function(be) {
+        var result = update_token_match_vector(matches, words, be.split(' '))
+        if (result["is_match"]) {
+            recognized_be.push(be)
+        }
+    })
+    //for (state in on_off.concat(raise_lower)) {
+    on_off.concat(raised_lowered).forEach(function(state) {
+        var result = update_token_match_vector(matches, words, state.split(' '))
+        if (result["is_match"]) {
+            recognized_states.push(state);
+        }
+    })
+
+    // valid only if one entity and one state
+    var success = (recognized_entities.length == 1 && recognized_states.length == 1 && (recognized_be.length == 1 || recognized_questions.length > 0))
+    // valid only if new entity state matches the type of the entity
+    if (success) {
+        success = (on_off.includes(recognized_states[0])) && (on_off_entities.includes(recognized_entities[0]))
+        success = success || (raised_lowered.includes(recognized_states[0])) && (raise_lower_entities.includes(recognized_entities[0]))
+    }
+
+    result["success"] = success
+    result["entity"] = recognized_entities
+    result["state"] = recognized_states
+    result["token_matches"] = matches
+    return result
+  }
+
+  function recognize_MEASUREMENT(utt) {
+    var words = tokenize_str(utt);
+    var matches = new Array(words.length).fill(0);
+    result = {
+        "intent": "measurement",
+        "success": false,
+        "attribute": null,
+        "token_matches": matches
+    }
+    var recognized_attributes = [];
+    ["tell me", "what", "is", "?"].forEach(function(t) {
+        var result = update_token_match_vector(matches, words, t.split(' '))
+    })
+    measurement.forEach(function(attribute) {
+        var result = update_token_match_vector(matches, words, attribute.split(' '))
+        if (result["is_match"]) {
+            recognized_attributes.push(attribute)
+        }
+    })
+
+    // valid only if one entity and one state
+    var success = (recognized_attributes.length == 1)
+
+    result["success"] = success
+    result["attribute"] = recognized_attributes
+    result["token_matches"] = matches
+    return result
+  }
+
+  function update_token_match_vector(matches, utt_words, token_words) {
+    var is_match = false;
+    var i;
+    for (i = 0; i < utt_words.length; i++) {
+      var slice = utt_words.slice(i, i+token_words.length)
+      if (JSON.stringify(slice) == JSON.stringify(token_words)) {
+        is_match = true;
+        var j;
+        for (j = i; j < i+token_words.length; j++) {
+          matches[j] = 1
+        }
+      }
+    }
+    return {"is_match": is_match, "matches": matches}
+  }
+
+  function reduce_logical_forms(logical_forms) {
+    var valid_logical_forms = [];
+    // first remove all the forms that did not successfully recognize anything
+    for (i = 0; i < logical_forms.length; i++) {
+      var result = logical_forms[i]
+      if (result["success"] == true) {
+        valid_logical_forms.push(result)
+      }
+    }
+
+    // now calculate if any valid forms have a subset of explanatory power compared to others
+    var indices_to_delete = [];
+    var i;
+    for (i = 0; i < valid_logical_forms.length; i++) {
+      var j;
+      for (j = 0; j < valid_logical_forms.length; j++) {
+        if (i != j) {
+          var a_tokens = valid_logical_forms[i]["token_matches"]
+          var b_tokens = valid_logical_forms[j]["token_matches"]
+          var a_is_subset = true;
+          var k;
+          for (k = 0; k < a_tokens.length; k++) {
+            if (a_tokens[k] == 1 && b_tokens[k] == 0) {
+              a_is_subset = false;
+            }
+          }
+          if (a_is_subset) {
+            indices_to_delete.push(i)
+          }
+        }
+      }
+    }
+    var reduced_logical_forms = [];
+    for (i = 0; i < valid_logical_forms.length; i++) {
+      var result = valid_logical_forms[i]
+      if (!indices_to_delete.includes(i)) {
+        reduced_logical_forms.push(result)
+      }
+    }
+    return reduced_logical_forms
+  }
+
+
   var overall_submission_count = 0;
   var scenario_submission_count = 0;
   document.getElementById("parse").addEventListener("click", function(){
@@ -1234,82 +1509,8 @@ loginInfo.click();
       var submission = document.getElementById("user_input").value;
       submission = submission.trim();
       submitMessage(submission);
-      var input = submission.toLowerCase();
 
-      if (input == "turn on the fluorescent lights") {
-        sim_room.overhead = true;
-      } else if (input == "turn off the fluorescent lights") {
-        sim_room.overhead = false;
 
-      } else if (input == "turn on the projector") {
-        sim_room.projector = true;
-      } else if (input == "turn off the projector") {
-        sim_room.projector = false;
-
-      } else if (input == "turn on the front lights") {
-        sim_room.front_cans = true;
-      } else if (input == "turn off the front lights") {
-        sim_room.front_cans = false;
-
-      // } else if (input == "turn on the wall light") {
-      //   sim_room.ambient = true;
-      // } else if (input == "turn off the wall light") {
-      //   sim_room.ambient = false;
-
-      } else if (input == "turn on the right light") {
-        sim_room.right_accent = true;
-      } else if (input == "turn off the right light") {
-        sim_room.right_accent = false;
-
-      } else if (input == "turn on the left light") {
-        sim_room.left_accent = true;
-      } else if (input == "turn off the left light") {
-        sim_room.left_accent = false;
-
-      // } else if (input == "raise the left blind") {
-      //   sim_room.left_blind = true;
-      // } else if (input == "lower the left blind") {
-      //   sim_room.left_blind = false;
-      //
-      // } else if (input == "raise the right blind") {
-      //   sim_room.right_blind = true;
-      // } else if (input == "lower the right blind") {
-      //   sim_room.right_blind = false;
-
-      } else if (input == "raise the blinds") {
-        sim_room.right_blind = true;
-        sim_room.left_blind = true;
-      } else if (input == "lower the blinds") {
-        sim_room.right_blind = false;
-        sim_room.left_blind = false;
-
-      } else if (input == "turn on the spot lights") {
-        sim_room.right_accent = true;
-        sim_room.left_accent = true;
-
-      } else if (input == "turn off the spot lights") {
-        sim_room.right_accent = false;
-        sim_room.left_accent = false;
-
-      } else if (input == "turn on the lights") {
-        sim_room.overhead = true;
-        sim_room.front_cans = true;
-        //sim_room.ambient = true;
-        sim_room.right_accent = true;
-        sim_room.left_accent = true;
-      } else if (input == "turn off the lights") {
-        sim_room.overhead = false;
-        sim_room.front_cans = false;
-        //sim_room.ambient = false;
-        sim_room.right_accent = false;
-        sim_room.left_accent = false;
-      }
-
-      sim_room.lights = sim_room.front_cans || sim_room.right_accent || sim_room.left_accent || sim_room.ambient || sim_room.overhead;
-      sim_room.accent_lights = sim_room.right_accent || sim_room.left_accent;
-      sim_room.the_blinds = sim_room.right_blinds || sim_room.left_blinds;
-
-      renderState(sim_room);
 
       ///////////////// START SUBMISSION LOGGING
       if (window.XMLHttpRequest) {
@@ -1346,28 +1547,6 @@ loginInfo.click();
       interactions_xmlhttp.send();
       ///////////////// END SUBMISSION LOGGING
 
-
-      // if (sim_room.projector == true && fsm.state == 'tasks1') {  setTimeout(scenario2, 1000); }
-      // else if (sim_room.projector == true && sim_room.lights == false && fsm.state == 'tasks2') { setTimeout(scenario3, 1000); }
-      // if (sim_room.projector == true && sim_room.front_cans == false && sim_room.overhead == true && fsm.state == 'tasks3') { setTimeout(questionnaire, 1000); }
-
-      // https://stackoverflow.com/questions/201183/how-to-determine-equality-for-two-javascript-objects
-      // function deepEqual(x, y) {
-      //   var equal = true;
-      //   equal = equal && (x.front_cans == y.front_cans);
-      //   equal = equal && (x.right_accent == y.right_accent);
-      //   equal = equal && (x.left_accent == y.left_accent);
-      //   equal = equal && (x.ambient == y.ambient);
-      //   equal = equal && (x.overhead == y.overhead);
-      //   equal = equal && (x.projector == y.projector);
-      //   equal = equal && (x.right_blind == y.right_blind);
-      //   equal = equal && (x.left_blind == y.left_blind);
-      //   return equal;
-      // }
-      //
-      // if (deepEqual(sim_room, scenario1_goal) && fsm.state == 'tasks1') { setTimeout(scenario2, 1000); }
-      // else if (deepEqual(sim_room, scenario2_goal) && fsm.state == 'tasks2') { setTimeout(scenario3, 1000); }
-      // if (deepEqual(sim_room, scenario3_goal) && fsm.state == 'tasks3') { setTimeout(questionnaire, 1000); }
 
       var chars = new antlr4.InputStream(input);
       var lexer = new NearbyLexer.NearbyLexer(chars);
@@ -1646,15 +1825,7 @@ loginInfo.click();
 
   // END OF MANUAL SELECT FUNCTIONS
 
-  // function select_option(suggestion) {
-  //   var autofilled_text = suggestion.textContent.replace("...", "");
-  //   document.getElementById("user_input").value = autofilled_text;
-  //   //clearSuggestions();
-  //   showResult({keyCode: -1});
-  // }
 
-
-  //var BailErrorStrategy = require('antlr4/error/ErrorStrategy').BailErrorStrategy;
 
   function showResult(event) {
       if (event.keyCode == 37 || event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 40) {
