@@ -1023,6 +1023,16 @@ input {
         setTimeout(function(){
           displayMessage("Scarlett", response);
         }, 1000);
+      } else if (lf["intent"] == "thanks") {
+        response = get_response_THANKS(lf);
+        setTimeout(function(){
+          displayMessage("Scarlett", response);
+        }, 1000);
+      } else if (lf["intent"] == "goodbye") {
+        response = get_response_GOODBYE(lf);
+        setTimeout(function(){
+          displayMessage("Scarlett", response);
+        }, 1000);
       } else {
         response = get_response_NO_UNDERSTAND(lf);
         setTimeout(function(){
@@ -1051,12 +1061,12 @@ input {
     // update sim if necessary, keep track if change was made
     var change_needed = false;
     for (i = 0; i < sim_entities.length; i++) {
-      sim_entity = sim_entities[i];
-      if (sim_room[sim_entity] != states_to_bool[logical_form.state[0]]) {
-      //  sim_room[sim_entity] = states_to_bool[logical_form.state[0]];
-        change_needed = true;
+        sim_entity = sim_entities[i];
+        if (sim_room[sim_entity] != states_to_bool[logical_form.state[0]]) {
+        //  sim_room[sim_entity] = states_to_bool[logical_form.state[0]];
+          change_needed = true;
+      }
     }
-  }
     // if there was no change necessary, let the user know
     if (!change_needed) {
         state = logical_form.state[0];
@@ -1101,6 +1111,16 @@ input {
 
   function get_response_GREETING(logical_form) {
     response = ":)"
+    return response
+  }
+
+  function get_response_THANKS(logical_form) {
+    response = "you're welcome!"
+    return response
+  }
+
+  function get_response_GOODBYE(logical_form) {
+    response = "bye!"
     return response
   }
 
@@ -1325,6 +1345,12 @@ input {
     if (reduced_logical_forms.length == 0) {
       reduced_logical_forms = reduce_logical_forms([recognize_GREETING(utt)]);
     }
+    if (reduced_logical_forms.length == 0) {
+      reduced_logical_forms = reduce_logical_forms([recognize_GOODBYE(utt)]);
+    }
+    if (reduced_logical_forms.length == 0) {
+      reduced_logical_forms = reduce_logical_forms([recognize_THANKS(utt)]);
+    }
     return reduced_logical_forms
   }
 
@@ -1499,6 +1525,48 @@ input {
     }
     var recognized_tokens = [];
     ["hi", "hello", "good morning", "good day", "sup", "wassup", "how are you"].forEach(function(t) {
+        var result = update_token_match_vector(matches, words, t.split(' '));
+        if (result["is_match"]) {
+            recognized_tokens.push(t);
+        }
+    })
+    var success = (recognized_tokens.length > 0)
+    result["success"] = success;
+    result["token_matches"] = matches
+    return result
+  }
+
+  function recognize_THANKS(utt) {
+    var words = tokenize_str(utt);
+    var matches = new Array(words.length).fill(0);
+    result = {
+      "intent": "thanks",
+      "success": false,
+      "token_matches": matches
+    }
+    var recognized_tokens = [];
+    ["thanks", "thx", "thnx", "thanx", "ty", "thank you", "tyvm", "fanks", "thank", "gracias", "danke", "merci"].forEach(function(t) {
+        var result = update_token_match_vector(matches, words, t.split(' '));
+        if (result["is_match"]) {
+            recognized_tokens.push(t);
+        }
+    })
+    var success = (recognized_tokens.length > 0)
+    result["success"] = success;
+    result["token_matches"] = matches
+    return result
+  }
+
+  function recognize_GOODBYE(utt) {
+    var words = tokenize_str(utt);
+    var matches = new Array(words.length).fill(0);
+    result = {
+      "intent": "goodbye",
+      "success": false,
+      "token_matches": matches
+    }
+    var recognized_tokens = [];
+    ["goodbye", "bye", "bai", "later", "laters", "see ya", "see you", "cya"].forEach(function(t) {
         var result = update_token_match_vector(matches, words, t.split(' '));
         if (result["is_match"]) {
             recognized_tokens.push(t);
