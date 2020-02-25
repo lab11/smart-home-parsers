@@ -107,7 +107,7 @@ TestGrammarErrorListener.prototype.syntaxError = function(
       for (i in tokens) {
         if (i < tokens.length - 1) {
           text += tokens[i].text + " ";
-          token_index_counter += tokens[i].text.length;
+          token_index_counter += 1 + tokens[i].text.length; // +1 for the space
           token_indices += " " + token_index_counter.toString();
         }
       }

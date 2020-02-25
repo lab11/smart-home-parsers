@@ -26,8 +26,8 @@ if ($result->num_rows > 0) {
       $token_indices = array_map('intval', explode(' ', $row["token_indices"]));
       $next_token_index = 0;
       foreach ($token_indices as $key => $value) {
-        if ($value > strlen($partialtext)) {
-          $next_token_index = $value + 1;
+        if ($value > strlen($partialtext) + 1) {
+          $next_token_index = $value;
           break;
         }
       }
