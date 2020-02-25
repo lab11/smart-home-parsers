@@ -4,6 +4,7 @@
 <html>
 
 <head>
+    <meta charset="utf-8" />
     <title>Scarlett</title>
     <script src="node_modules/stanza.io/build/stanzaio.bundle.js"></script>
     <script type="text/javascript" src="js/require.js"></script>
@@ -233,7 +234,7 @@ input {
 }
 
 </style>
-<div id="overlay">
+<div id="overlay" style="overflow-y:scroll;">
   <div id="overlaytextbox" style="font-size:16px;">
     <div id="overlaytext">
       Contact: Meghan Clark (mclarkk@berkeley.edu). Meghan is a PhD Student in Electrical Engineering and Computer Science at University of California, Berkeley.
@@ -420,6 +421,7 @@ input {
   var scenario2 = "<div style='font-size:25px;' align=center><b>Scenario 2/3</b></div>" + instructions + "2\" button. Spelling matters!</div>";
   var scenario3 = "<div style='font-size:25px;' align=center><b>Scenario 3/3</b></div>" + instructions + "3\" button. Spelling matters!</div>";
 
+  var confirmation_txt = "Last chance! Are you finished putting the room into the goal state?\nClick OK to move on to the next scenario, or click cancel to keep working.";
 
   var fsm = new StateMachine({
     init: 'init',
@@ -656,7 +658,6 @@ input {
       qString += "&keycode=" + e.keyCode;
       qString += "&is_printable=" + keycode_is_printable; // true/false
       qString += "&user_input=" + document.getElementById("user_input").value;
-      //console.log(qString);
       keylogger_xmlhttp.open("GET", qString,true);
       keylogger_xmlhttp.send();
       ///////////////// END LOGGING
@@ -784,166 +785,174 @@ input {
 
 
   //Thanks to http://tomassetti.me/antlr-and-the-web/
-  var updateTree = function(tree, ruleNames) {
-      var container = document.getElementById("treediv");
-      while (container.hasChildNodes()) {
-          container.removeChild(container.lastChild);
-      }
-      recurseTree(container, tree, ruleNames)
-  };
+  // var updateTree = function(tree, ruleNames) {
+  //     var container = document.getElementById("treediv");
+  //     while (container.hasChildNodes()) {
+  //         container.removeChild(container.lastChild);
+  //     }
+  //     recurseTree(container, tree, ruleNames)
+  // };
+  //
+  // var recurseTree = function(container, tree, ruleNames) {
+  //     if (tree.children !== undefined && tree.children != null) {
+  //         for (var i = 0; i < tree.children.length; i++) {
+  //             var child = tree.children[i];
+  //             recurseTree(container, child, ruleNames);
+  //         }
+  //         var nodeType = ruleNames[tree.ruleIndex];
+  //         var newElement = document.createElement("div");
+  //         newElement.className = "NearbyApplication";
+  //         var newElementText = document.createTextNode(nodeType);//child.children[2].getText());
+  //         newElement.appendChild(newElementText);
+  //         container.appendChild(newElement);
+  //     }
+  // };
+  //
+  // var ErrorListener = require('antlr4/error/ErrorListener').ErrorListener;
+  // function TestGrammarErrorListener() {
+  //     ErrorListener.call(this);
+  //     this.partialApplication = null;
+  //     this.errors = [];
+  //     return this;
+  // }
+  //
+  // TestGrammarErrorListener.prototype = Object.create(ErrorListener.prototype);
+  // TestGrammarErrorListener.prototype.constructor = TestGrammarErrorListener;
+  //
+  // var testTokens; //TEST global for console stuff
+  // var testParser;
+  // TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingSymbol, line, column, msg, e) {
+  //     this.errors.push(arguments);
+  //     //console.log("PARSER ERROR");
+  //     //console.log(msg);
+  //     var parser = recognizer._ctx.parser;
+  //     testParser = recognizer._ctx.parser;
+  //     testTokens = parser.getExpectedTokens(); //CRITICAL. This is an interval set with the numbers that correspond to the expected token types
+  //     tokenString = testTokens.toString(); //String like '{1..2, 4..9}' or '8..9'
+  //      //console.log(tokenString);
+  //      var tokenStrArray = tokenString.replace('{', '').replace('}', '').split(", "); //Array of strings like ['1..2', '4..9']
+  //      var tokenArray = [];
+  //      //console.log(tokenStrArray);
+  //      for (i = 0; i < tokenStrArray.length; i++) {
+  //          intInterval = tokenStrArray[i];
+  //          if (intInterval.indexOf('..') !== -1) {
+  //              var endpoints = intInterval.split('..');
+  //              var start = parseInt(endpoints[0], 10);
+  //              var end = parseInt(endpoints[1], 10);
+  //              for (j = start; j < end+1; j++) {
+  //                  tokenArray.push(j);
+  //              }
+  //          } else {
+  //              tokenArray.push(parseInt(intInterval, 10));
+  //          }
+  //      }
+  //     //console.log(tokenArray);
+  //      // End interval set to array of integers conversion
+  //      // Begin convert from array of integers to array of symbolic names
+  //      for (i in tokenArray) {
+  //          tokenArray[i] = parser.symbolicNames[parseInt(tokenArray[i], 10)];
+  //      }
+  //      //console.log(tokenArray);
+  //      // End conversion from integers to symbolic names
+  //
+  //      this.partialApplication = null;
+  //      var typeAssistTokens = parser.symbolicNames;
+  //      var tokens = parser.getTokenStream().tokens;
+  //
+  //     // last token is always "fake" EOF token
+  //     if (tokens.length > 1) {
+  //         var lastToken = tokens[tokens.length - 2],
+  //             tokenType = parser.symbolicNames[lastToken.type];
+  //
+  //         this.tokenType = tokenType;
+  //         if (typeAssistTokens.indexOf(tokenType) >= 0) {
+  //             this.partialApplication = lastToken.text;
+  //             //console.log("partial application: " + this.partialApplication);
+  //         }
+  //    }
+  //
+  //         if (window.XMLHttpRequest) {
+  //             // code for IE7+, Firefox, Chrome, Opera, Safari
+  //             var xmlhttp = new XMLHttpRequest();
+  //             var pre_xmlhttp = new XMLHttpRequest()
+  //         } else {  // code for IE6, IE5
+  //             var xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  //             var pre_xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  //         }
+  //         xmlhttp.onreadystatechange=function() {
+  //             if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+  //               document.getElementById("autocomplete").innerHTML=xmlhttp.responseText;
+  //               //console.log("xml response text: ", xmlhttp.responseText);
+  //               if (xmlhttp.responseText != "") {
+  //                 document.getElementById("autocomplete").style.border="1px solid #A5ACB2";
+  //                 document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 1)";
+  //               }
+  // 	          }
+  //         }
+  //
+  //         if (show_autocomplete == true) {
+  //           // switch between interfaces
+  //           var qString = null;
+  //           var text = null;
+  //
+  //           var typing_in_order = false;
+  //
+  //           var pre_qString = "php/in_order.php?";
+  //           pre_text = document.getElementById("user_input").value
+  //           pre_qString += "text=" + pre_text;
+  //           //console.log("pre_qstring: ", pre_qString);
+  //           pre_xmlhttp.open("GET", pre_qString, false);
+  //           pre_xmlhttp.send();
+  //           if (pre_xmlhttp.status == 200) {
+  //             //console.log("returned", pre_xmlhttp.responseText);
+  //             if (pre_xmlhttp.responseText == "true") {
+  //               typing_in_order = true;
+  //             }
+  //           }
+  //
+  //           //console.log("typing in order: ", typing_in_order);
+  //
+  //           if (out_of_order == false || typing_in_order == true) {
+  //             if (full_phrase_suggestions == true) {
+  //               //match starting strings
+  //               qString = "php/start.php?";
+  //               text = document.getElementById("user_input").value;
+  //             } else if (full_phrase_suggestions == false) {
+  //               if (typing_in_order) {
+  //                 // token-based autocomplete
+  //                 qString = "php/autocomplete.php?";
+  //                 for (i in tokenArray) {
+  //                     qString += "q[]=_" + tokenArray[i] + "&";
+  //                 }
+  //                 qString += "input=" + document.getElementById("user_input").value + "&";
+  //                 var text = "";
+  //                 for (i in tokens) {
+  //                     if (i < tokens.length - 1) {
+  //                        text += tokens[i].text + " ";
+  //                     }
+  //                 }
+  //               }
+  //             }
+  //           } else if (out_of_order == true && typing_in_order == false) {
+  //             qString = "php/search.php?";
+  //             text = document.getElementById("user_input").value;
+  //           }
+  //           //text = document.getElementById("user_input").value;
+  //           qString += "text=" + text;
+  //           //console.log(qString);
+  //           xmlhttp.open("GET",qString,true);
+  //           xmlhttp.send();
+  //       }
+  //  //   }
+  // };
+  //
+  // var antlr4 = require('antlr4/index');
+  // var NearbyLexer = require('generated-parser/NearbyLexer');
+  // var NearbyParser = require('generated-parser/NearbyParser');
 
-  var recurseTree = function(container, tree, ruleNames) {
-      if (tree.children !== undefined && tree.children != null) {
-          for (var i = 0; i < tree.children.length; i++) {
-              var child = tree.children[i];
-              recurseTree(container, child, ruleNames);
-          }
-          var nodeType = ruleNames[tree.ruleIndex];
-          var newElement = document.createElement("div");
-          newElement.className = "NearbyApplication";
-          var newElementText = document.createTextNode(nodeType);//child.children[2].getText());
-          newElement.appendChild(newElementText);
-          container.appendChild(newElement);
-      }
-  };
 
-  var ErrorListener = require('antlr4/error/ErrorListener').ErrorListener;
-  function TestGrammarErrorListener() {
-      ErrorListener.call(this);
-      this.partialApplication = null;
-      this.errors = [];
-      return this;
-  }
 
-  TestGrammarErrorListener.prototype = Object.create(ErrorListener.prototype);
-  TestGrammarErrorListener.prototype.constructor = TestGrammarErrorListener;
 
-  var testTokens; //TEST global for console stuff
-  var testParser;
-  TestGrammarErrorListener.prototype.syntaxError = function(recognizer, offendingSymbol, line, column, msg, e) {
-      this.errors.push(arguments);
-      //console.log("PARSER ERROR");
-      //console.log(msg);
-      var parser = recognizer._ctx.parser;
-      testParser = recognizer._ctx.parser;
-      testTokens = parser.getExpectedTokens(); //CRITICAL. This is an interval set with the numbers that correspond to the expected token types
-      tokenString = testTokens.toString(); //String like '{1..2, 4..9}' or '8..9'
-       //console.log(tokenString);
-       var tokenStrArray = tokenString.replace('{', '').replace('}', '').split(", "); //Array of strings like ['1..2', '4..9']
-       var tokenArray = [];
-       //console.log(tokenStrArray);
-       for (i = 0; i < tokenStrArray.length; i++) {
-           intInterval = tokenStrArray[i];
-           if (intInterval.indexOf('..') !== -1) {
-               var endpoints = intInterval.split('..');
-               var start = parseInt(endpoints[0], 10);
-               var end = parseInt(endpoints[1], 10);
-               for (j = start; j < end+1; j++) {
-                   tokenArray.push(j);
-               }
-           } else {
-               tokenArray.push(parseInt(intInterval, 10));
-           }
-       }
-      //console.log(tokenArray);
-       // End interval set to array of integers conversion
-       // Begin convert from array of integers to array of symbolic names
-       for (i in tokenArray) {
-           tokenArray[i] = parser.symbolicNames[parseInt(tokenArray[i], 10)];
-       }
-       //console.log(tokenArray);
-       // End conversion from integers to symbolic names
-
-       this.partialApplication = null;
-       var typeAssistTokens = parser.symbolicNames;
-       var tokens = parser.getTokenStream().tokens;
-
-      // last token is always "fake" EOF token
-      if (tokens.length > 1) {
-          var lastToken = tokens[tokens.length - 2],
-              tokenType = parser.symbolicNames[lastToken.type];
-
-          this.tokenType = tokenType;
-          if (typeAssistTokens.indexOf(tokenType) >= 0) {
-              this.partialApplication = lastToken.text;
-              //console.log("partial application: " + this.partialApplication);
-          }
-     }
-
-          if (window.XMLHttpRequest) {
-              // code for IE7+, Firefox, Chrome, Opera, Safari
-              var xmlhttp = new XMLHttpRequest();
-              var pre_xmlhttp = new XMLHttpRequest()
-          } else {  // code for IE6, IE5
-              var xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-              var pre_xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-          }
-          xmlhttp.onreadystatechange=function() {
-              if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-                document.getElementById("autocomplete").innerHTML=xmlhttp.responseText;
-                //console.log("xml response text: ", xmlhttp.responseText);
-                if (xmlhttp.responseText != "") {
-                  document.getElementById("autocomplete").style.border="1px solid #A5ACB2";
-                  document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 1)";
-                }
-  	          }
-          }
-
-          if (show_autocomplete == true) {
-            // switch between interfaces
-            var qString = null;
-            var text = null;
-
-            var typing_in_order = false;
-
-            var pre_qString = "php/in_order.php?";
-            pre_text = document.getElementById("user_input").value
-            pre_qString += "text=" + pre_text;
-            //console.log("pre_qstring: ", pre_qString);
-            pre_xmlhttp.open("GET", pre_qString, false);
-            pre_xmlhttp.send();
-            if (pre_xmlhttp.status == 200) {
-              //console.log("returned", pre_xmlhttp.responseText);
-              if (pre_xmlhttp.responseText == "true") {
-                typing_in_order = true;
-              }
-            }
-
-            //console.log("typing in order: ", typing_in_order);
-
-            if (out_of_order == false || typing_in_order == true) {
-              if (full_phrase_suggestions == true) {
-                //match starting strings
-                qString = "php/start.php?";
-                text = document.getElementById("user_input").value;
-              } else if (full_phrase_suggestions == false) {
-                if (typing_in_order) {
-                  // token-based autocomplete
-                  qString = "php/autocomplete.php?";
-                  for (i in tokenArray) {
-                      qString += "q[]=_" + tokenArray[i] + "&";
-                  }
-                  qString += "input=" + document.getElementById("user_input").value + "&";
-                  var text = "";
-                  for (i in tokens) {
-                      if (i < tokens.length - 1) {
-                         text += tokens[i].text + " ";
-                      }
-                  }
-                }
-              }
-            } else if (out_of_order == true && typing_in_order == false) {
-              qString = "php/search.php?";
-              text = document.getElementById("user_input").value;
-            }
-            //text = document.getElementById("user_input").value;
-            qString += "text=" + text;
-            //console.log(qString);
-            xmlhttp.open("GET",qString,true);
-            xmlhttp.send();
-        }
-   //   }
-  };
 
 
   function displayMessage(sender, msg) {
@@ -958,26 +967,11 @@ input {
     document.getElementById("history_box").scrollTop = document.getElementById("history_box").scrollHeight;
   }
 
-
   function doAction(logical_form) {
-    var groups = {
-      "right light": ["right_accent"],
-      "left light": ["left_accent"],
-      "projector": ["projector"],
-      "front lights": ["front_cans"],
-      "spot lights": ["right_accent", "left_accent"],
-      "fluorescent lights": ["overhead"],
-      "the lights": ["overhead", "front_cans", "right_accent", "left_accent"],
-      "blinds": ["right_blind", "left_blind"]
-    }
-
-    // parse submission to affect simulation state
-    //var logical_forms = get_logical_forms(input);
-    //var logical_form = logical_forms[0];
     if (logical_form['intent'] == 'set_state') {
       //do stuff
-      var entity_str = logical_form['entity'][0];
-      var sim_entities = groups[entity_str];
+      var entity_str = logical_form['entity'][0][0];
+      var sim_entities = logical_form['entity'][0][1];
       var state_str = logical_form['state'][0];
       var state_bool = states_to_bool[state_str];
       var i;
@@ -990,6 +984,12 @@ input {
     sim_room.lights = sim_room.front_cans || sim_room.right_accent || sim_room.left_accent || sim_room.overhead;
     sim_room.accent_lights = sim_room.right_accent || sim_room.left_accent;
     sim_room.blinds = sim_room.right_blind || sim_room.left_blind;
+
+    if (!sim_room.lights) {
+      sim_room.brightness = "101 lux";
+    } else {
+      sim_room.brightness = "332 lux";
+    }
 
     console.log(sim_room);
 
@@ -1030,7 +1030,7 @@ input {
         }, 1000);
       }
     } else {
-      response = get_response_NO_UNDERSTAND(lf);
+      response = get_response_NO_UNDERSTAND({});
       setTimeout(function(){
         displayMessage("Scarlett", response);
       }, 1000);
@@ -1042,31 +1042,48 @@ input {
   function get_response_SET_STATE(logical_form) {
     console.log(logical_form)
     response = "okay"
-    entity = logical_form["entity"][0];
+    entity = logical_form["entity"][0][0];
+    sim_entities = logical_form["entity"][0][1];
     be = "is"
     if (plural_entities.includes(entity)) {
       be = "are";
     }
-    if (sim_room[entity] == states_to_bool[logical_form.state[0]]) {
-      state = logical_form.state[0];
-      if (raise_lower.includes(state)) {
-        state = bool_to_up_down(states_to_bool[state]);
-      }
-      response = "the " + entity + " " + be + " already " + state;
+    // update sim if necessary, keep track if change was made
+    var change_needed = false;
+    for (i = 0; i < sim_entities.length; i++) {
+      sim_entity = sim_entities[i];
+      if (sim_room[sim_entity] != states_to_bool[logical_form.state[0]]) {
+      //  sim_room[sim_entity] = states_to_bool[logical_form.state[0]];
+        change_needed = true;
     }
+  }
+    // if there was no change necessary, let the user know
+    if (!change_needed) {
+        state = logical_form.state[0];
+        if (raise_lower.includes(state)) {
+          state = bool_to_up_down(states_to_bool[state]);
+        }
+        response = "the " + entity + " " + be + " already " + state;
+      }
     return response
   }
 
   function get_response_TRUTH_EVAL(logical_form) {
     console.log(logical_form)
     response = "";
-    entity = logical_form["entity"][0]
+    entity = logical_form["entity"][0][0];
+    sim_entities = logical_form["entity"][0][1];
     state = states_to_bool[logical_form.state[0]]
     be = "is"
     if (plural_entities.includes(entity)) {
       be = "are";
     }
-    if (sim_room[entity] == state) {
+    var group_state = false;
+    for (i = 0; i < sim_entities.length; i++) {
+      sim_entity = sim_entities[i];
+      group_state = group_state || sim_room[sim_entity];
+    }
+    if (group_state == state) {
       response = "yes, the " + entity + " " + be + " " + logical_form.state[0];
     } else {
       response = "no, the " + entity + " " + be + " not " + logical_form.state[0];
@@ -1091,17 +1108,6 @@ input {
     return "I don't understand";
   }
 
-  // Remove suggestions
-  function clearSuggestions() {
-      document.getElementById("autocomplete").innerHTML="";
-      document.getElementById("autocomplete").style.border="0px solid #A5ACB2";
-      document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 0)";
-  }
-
-  var antlr4 = require('antlr4/index');
-  var NearbyLexer = require('generated-parser/NearbyLexer');
-  var NearbyParser = require('generated-parser/NearbyParser');
-
   var sim_room = {
     front_cans: true,
     right_accent: false,
@@ -1115,8 +1121,8 @@ input {
     left_blind: true,
     blinds: true,
     temperature: "69 F",
-    humidity: "20%",
-    brightness: "100 lumens",
+    humidity: "46%",
+    brightness: "332 lux",
     goal: false
   };
 
@@ -1306,6 +1312,8 @@ input {
     renderState(sim_room);
   });
 
+
+
   function get_logical_forms(utt) {
     //console.log("GET 'EM!!!'");
     var logical_forms =  [recognize_SET_STATE(utt),
@@ -1336,6 +1344,17 @@ input {
   var raised_lowered = ["raised", "lowered", "up", "down"];
   var is_are = ["is", "are"];
 
+  var entity_to_ids = {
+    "right light": ["right_accent"],
+    "left light": ["left_accent"],
+    "projector": ["projector"],
+    "front lights": ["front_cans"],
+    "spot lights": ["right_accent", "left_accent"],
+    "fluorescent lights": ["overhead"],
+    "the lights": ["overhead", "front_cans", "right_accent", "left_accent"],
+    "blinds": ["right_blind", "left_blind"]
+  }
+
   function recognize_SET_STATE(utt) {
     var words = tokenize_str(utt);
     var matches = new Array(words.length).fill(0);
@@ -1358,7 +1377,7 @@ input {
     known_entities.forEach(function(entity) {
         var result = update_token_match_vector(matches, words, entity.split(' '))
         if (result["is_match"]) {
-            recognized_entities.push(entity)
+            recognized_entities.push([entity, entity_to_ids[entity]]);
         }
     })
     //for (state in on_off.concat(raise_lower)) {
@@ -1373,14 +1392,15 @@ input {
     var success = (recognized_entities.length == 1 && recognized_states.length == 1)
     // valid only if new entity state matches the type of the entity
     if (success) {
-        success = (on_off.includes(recognized_states[0])) && (on_off_entities.includes(recognized_entities[0]))
-        success = success || (raise_lower.includes(recognized_states[0])) && (raise_lower_entities.includes(recognized_entities[0]))
+        success = (on_off.includes(recognized_states[0])) && (on_off_entities.includes(recognized_entities[0][0]))
+        success = success || (raise_lower.includes(recognized_states[0])) && (raise_lower_entities.includes(recognized_entities[0][0]))
     }
 
     result["success"] = success
     result["entity"] = recognized_entities
     result["state"] = recognized_states
     result["token_matches"] = matches
+    console.log("SET STATE", result);
     return result
   }
 
@@ -1408,7 +1428,7 @@ input {
     known_entities.forEach(function(entity) {
         var result = update_token_match_vector(matches, words, entity.split(' '))
         if (result["is_match"]) {
-            recognized_entities.push(entity)
+            recognized_entities.push([entity, entity_to_ids[entity]]);
         }
     })
     is_are.forEach(function(be) {
@@ -1429,8 +1449,8 @@ input {
     var success = (recognized_entities.length == 1 && recognized_states.length == 1 && (recognized_be.length == 1 || recognized_questions.length > 0))
     // valid only if new entity state matches the type of the entity
     if (success) {
-        success = (on_off.includes(recognized_states[0])) && (on_off_entities.includes(recognized_entities[0]))
-        success = success || (raised_lowered.includes(recognized_states[0])) && (raise_lower_entities.includes(recognized_entities[0]))
+        success = (on_off.includes(recognized_states[0])) && (on_off_entities.includes(recognized_entities[0][0]))
+        success = success || (raised_lowered.includes(recognized_states[0])) && (raise_lower_entities.includes(recognized_entities[0][0]))
     }
 
     result["success"] = success
@@ -1548,6 +1568,40 @@ input {
     return reduced_logical_forms
   }
 
+  function log_submission(submission) {
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        var interactions_xmlhttp = new XMLHttpRequest();
+    } else {  // code for IE6, IE5
+        var interactions_xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    interactions_xmlhttp.onreadystatechange=function() {
+        if (interactions_xmlhttp.readyState==4 && interactions_xmlhttp.status==200) {
+          console.log("xml response text: ", interactions_xmlhttp.responseText);
+        }
+    }
+    var qString = "php/logger.php?";
+    qString += "tablename=interactions";
+    qString += "&deployment_id=" + deployment_name;
+    qString += "&user_id=" + user_id;
+    qString += "&interface_id=" + interface_id;
+    qString += "&scenario_id=" + fsm.state.replace("tasks", "");
+    qString += "&overall_submission_count=" + overall_submission_count;
+    qString += "&scenario_submission_count=" + scenario_submission_count;
+    qString += "&submission=" + submission;
+    qString += "&timestamp_ms=" + new Date().getTime(); // In GMT
+    qString += "&projector=" + bool_to_on_off(sim_room.projector);
+    qString += "&left_blind=" + bool_to_up_down(sim_room.left_blind);
+    qString += "&right_blind=" + bool_to_up_down(sim_room.right_blind);
+    qString += "&fluorescent_lights=" + bool_to_on_off(sim_room.overhead);
+    qString += "&front_lights=" + bool_to_on_off(sim_room.front_cans);
+    qString += "&wall_light=" + bool_to_on_off(sim_room.ambient);
+    qString += "&left_light=" + bool_to_on_off(sim_room.left_accent);
+    qString += "&right_light=" + bool_to_on_off(sim_room.right_accent);
+    //console.log(qString);
+    interactions_xmlhttp.open("GET", qString, true);
+    interactions_xmlhttp.send();
+  }
 
   var overall_submission_count = 0;
   var scenario_submission_count = 0;
@@ -1558,62 +1612,28 @@ input {
       submission = submission.trim();
       submitMessage(submission);
 
-
-
       ///////////////// START SUBMISSION LOGGING
-      if (window.XMLHttpRequest) {
-          // code for IE7+, Firefox, Chrome, Opera, Safari
-          var interactions_xmlhttp = new XMLHttpRequest();
-      } else {  // code for IE6, IE5
-          var interactions_xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      interactions_xmlhttp.onreadystatechange=function() {
-          if (interactions_xmlhttp.readyState==4 && interactions_xmlhttp.status==200) {
-            console.log("xml response text: ", interactions_xmlhttp.responseText);
-          }
-      }
-      var qString = "php/logger.php?";
-      qString += "tablename=interactions";
-      qString += "&deployment_id=" + deployment_name;
-      qString += "&user_id=" + user_id;
-      qString += "&interface_id=" + interface_id;
-      qString += "&scenario_id=" + fsm.state.replace("tasks", "");
-      qString += "&overall_submission_count=" + overall_submission_count;
-      qString += "&scenario_submission_count=" + scenario_submission_count;
-      qString += "&submission=" + submission;
-      qString += "&timestamp_ms=" + new Date().getTime(); // In GMT
-      qString += "&projector=" + bool_to_on_off(sim_room.projector);
-      qString += "&left_blind=" + bool_to_up_down(sim_room.left_blind);
-      qString += "&right_blind=" + bool_to_up_down(sim_room.right_blind);
-      qString += "&fluorescent_lights=" + bool_to_on_off(sim_room.overhead);
-      qString += "&front_lights=" + bool_to_on_off(sim_room.front_cans);
-      qString += "&wall_light=" + bool_to_on_off(sim_room.ambient);
-      qString += "&left_light=" + bool_to_on_off(sim_room.left_accent);
-      qString += "&right_light=" + bool_to_on_off(sim_room.right_accent);
-      //console.log(qString);
-      interactions_xmlhttp.open("GET", qString, true);
-      interactions_xmlhttp.send();
+      log_submission(submission);
       ///////////////// END SUBMISSION LOGGING
 
-
-      var chars = new antlr4.InputStream(input);
-      var lexer = new NearbyLexer.NearbyLexer(chars);
-      var tokens  = new antlr4.CommonTokenStream(lexer);
-      var parser = new NearbyParser.NearbyParser(tokens);
-      var listener = new TestGrammarErrorListener();
-      parser.removeErrorListeners();
-      parser.addErrorListener(listener);
-      parser.buildParseTrees = true;
-      var tree = parser.application();
-      //updateTree(tree, parser.ruleNames);
-      var translator = new TargetTranslator();
-      antlr4.tree.ParseTreeWalker.DEFAULT.walk(translator, tree);
-      //console.log(translator.target_sentence);
-      var str_json = JSON.stringify(translator.target_sentence);
-      //var request = new XMLHttpRequest();
-      //request.open("POST", "php/post-to-target.php", true);
-      //request.setRequestHeader("Content-type", "application/json");
-      //request.send(str_json);
+      // var chars = new antlr4.InputStream(input);
+      // var lexer = new NearbyLexer.NearbyLexer(chars);
+      // var tokens  = new antlr4.CommonTokenStream(lexer);
+      // var parser = new NearbyParser.NearbyParser(tokens);
+      // var listener = new TestGrammarErrorListener();
+      // parser.removeErrorListeners();
+      // parser.addErrorListener(listener);
+      // parser.buildParseTrees = true;
+      // var tree = parser.application();
+      // //updateTree(tree, parser.ruleNames);
+      // var translator = new TargetTranslator();
+      // antlr4.tree.ParseTreeWalker.DEFAULT.walk(translator, tree);
+      // //console.log(translator.target_sentence);
+      // var str_json = JSON.stringify(translator.target_sentence);
+      // //var request = new XMLHttpRequest();
+      // //request.open("POST", "php/post-to-target.php", true);
+      // //request.setRequestHeader("Content-type", "application/json");
+      // //request.send(str_json);
 
       document.getElementById("user_input").value = "";
   });
@@ -1624,8 +1644,6 @@ input {
     return count;
 
   }
-
-  var confirmation_txt = "Last chance! Are you finished putting the room into the goal state?\nClick OK to move on to the next scenario, or click cancel to keep working.";
 
   function advanceState() {
     //console.log("made it: ", fsm.state);
@@ -1874,39 +1892,64 @@ input {
   // END OF MANUAL SELECT FUNCTIONS
 
 
+  // Remove suggestions
+  function clearSuggestions() {
+      document.getElementById("autocomplete").innerHTML="";
+      document.getElementById("autocomplete").style.border="0px solid #A5ACB2";
+      document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 0)";
+  }
 
   function showResult(event) {
       if (event.keyCode == 37 || event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 40) {
         return;
       }
       var input =   document.getElementById("user_input").value.toLowerCase();
-      var chars = new antlr4.InputStream(input);
-      var lexer = new NearbyLexer.NearbyLexer(chars);
-      var tokens  = new antlr4.CommonTokenStream(lexer);
-      var parser = new NearbyParser.NearbyParser(tokens);
-      var listener = new TestGrammarErrorListener();
-      parser.removeErrorListeners();
-      parser.addErrorListener(listener);
-      parser.buildParseTrees = true;
-      //parser._errHandler = new BailErrorStrategy();
-      //console.log(parser._errHandler); //TEST
-      var tree = parser.application();
-      //updateTree(tree, parser.ruleNames);
+      if (show_autocomplete) {
+        getResults(input)
+      }
 
      document.getElementById("autocomplete").innerHTML="";
      document.getElementById("autocomplete").style.border="0px solid #A5ACB2";
      document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 0)";
 
-      var tokens = parser.getTokenStream().tokens;
-      tokens = tokens.slice(0,tokens.length-1);
+     CURRENT_OPTION = null;
+  }
 
-      var tokenString = "";
-      for (i in tokens) {
-          tokenString += parser.symbolicNames[tokens[i].type] + " ";
-      }
+  function getResults(input) {
 
-      CURRENT_OPTION = null;
-      //document.getElementById("tokens").innerHTML=tokenString;
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        var xmlhttp = new XMLHttpRequest();
+    } else {  // code for IE6, IE5
+        var xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+          document.getElementById("autocomplete").innerHTML=xmlhttp.responseText;
+          //console.log("xml response text: ", xmlhttp.responseText);
+          if (xmlhttp.responseText != "") {
+            document.getElementById("autocomplete").style.border="1px solid #A5ACB2";
+            document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 1)";
+          }
+        }
+    }
+
+    if (out_of_order && full_phrase_suggestions) {
+      qString = "php/oo_order_full_sentence.php?";
+    }
+    else if (out_of_order && !full_phrase_suggestions) {
+      qString = "php/oo_order_next_token.php?";
+    }
+    else if (!out_of_order && full_phrase_suggestions) {
+      qString = "php/in_order_full_sentence.php?";
+    }
+    else if (!out_of_order && !full_phrase_suggestions) {
+      qString = "php/in_order_next_token.php?";
+    }
+
+    qString += "text=" + input;
+    xmlhttp.open("GET",qString,true);
+    xmlhttp.send();
   }
 
   </script>
