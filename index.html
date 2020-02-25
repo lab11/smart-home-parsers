@@ -61,6 +61,7 @@ body {
     background-color: #ddd;/*#BDE2FE; #bcf2ff;  */
     font-family: arial, verdana, sans-serif;
     font-style: normal;
+    overflow-y: scroll;
 }
 
 #header {
@@ -330,7 +331,7 @@ input {
                 <button id="parse" class="button" type="button">&#9655;</button>
               </div>
               <div style="display: flex;">
-                <div id="autocomplete" class="suggestions" style="font-size:14px; overflow-y: scroll; max-height: 140px; width:100%; z-index:1;"></div>
+                <div id="autocomplete" class="suggestions" style="font-size:14px; overflow-y: hidden; max-height: 140px; width:100%; z-index:1;"></div>
                 <button class="button" type="button" style="visibility:hidden;" disabled=true>&#9655;</button>
               </div>
             </form>
@@ -1965,6 +1966,7 @@ input {
       document.getElementById("autocomplete").innerHTML="";
       document.getElementById("autocomplete").style.border="0px solid #A5ACB2";
       document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 0)";
+      document.getElementById("autocomplete").style["overflow-y"] = "hidden";
   }
 
   function showResult(event) {
@@ -1979,6 +1981,7 @@ input {
      document.getElementById("autocomplete").innerHTML="";
      document.getElementById("autocomplete").style.border="0px solid #A5ACB2";
      document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 0)";
+     document.getElementById("autocomplete").style["overflow-y"] = "hidden";
 
      CURRENT_OPTION = null;
   }
@@ -1994,10 +1997,12 @@ input {
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4 && xmlhttp.status==200) {
           document.getElementById("autocomplete").innerHTML=xmlhttp.responseText;
+          document.getElementById("autocomplete").style["overflow-y"] = "scroll";
           //console.log("xml response text: ", xmlhttp.responseText);
           if (xmlhttp.responseText != "") {
             document.getElementById("autocomplete").style.border="1px solid #A5ACB2";
             document.getElementById("autocomplete").style.backgroundColor = "rgba(255, 255, 255, 1)";
+            document.getElementById("autocomplete").style["overflow-y"] = "hidden";
           }
         }
     }
