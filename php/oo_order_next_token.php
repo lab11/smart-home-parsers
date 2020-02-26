@@ -43,9 +43,15 @@ if ($result->num_rows > 0) {
 
       // Only add suggestion if it isn't a duplicate when truncated
       if (!in_array($next_token_string, $seen_list)) {
-        $suggestion = "<div onmouseover=\"highlight_suggestion(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . rtrim(ucfirst($next_token_string)) . $continue . "</div>";
-        $i++;
         array_push($seen_list, $next_token_string);
+
+        // Insert bold and other formatting
+        $next_token_string = rtrim(ucfirst($next_token_string));
+        $pos = strlen($partialtext);
+        $next_token_string = "<b>" . substr($next_token_string, 0, $pos) . "</b>" . substr($next_token_string, $pos);
+        $suggestion = "<div onmouseover=\"highlight_suggestion(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . $next_token_string . $continue . "</div>";
+        $i++;
+
         echo ucfirst($suggestion);
       }
     }
@@ -57,7 +63,11 @@ if ($result->num_rows > 0) {
     if ($result->num_rows > 0) {
         $i = 0;
         while($row = $result->fetch_assoc()) {
-            $suggestion = "<div onmouseover=\"highlight_suggestion(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . ucfirst($row["sentence"]) . "</div>";
+            $suggestion_str = ucfirst($row["sentence"]);
+            $startpos = strpos($suggestion_str, $partialtext);
+            $endpos = $startpos + strlen($partialtext);
+            $suggestion_str = substr($suggestion_str, 0, $startpos) . "<b>" . substr($suggestion_str, $startpos, strlen($partialtext)) . "</b>" . substr($suggestion_str, $endpos);
+            $suggestion = "<div onmouseover=\"highlight_suggestion(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . $suggestion_str . "</div>";
             $i++;
             echo ucfirst($suggestion);
         }
