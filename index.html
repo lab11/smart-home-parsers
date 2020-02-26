@@ -1997,7 +1997,7 @@ input {
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4 && xmlhttp.status==200) {
           document.getElementById("autocomplete").innerHTML=xmlhttp.responseText;
-          document.getElementById("autocomplete").style["overflow-y"] = "scroll";
+          document.getElementById("autocomplete").style["overflow-y"] = "auto";
           //console.log("xml response text: ", xmlhttp.responseText);
           if (xmlhttp.responseText != "") {
             document.getElementById("autocomplete").style.border="1px solid #A5ACB2";
