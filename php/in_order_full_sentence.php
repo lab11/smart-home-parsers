@@ -19,17 +19,17 @@ if ($result->num_rows > 0) {
     // output data of each row
     $i = 0;
     while($row = $result->fetch_assoc()) {
-        // bold and formatting
-        $suggestion_str = ucfirst($row["sentence"]);
+        // bolding and formatting
+        $suggestion_str = $row["sentence"];
         $startpos = strpos($suggestion_str, $partialtext);
         $endpos = $startpos + strlen($partialtext);
+        $suggestion_str = ucfirst($suggestion_str);
         $suggestion_str = substr($suggestion_str, 0, $startpos) . "<b>" . substr($suggestion_str, $startpos, strlen($partialtext)) . "</b>" . substr($suggestion_str, $endpos);
         $suggestion = "<div onmouseover=\"highlight_suggestion(this);\" onmouseout=\"unhighlight_suggestion(this);\" onclick=\"autofill(this);\" class=\"suggestion\" id=\"suggestion" . $i . "\">" . $suggestion_str . "</div>";
         $i++;
         echo ucfirst($suggestion);
     }
-  } //else {
-  //    echo "0 results";
+  } 
 
 $conn->close();
 ?>
