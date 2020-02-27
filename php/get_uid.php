@@ -5,16 +5,16 @@
 // //$counter = $counter + 1;
 // fclose($myfile); //instead, need to write incremented counter to file
 
-$fp = fopen('counter.txt', 'c+');
+$fp = fopen('counter.txt', 'c+') or die("Unable to open file!");
 flock($fp, LOCK_EX);
 
 $counter = (int)fread($fp, filesize('counter.txt'));
 
-echo $counter; //. "_" . (string)rand(0, 99999999999);
+echo $counter;
 
 ftruncate($fp, 0);
 fseek($fp, 0);
-fwrite($fp, $counter + 1);
+fwrite($fp, $counter+1);
 
 flock($fp, LOCK_UN);
 fclose($fp);
