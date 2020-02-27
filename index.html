@@ -733,7 +733,7 @@ input {
 
   // select interface
   var user_id = getUrlParameter('uid');
-  //console.log("UID:", user_id);
+  //console.log("UID (from URL):", user_id);
   // if not provided in URL, get uid from server
   if (user_id == "") {
     //user_id = 9001;
@@ -745,8 +745,9 @@ input {
     }
     xmlhttp_uid.open("GET", "php/get_uid.php", false);
     xmlhttp_uid.send();
+    console.log("XMLHTTP Status:", xmlhttp_uid.status);
     if (xmlhttp_uid.status == 200) {
-      //console.log("returned", xmlhttp_uid.responseText);
+      console.log("returned", xmlhttp_uid.responseText);
       user_id = xmlhttp_uid.responseText;
     }
     console.log("UID:", user_id);
